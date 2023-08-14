@@ -10,8 +10,22 @@ import UIKit
 import Darwin
 
 class SelectTrackerViewController: UIViewController {
+
+    // MARK: - Types
+
+    // MARK: - Constants
+
+    // MARK: - Public Properties
     var trackersViewController: TrackersViewController?
     
+    // MARK: - IBOutlet
+
+    // MARK: - Private Properties
+    
+
+    // MARK: - Initializers
+
+    // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         //print("NewTrackerSelectViewController viewDidLoad()")
@@ -25,8 +39,6 @@ class SelectTrackerViewController: UIViewController {
         newTrackerButton.setTitle("Привычка", for: .normal)
         newTrackerButton.setTitleColor(.ypWhiteDay, for: .normal)
         newTrackerButton.titleLabel?.font = YFonts.fontYPMedium16
-        //print("[TEST] view.layer.masksToBounds = \(newTrackerButton.layer.masksToBounds)")
-        //newTrackerButton.layer.masksToBounds = true
         newTrackerButton.layer.cornerRadius = 19
         newTrackerButton.backgroundColor = .ypBlackDay
         newTrackerButton.addTarget(self, action: #selector(self.buttonNewTrackerTapped), for: .touchUpInside)
@@ -56,23 +68,26 @@ class SelectTrackerViewController: UIViewController {
         newEventButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         newEventButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
     
-        
-        
     }
-  
-    @IBAction private func buttonNewEventTapped(_ sender: UIButton) {
-        print("buttonNewEventTapped")
-        presentCreteEventController(isEvent: true)
-        return
-    }
-    
-    @IBAction private func buttonNewTrackerTapped(_ sender: UIButton) {
-        print("buttonNewTrackerTapped")
-        presentCreteEventController(isEvent: false)
-        return
-    }
-    
 
+    // MARK: - Public Methods
+
+    // MARK: - IBAction
+    
+      @IBAction private func buttonNewEventTapped(_ sender: UIButton) {
+          print("buttonNewEventTapped")
+          presentCreteEventController(isEvent: true)
+          return
+      }
+      
+      @IBAction private func buttonNewTrackerTapped(_ sender: UIButton) {
+          print("buttonNewTrackerTapped")
+          presentCreteEventController(isEvent: false)
+          return
+      }
+      
+
+    // MARK: - Private Methods
     
     private func presentCreteEventController(isEvent: Bool) {
         

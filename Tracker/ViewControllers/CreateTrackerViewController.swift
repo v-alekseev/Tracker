@@ -13,6 +13,25 @@ final class CreateTrackerViewController: UIViewController {
     // MARK: - Types
 
     // MARK: - Constants
+    let tmpColors = [UIColor.ypColorselection1,
+                     UIColor.ypColorselection2,
+                     UIColor.ypColorselection3,
+                     UIColor.ypColorselection4,
+                     UIColor.ypColorselection5,
+                     UIColor.ypColorselection6,
+                     UIColor.ypColorselection7,
+                     UIColor.ypColorselection8,
+                     UIColor.ypColorselection9,
+                     UIColor.ypColorselection10,
+                     UIColor.ypColorselection11,
+                     UIColor.ypColorselection12,
+                     UIColor.ypColorselection13,
+                     UIColor.ypColorselection14,
+                     UIColor.ypColorselection15,
+                     UIColor.ypColorselection16,
+                     UIColor.ypColorselection17,
+                     UIColor.ypColorselection18,
+                 ]
 
     // MARK: - Public Properties
     var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
@@ -69,15 +88,23 @@ final class CreateTrackerViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction private func cancelButtonPressed(_ sender: UIButton) {
-        print("cancelButtonPressed")
         dismiss(animated: true)
         return
     }
     
     @IBAction private func createButtonPressed(_ sender: UIButton) {
-        print("createButtonPressed")
-       
-        trackersViewController?.setDefaultText(text: "Новый текст")
+        guard let label = label else { return }
+        // TODO сюда проверку что все поля выбраны алерт надо поставить
+
+        let emojies = ["🍄", "🥦","❤️"]
+        
+        let newTracker = Tracker(trackerID: UUID(), trackerName: label.text ?? "Без названия",
+                                 trackerEmodji: emojies[Int.random(in: 0..<emojies.count)],
+                                 trackerColor: tmpColors[Int.random(in: 0..<tmpColors.count)],
+                                 trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays())
+
+        // TODO снять заглушку с категорий в 15м спринте
+        trackersViewController?.addTracker(tracker: newTracker, trackerCategory: testCategory)
         trackersViewController?.dismiss(animated: true)
         
         return
@@ -85,6 +112,7 @@ final class CreateTrackerViewController: UIViewController {
 
 
     // MARK: - Private Methods
+
     private func presentCreateScheduleViewController() {
         
         let createScheduleViewController = CreateScheduleViewController()
@@ -196,7 +224,7 @@ final class CreateTrackerViewController: UIViewController {
     private func setupCell(cell: UITableViewCell, cellIndex: Int) {
         
         let firstCellLine = tableItems[cellIndex]
-        let secondCellLine = cellIndex == 0 ? "\nТекст для категорий" : scheduleDays.getDescriptionFirstNewLine()
+        let secondCellLine = (cellIndex == 0) ? "\n\(testCategory)" : scheduleDays.getScheduleAsTextWithNewLine()
         
         let cellText = NSMutableAttributedString(string: firstCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay])
         let secondCellLineAttrString = NSAttributedString(string: secondCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypGray] )
@@ -217,14 +245,10 @@ extension CreateTrackerViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection section = \(section)")
         return tableItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        print("cellForRowAt index= \(indexPath)")
-        
         var cell =  UITableViewCell()
         
         if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
@@ -234,23 +258,20 @@ extension CreateTrackerViewController: UITableViewDataSource {
         }
         
         setupCell(cell: cell, cellIndex: indexPath.row)
-        
 
-        
         return cell
     }
 }
 
 extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("heightForRowAt indexPath = \(indexPath)")
         return 75
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         print("didSelectRowAt indexPath = \(indexPath)")
-        
-        presentCreateScheduleViewController()
+        if indexPath.row == 1 {
+          presentCreateScheduleViewController()
+        }
     }
 
 }

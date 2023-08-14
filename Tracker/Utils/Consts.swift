@@ -12,6 +12,11 @@ import UIKit
 let barControllerTrackers = "Трекеры"
 let barControllerStatisic = "Статистика"
 
+let testCategory = "Важное"
+
+let imageTrackerCellPlus = UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate)
+let imageTrackerCellCompleted = UIImage(named: "done_button")?.withRenderingMode(.alwaysTemplate)
+
 struct YFonts {
     static let fontYPMedium34 = UIFont.systemFont(ofSize: 34, weight: .bold)
     static let fontYPMedium32 = UIFont.systemFont(ofSize: 32, weight: .bold)
@@ -24,21 +29,22 @@ struct YFonts {
 
 
 // MARK: - Types
-
+//
 // MARK: - Constants
-
+//
 // MARK: - Public Properties
-
+//
 // MARK: - IBOutlet
-
+//
 // MARK: - Private Properties
-
+//
 // MARK: - Initializers
-
+//
 // MARK: - UIViewController(*)
-
+//
 // MARK: - Public Methods
-
+//
 // MARK: - IBAction
-
+//
 // MARK: - Private Methods
+//

@@ -106,20 +106,17 @@ extension CreateScheduleViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("[Schedule] numberOfRowsInSection section = \(section)")
         guard let scheduleDays = scheduleDays else { return 0 }
         return scheduleDays.weekDays.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        print("[Schedule] cellForRowAt index= \(indexPath)")
-        
         var cell =  UITableViewCell()
      
         if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
             cell = reusedCell
         } else {
+            print("[cell] UITableViewCell()n)")
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
         
@@ -139,19 +136,15 @@ extension CreateScheduleViewController: UITableViewDataSource {
 extension CreateScheduleViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("[Schedule] heightForRowAt indexPath = \(indexPath)")
         return 75
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         print("didSelectRowAt indexPath = \(indexPath)")
-        
-        //presentCreateScheduleViewController()
-    }
-    
-    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        print("accessoryButtonTappedForRowWith indexPath = \(indexPath)")
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    }
+//    
+//    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+//       
+//    }
 
 }
 
