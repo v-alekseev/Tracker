@@ -21,8 +21,7 @@ extension TrackersViewController: UICollectionViewDataSource {
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("[cell] cellForItemAt indexPath.row =\(indexPath.row)  indexPath.secton =\(indexPath.section)")
-        
+   
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? TrackerCollectionViewCell
         let tracker =  visibleTrackers[indexPath.row] //   trackers[indexPath.row]
         cell?.trackersViewController = self

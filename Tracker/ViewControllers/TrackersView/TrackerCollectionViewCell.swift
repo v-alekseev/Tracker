@@ -61,9 +61,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
        
         if trackersVC.currentDate > Date() {
-            let alert = UIAlertController(title: "Привет!", message: "Отметить выполнение привычки в будущем никак нельзя)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Хорошо", style: .default))
-            trackersVC.present(alert, animated: true)
+            Alert.alertInformation(viewController: trackersVC, text: "Отметить выполнение привычки в будущем никак нельзя)")
             return
         }
         

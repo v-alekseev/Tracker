@@ -66,7 +66,7 @@ class TrackersViewController: UIViewController {
         
         self.view.backgroundColor = .ypWhiteDay
         navBar.topItem?.title = "Трекеры"
-        navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPMedium34]
+        navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
         
         // Добавляем +
@@ -98,6 +98,8 @@ class TrackersViewController: UIViewController {
         //            datePicker.translatesAutoresizingMaskIntoConstraints = false
         //            datePicker.widthAnchor.constraint(equalToConstant: 120).isActive = true
         //            datePicker.locale = Locale(identifier: "en")
+        
+        view.frame.size.height = 200
     }
 
     func showLogo(_ uiShow: Bool, whichLogo: LogoType = .noTrackers) {
