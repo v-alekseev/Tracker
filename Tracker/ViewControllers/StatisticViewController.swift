@@ -18,11 +18,13 @@ class StatisticViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
 
         let label = UILabel()
+        view.addSubview(label)
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "тестовый label"
         label.textColor = .ypBlackDay
         label.font = YFonts.fontYPMedium16
-        view.addSubview(label)
+
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         

@@ -5,13 +5,9 @@
 //  Created by Vitaly Alekseev on 09.08.2023.
 //
 
-//TrackersViewController+UISearchControllerDelegate
 import Foundation
-
-
 import UIKit
 
-//private let emojes = [ "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆", "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅", "🍄"]
 
 class TrackersViewController: UIViewController {
 
@@ -23,7 +19,6 @@ class TrackersViewController: UIViewController {
 
     // MARK: - Constants
     let cellId = "TrackerCell"
-   // var categ: [String] = []
 
     // MARK: - Public Properties
     var visibleTrackers: [Tracker] = []
@@ -31,8 +26,6 @@ class TrackersViewController: UIViewController {
     var collectionView: UICollectionView?
     
     private (set) var currentDate: Date = Date()
-    
-    // MARK: - IBOutlet
 
     // MARK: - Private Properties
   
@@ -40,18 +33,13 @@ class TrackersViewController: UIViewController {
     private var completedTrackers: [TrackerRecord] = []
     private var logoImageView: UIImageView?
     private var logoLabel: UILabel?
-
-    
     private var datePicker: UIDatePicker?
-
-    // MARK: - Initializers
 
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
-        
         logoImageView = addDefaultImageView()
         logoLabel = addDefaultLabel()
         collectionView = addTrackersCollectionsView()
@@ -292,9 +280,7 @@ class TrackersViewController: UIViewController {
         newIds.append(trackerID)
         categories.append(TrackerCategory(trackerIDs: newIds, categoryName: name))
     }
-    
 
-    
     private func addTrackersCollectionsView() -> UICollectionView? {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -303,15 +289,10 @@ class TrackersViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         collectionView.allowsMultipleSelection = false
-//        // регистрациия класса ячейки коллекции  // TrackerCollectionViewCell
         collectionView.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        // регистрируем header
         collectionView.register(SupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true;
         collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true;
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
@@ -330,7 +311,6 @@ class TrackersViewController: UIViewController {
         return noTrackersImageView
     }
 
-    
     private func addDefaultLabel() ->  UILabel? {
         guard let noTrackersImageView = logoImageView else { return nil }
         
@@ -343,5 +323,4 @@ class TrackersViewController: UIViewController {
         noTrackersLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         return noTrackersLabel
     }
-
 }

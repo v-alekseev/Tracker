@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 final class CreateTrackerViewController: UIViewController {
-    
-    // MARK: - Types
 
     // MARK: - Constants
     let tmpColors = [UIColor.ypColorselection1,
@@ -37,8 +35,6 @@ final class CreateTrackerViewController: UIViewController {
     var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
     var trackersViewController: TrackersViewController?
 
-    // MARK: - IBOutlet
-
     // MARK: - Private Properties
     private var label: UITextField?
     private var labelView: UIView?
@@ -46,11 +42,7 @@ final class CreateTrackerViewController: UIViewController {
     private var createButton: UIButton?
     private var tableView: UITableView?
     private var tableItems = ["Категория", "Расписание"]
-    
     private var scheduleDays = ScheduleDays()
-    
-
-    // MARK: - Initializers
 
     // MARK: - UIViewController(*)
     
@@ -69,8 +61,6 @@ final class CreateTrackerViewController: UIViewController {
         tableView = addCategoryAndSchedule()
         cancelButton = addCancelButton()
         createButton = addCreateButton()
-        
-
     }
 
     // MARK: - Public Methods
@@ -127,16 +117,19 @@ final class CreateTrackerViewController: UIViewController {
     private func addTrackerNameFied() -> (UIView?, UITextField?) {
         
         let textBackgroundView = UIView()
+        view.addSubview(textBackgroundView)
+        
         textBackgroundView.backgroundColor = .ypBackground
         textBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         textBackgroundView.layer.cornerRadius = 16
-        view.addSubview(textBackgroundView)
         textBackgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24).isActive = true
         textBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         textBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         textBackgroundView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         let label = UITextField()
+        textBackgroundView.addSubview(label)
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.placeholder = "Введите название трекера"
         label.clearsOnBeginEditing = true
@@ -145,7 +138,6 @@ final class CreateTrackerViewController: UIViewController {
         label.textColor = .ypBlackDay
         label.font = YFonts.fontYPMedium17
         label.backgroundColor = .clear
-        textBackgroundView.addSubview(label)
         label.topAnchor.constraint(equalTo: textBackgroundView.topAnchor, constant: 27).isActive = true
         label.leadingAnchor.constraint(equalTo: textBackgroundView.leadingAnchor, constant: 16).isActive = true
         label.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -16).isActive = true
@@ -154,17 +146,18 @@ final class CreateTrackerViewController: UIViewController {
     }
 
     private func addCategoryAndSchedule()-> UITableView? {
-        let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         guard let labelView = labelView else { return nil }
+        
+        let table = UITableView()
+        view.addSubview(table)
+        
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.dataSource = self
         table.delegate = self
         table.layer.cornerRadius = 16
         table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16);
         table.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(table)
-        
+    
         table.topAnchor.constraint(equalTo: labelView.bottomAnchor, constant: 27).isActive = true
         table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
@@ -176,6 +169,8 @@ final class CreateTrackerViewController: UIViewController {
     private func addCancelButton() -> UIButton? {
         
         let cancelButton = UIButton()
+        view.addSubview(cancelButton)
+        
         cancelButton.setTitle("Отменить", for: .normal)
         cancelButton.setTitleColor(.ypRed, for: .normal)
         cancelButton.titleLabel?.font = YFonts.fontYPMedium16
@@ -184,10 +179,8 @@ final class CreateTrackerViewController: UIViewController {
         cancelButton.layer.borderWidth = 1
         cancelButton.backgroundColor = .ypWhiteDay
         cancelButton.addTarget(self, action: #selector(self.cancelButtonPressed), for: .touchUpInside)
-
         cancelButton.translatesAutoresizingMaskIntoConstraints =  false
 
-        view.addSubview(cancelButton)
         cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20).isActive = true
         cancelButton.widthAnchor.constraint(equalToConstant: 166).isActive = true
@@ -201,20 +194,19 @@ final class CreateTrackerViewController: UIViewController {
         guard let cancelButton = cancelButton else { return nil}
         
         let createButton = UIButton()
+        view.addSubview(createButton)
+        
         createButton.setTitle("Создать", for: .normal)
         createButton.setTitleColor(.ypWhiteDay, for: .normal)
         createButton.titleLabel?.font = YFonts.fontYPMedium16
         createButton.layer.cornerRadius = 19
         createButton.backgroundColor = .ypGray
         createButton.addTarget(self, action: #selector(self.createButtonPressed), for: .touchUpInside)
-
         createButton.translatesAutoresizingMaskIntoConstraints =  false
 
-        view.addSubview(createButton)
         createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         createButton.leadingAnchor.constraint(equalTo: cancelButton.trailingAnchor,constant: 8).isActive = true
         createButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20).isActive = true
-        //createButton.widthAnchor.constraint(equalToConstant: 161).isActive = true
         createButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor).isActive = true
         
         return createButton
@@ -231,7 +223,6 @@ final class CreateTrackerViewController: UIViewController {
         cellText.append(secondCellLineAttrString)
         
         cell.textLabel?.attributedText = cellText
-        
         cell.textLabel?.font = YFonts.fontYPMedium17
         cell.textLabel?.numberOfLines = 2
         cell.backgroundColor = .ypBackground
