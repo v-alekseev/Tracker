@@ -10,7 +10,7 @@ import UIKit
 
 // TrackerCategory  - содержит имя категории и список трекеров с этой категориией
 struct TrackerCategory {
-    let trackerIDs: [UUID]     // массив ID трекеров у которых эта директория
+    let trackerIDs: [UUID]     // массив ID трекеров у которых эта категория
     let categoryName: String    // название категории
 }
 

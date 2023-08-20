@@ -9,25 +9,16 @@ import Foundation
 import UIKit
 
 class TrackerCollectionViewCell: UICollectionViewCell {
-
     
-    // MARK: - Types
-    //
-    // MARK: - Constants
-    //
     // MARK: - Public Properties
     var trackersViewController: TrackersViewController?
     var trackerID: UUID?
-    
     var titleLabel: UILabel?
     var daysCompletedLabel: UILabel?
     var completeButton: UIButton?
     var emojiLabel: UILabel?
     var cardTrackerView: UIView?
-    
-    //
-    // MARK: - IBOutlet
-    //
+
     // MARK: - Private Properties
     private var isPressed = false
     private var quantityManagementView: UIView?
@@ -47,13 +38,8 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Public Methods
-    //
     
-
     // MARK: - IBAction
-    
     // нажали кнопку +
     @IBAction private func completButtonTapped(_ sender: UIButton) {
         guard let trackersVC = trackersViewController,
@@ -153,12 +139,10 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     private func addDaysCompletedLabel() -> UILabel? {
-        
         guard let quantityManagementView = quantityManagementView else { return nil }
         
         let daysCompletedLabel = UILabel()
         daysCompletedLabel.backgroundColor = .clear
-        //daysCompletedLabel.text = "1 день"
         daysCompletedLabel.font = YFonts.fontYPMedium12
         daysCompletedLabel.textColor = .ypBlackDay
         contentView.addSubview(daysCompletedLabel)
@@ -174,10 +158,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         guard let quantityManagementView = quantityManagementView else { return nil }
         
         let completeButton = UIButton()
-        //completeButton.tintColor = UIColor(named: "Color selection 5")!
-        //completeButton.setImage(UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate), for: .normal)
         completeButton.addTarget(self, action: #selector(self.completButtonTapped), for: .touchUpInside)
-    
         contentView.addSubview(completeButton)
         completeButton.translatesAutoresizingMaskIntoConstraints = false
         completeButton.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 8).isActive = true

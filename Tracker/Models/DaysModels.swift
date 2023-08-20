@@ -12,12 +12,11 @@ enum DaysOfWeek: Int {
 }
 
 struct  Day {
-    var dayName: String
+    let dayName: String
     var dayValue: Bool
-    var shortDatName: String
-    var dayOfWeek: DaysOfWeek
+    let shortDatName: String
+    let dayOfWeek: DaysOfWeek
 }
-
 
 class ScheduleDays {
     
@@ -70,9 +69,8 @@ class ScheduleDays {
         }
         
         if description.isEmpty == false {
-            // удаляем последние символы ", "
-            description.removeLast()
-            description.removeLast()
+            // удаляем последние 2 символа ", "
+            description.removeLast(2)
         }
         
         return description

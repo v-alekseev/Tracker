@@ -9,24 +9,17 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    //static var ypBlack: UIColor { UIColor(named: "YP Black") ?? UIColor.black }
-    //static var ypRed: UIColor { UIColor(named: "YP Red") ?? UIColor.red }
-    //static var ypBackground: UIColor { UIColor(named: "YP Background") ?? UIColor.darkGray }
-    
-    
     static var ypWhite: UIColor { UIColor(named: "Y.White") ?? UIColor.darkGray }
     static var ypGray: UIColor { UIColor(named: "Y.Gray") ?? UIColor.darkGray }
     static var ypRed: UIColor { UIColor(named: "Y.Red") ?? UIColor.red }
     static var ypBackground: UIColor { UIColor(named: "Y.BackgroundDay") ?? UIColor.darkGray }
     static var ypBlackDay: UIColor { UIColor(named: "Y.BlackDay") ?? UIColor.black }
-    
     static var ypWhiteDay: UIColor { UIColor(named: "Y.WhiteDay") ?? UIColor.white }
     static var ypBlue: UIColor { UIColor(named: "Y.Blue") ?? UIColor.blue }
     static var ypWhite30: UIColor { UIColor(named: "Y.White30") ?? UIColor.white }
     static var ypLightGray: UIColor { UIColor(named: "Y.LightGray") ?? UIColor.lightGray }
-    
-    
-    //Color selection 5
+
+    //Color selection
     static var ypColorselection1: UIColor { UIColor(named: "Color selection 1") ?? UIColor.ypWhiteDay }
     static var ypColorselection2: UIColor { UIColor(named: "Color selection 2") ?? UIColor.ypWhiteDay }
     static var ypColorselection3: UIColor { UIColor(named: "Color selection 3") ?? UIColor.ypWhiteDay }
@@ -45,6 +38,4 @@ extension UIColor {
     static var ypColorselection16: UIColor { UIColor(named: "Color selection 16") ?? UIColor.ypWhiteDay }
     static var ypColorselection17: UIColor { UIColor(named: "Color selection 17") ?? UIColor.ypWhiteDay }
     static var ypColorselection18: UIColor { UIColor(named: "Color selection 18") ?? UIColor.ypWhiteDay }
- 
-    //Color selection 2
 }
