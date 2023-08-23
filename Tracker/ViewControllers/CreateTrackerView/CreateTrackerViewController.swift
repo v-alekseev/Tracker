@@ -68,6 +68,7 @@ final class CreateTrackerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         view.backgroundColor = .ypWhiteDay
         
@@ -109,7 +110,7 @@ final class CreateTrackerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         guard let emojiCollectionsView = emojiCollectionsView,
               let colorCollectionsView = colorCollectionsView else { return }
-        print("viewWillAppear")
+        //print("viewWillAppear")
         selectFirstItemInCollection(collection: emojiCollectionsView)
         selectFirstItemInCollection(collection: colorCollectionsView)
     }
@@ -143,6 +144,7 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @IBAction private func createButtonPressed(_ sender: UIButton) {
+        print("CreateTrackerViewController createButtonPressed")
         
         guard let label = label,
               let trackerName = label.text,
@@ -166,7 +168,7 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays())
         
         // TODO снять заглушку(testCategory) с категорий в 15м спринте
-        trackersViewController?.addTracker(tracker: newTracker, trackerCategory: testCategory)
+        trackersViewController?.addTracker(tracker: newTracker, trackerCategoryName: testCategory)
         trackersViewController?.dismiss(animated: true)
         
         return

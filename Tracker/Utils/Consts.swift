@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 
+let trackerCoreDataModel = "TrackerCoreDataModel"
+
 let barControllerTrackers = "Трекеры"
 let barControllerStatisic = "Статистика"
 

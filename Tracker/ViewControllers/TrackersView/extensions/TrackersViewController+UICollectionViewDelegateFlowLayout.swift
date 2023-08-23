@@ -30,7 +30,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     // устанавливаем категорию для ячейки
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    
         var id: String
         switch kind {
         case UICollectionView.elementKindSectionHeader:
@@ -38,24 +37,35 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         case UICollectionView.elementKindSectionFooter:
             id = "footer"
         default:
-            id = ""                                         
+            id = ""
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! SupplementaryView
+        
         view.titleLabel.text = getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
         return view
     }
     
-    // устанавливаем размер ходера в секции
+    // устанавливаем размер хидера в секции
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(collectionView,
-                                             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
-                                             at: indexPath)
         
+        let indexPath = IndexPath(row: 0, section: section)
+        
+        
+        //FIXIT  UICollectionView internal inconsistency: attempting to apply nil layout attributes to view.
+        let headerView = SupplementaryView()
+        var categoryName = ""
+        if(visibleTrackers.count != 0){
+            categoryName = getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
+        }
+        
+        headerView.titleLabel.text = categoryName
+        
+//        let headerView = self.collectionView(collectionView,viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+//
         return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width,
                                                          height: UIView.layoutFittingExpandedSize.height),
-                                                         withHorizontalFittingPriority: .required,
-                                                         verticalFittingPriority: .fittingSizeLevel)
+                                                  withHorizontalFittingPriority: .required,
+                                                  verticalFittingPriority: .fittingSizeLevel)
     }
 }

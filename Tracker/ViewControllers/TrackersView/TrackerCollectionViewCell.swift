@@ -55,7 +55,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         let isCompleted = trackersVC.isTrackerCompleted(trackerID: trackerID, date: trackersVC.currentDate)
         if isCompleted == false {
             // записываем в TrackerRecord
-            trackersVC.addTrackerRecord(trackerID: trackerID)
+            if trackersVC.addTrackerRecord(trackerID: trackerID) == false { return }
             //меняем картинку на галочку
             sender.setImage(imageTrackerCellCompleted, for: .normal)
         } else {

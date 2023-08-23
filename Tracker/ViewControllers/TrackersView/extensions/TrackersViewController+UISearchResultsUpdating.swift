@@ -13,16 +13,17 @@ extension TrackersViewController : UISearchResultsUpdating {
         
         guard let searchText = searchController.searchBar.text,
               let collectionView = self.collectionView  else { return }
-        print("searchController text = \(searchText)")
         
         if(searchText == "") {
             showLogo(false)
-            visibleTrackers = createVisibleTrackers(trackers: trackers)
+            visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
             collectionView.reloadData()
             return
         }
     
-        visibleTrackers = createVisibleTrackers(trackers: searchTrackers(text: searchText))
+        // visibleTrackers = createVisibleTrackers(trackers: searchTrackers(text: searchText))
+        visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackersByTextInName(text: searchText))
+        
         if visibleTrackers.count == 0 {
             // отобразить заглушку
             showLogo(true, whichLogo: .searchNothing)

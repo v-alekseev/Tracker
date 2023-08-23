@@ -30,6 +30,25 @@ class ScheduleDays {
         Day(dayName: "Воскресенье", dayValue: false, shortDatName: "Вс", dayOfWeek: DaysOfWeek.Sunday)
     ]
     
+
+    
+    init() {
+    }
+    
+    init(activeDays: String) {
+        setActiveDaysOfWeek(daysOfWeek: activeDays)
+    }
+
+    // daysOfWeek = "1,2,3"
+    func setActiveDaysOfWeek(daysOfWeek: String) {
+        let days = daysOfWeek.split(separator: ",").map {DaysOfWeek(rawValue: Int($0)!)}
+        for day in days {
+            let activeDayIndex = weekDays.firstIndex {$0.dayOfWeek == day}
+            guard let activeDayIndex = activeDayIndex else { continue }
+            weekDays[activeDayIndex].dayValue = true
+        }
+    }
+    
     // если это нерегулярное событие (все дни неактивны), возвращаем true  Кстати это = привычка без рассписания
     func isUnregularEvent() -> Bool {
         for day in weekDays {
@@ -82,6 +101,15 @@ class ScheduleDays {
         
         return  desription == "" ? desription : ("\n" + desription)
     }
+    
+    // TODO: в tracker.trackerScheduleDays передавать класс ScheduleDays и в него уже перенести все конвертации
+    // конвертер из массива tracker.trackerScheduleDays [1,2,3] в строку daysOfWeek  "1,2,3"
+    static func getActiveDaysString(days: [Day] ) -> String {
+        let activeDays = days.filter {$0.dayValue == true}
+        let activeDayNums:[String] = activeDays.map { String($0.dayOfWeek.rawValue) }
+        return activeDayNums.joined(separator: ",")
+    }
+    
 }
 
 
