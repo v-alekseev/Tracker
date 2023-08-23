@@ -38,25 +38,26 @@ struct Tracker {
     let trackerName: String
     let trackerEmodji: String
     let trackerColor: UIColor
-    let trackerScheduleDays: [Day]
+    let trackerActiveDays: [Int]
     
     init(tracker: TrackerCoreData) {
         trackerID = tracker.trackerID!
         trackerName = tracker.trackerName!
         trackerEmodji = tracker.trackerEmodji!
         trackerColor = UIColorMarshalling(colorHex: tracker.trackerColorHEX!).color!
-        trackerScheduleDays = ScheduleDays(activeDays: tracker.daysOfWeek!).weekDays
+        trackerActiveDays = DaysConverter.getActiveDaysInt(days: tracker.daysOfWeek!)
     }
     
     init(trackerID: UUID,
          trackerName: String,
          trackerEmodji: String,
          trackerColor: UIColor,
-         trackerScheduleDays: [Day]) {
+         trackerScheduleDays: [Int]) {
         self.trackerID = trackerID
         self.trackerName = trackerName
         self.trackerEmodji = trackerEmodji
         self.trackerColor = trackerColor
-        self.trackerScheduleDays = trackerScheduleDays
+        self.trackerActiveDays = trackerScheduleDays
     }
+    
 }

@@ -10,16 +10,16 @@ import UIKit
 
 
 class TrackersViewController: UIViewController {
-
+    
     // MARK: - Types
     enum LogoType {
         case searchNothing
         case noTrackers
     }
-
+    
     // MARK: - Constants
     let cellId = "TrackerCell"
-
+    
     // MARK: - Public Properties
     var visibleTrackers: [Tracker] = []
     //var trackers: [Tracker] = []
@@ -29,31 +29,31 @@ class TrackersViewController: UIViewController {
     var trackerCategoryStore = TrackerCategoryStore()
     
     private (set) var currentDate: Date = Date()
-
+    
     // MARK: - Private Properties
-  
-   // private var categories: [TrackerCategory] = []
+    
+    // private var categories: [TrackerCategory] = []
     //private var completedTrackers: [TrackerRecord] = []
     private var logoImageView: UIImageView?
     private var logoLabel: UILabel?
     private var datePicker: UIDatePicker?
-
+    
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         trackerStore.delegate = self
-
+        
         setupNavigationBar()
         logoImageView = addDefaultImageView()
         logoLabel = addDefaultLabel()
         collectionView = addTrackersCollectionsView()
         
         currentDate = getCurrentDate(incomingDate: Date())
-        visibleTrackers = createVisibleTrackers(trackers: trackerStore.getTrackers())
+        visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         
         showLogo(visibleTrackers.count == 0)
     }
-
+    
     // MARK: - Public Methods
     
     private func setupNavigationBar() {
@@ -68,7 +68,7 @@ class TrackersViewController: UIViewController {
         let leftButton = UIBarButtonItem(image: UIImage(named: "AddTracker"), style: .plain, target: self, action: #selector(addNewTrackerButtonTap))
         leftButton.tintColor = .black
         navBar.topItem?.setLeftBarButton(leftButton, animated: false)
-
+        
         // добавляем строку поиска
         let seachController = UISearchController()  //
         seachController.hidesNavigationBarDuringPresentation = false
@@ -86,7 +86,7 @@ class TrackersViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(self.didChangeDate), for: .valueChanged)
         let rightButton = UIBarButtonItem(customView: datePicker)
         navBar.topItem?.setRightBarButton(rightButton, animated: false)
-
+        
         // TODO выводит дату не так как в ТЗ. В паке есть тред про это.,но решения нет
         //            datePicker.translatesAutoresizingMaskIntoConstraints = false
         //            datePicker.widthAnchor.constraint(equalToConstant: 120).isActive = true
@@ -94,7 +94,7 @@ class TrackersViewController: UIViewController {
         
         view.frame.size.height = 200
     }
-
+    
     func showLogo(_ uiShow: Bool, whichLogo: LogoType = .noTrackers) {
         logoImageView?.isHidden = !uiShow
         logoImageView?.image = (whichLogo == .noTrackers) ? UIImage(named: "NoTrackers") : UIImage(named: "SearchError")
@@ -122,16 +122,16 @@ class TrackersViewController: UIViewController {
         var visibleTrackers: [Tracker] = []
         
         guard let calendar = NSCalendar(identifier: .ISO8601) else { return visibleTrackers }
-        let currentDayOfWeek =  DaysOfWeek(rawValue: calendar.component(.weekday, from: currentDate))
+        let currentDay = calendar.component(.weekday, from: currentDate)
+        let currentDayOfWeek =  DaysOfWeek(rawValue: currentDay)
         
         for tracker in trackers {
-            if tracker.trackerScheduleDays.filter({$0.dayValue == true}).count == 0 { // расписания нет, показываем каждый день
+            if tracker.trackerActiveDays.count == 0 { // расписания нет, показываем каждый день
                 visibleTrackers.append(tracker)
             } else {
-                for day in tracker.trackerScheduleDays {
-                    if day.dayOfWeek == currentDayOfWeek && day.dayValue == true {
-                        visibleTrackers.append(tracker)
-                    }
+                let a = tracker.trackerActiveDays.filter { DaysOfWeek(rawValue: $0 ) == currentDayOfWeek }
+                if a.count > 0 { // один из дней совпас с сегодняшним днкм недели
+                    visibleTrackers.append(tracker)
                 }
             }
         }
@@ -146,7 +146,7 @@ class TrackersViewController: UIViewController {
         }
         return categories.count
     }
-
+    
     func addTrackerRecord(trackerID: UUID) -> Bool {
         
         return trackerRecordStore.addRecord(TrackerRecord(trackerID: trackerID, date: currentDate))
@@ -162,7 +162,7 @@ class TrackersViewController: UIViewController {
         // Обрабатываем создание категории category
         // TODO: это блок кода будет переписан в 16 спринте когда будут добавлена работа с категориями
         if linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) == false { return }
-
+        
         if trackerStore.addTracker(tracker) == false { return }
         print("TrackersViewController final")
     }
@@ -174,42 +174,44 @@ class TrackersViewController: UIViewController {
     
     // возвращает индекс массива и название категории по  ID трекера
     func getTrackerCategoryName(trackerID: UUID) -> String {
-        return testCategory
+        
         // TODO: 16 спринт. Проблема с поддержкой множественных категорий
-//        var trackerCategoryName: String = ""
-//
-//        for category in categories {
-//            for uuid in category.trackerIDs {
-//                if(uuid == trackerID) {
-//                    trackerCategoryName = category.categoryName
-//                    break
-//                }
-//            }
-//        }
-//
-//        return trackerCategoryName
+        //        var trackerCategoryName: String = ""
+        //
+        //        for category in categories {
+        //            for uuid in category.trackerIDs {
+        //                if(uuid == trackerID) {
+        //                    trackerCategoryName = category.categoryName
+        //                    break
+        //                }
+        //            }
+        //        }
+        //
+        //        return trackerCategoryName
+        return testCategory
     }
-
-
+    
+    
+    
     // MARK: - IBAction
     // нажали кнопку добавить трекер
     @objc
     private func addNewTrackerButtonTap() {
         let viewControllerToPresent = SelectTrackerViewController()
         viewControllerToPresent.trackersViewController = self
-       
+        
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
         navigationController.modalPresentationStyle = .pageSheet
         present(navigationController, animated: true, completion: nil)
-
+        
     }
-
+    
     func getCurrentDate(incomingDate: Date) -> Date{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: incomingDate)
         print(dateString)
-
+        
         return dateFormatter.date(from: dateString)!
     }
     
@@ -218,9 +220,9 @@ class TrackersViewController: UIViewController {
         print("didChangeDate")
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
-
+        
         currentDate = getCurrentDate(incomingDate: datePicker.date as Date)
-
+        
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         if visibleTrackers.count > 0 {
             showLogo(false)
@@ -230,22 +232,8 @@ class TrackersViewController: UIViewController {
             showLogo(true)
         }
     }
-
+    
     // MARK: - Private Methods
-    
-    // возвращает индекс массива с категорией
-//    private func getCategoryIndex(categoryName: String) -> Int? {
-//        var trackerCategoryIndex: Int?
-//        for (index, category) in categories.enumerated() {
-//            if(categoryName == category.categoryName) {
-//                trackerCategoryIndex = index
-//                break
-//                }
-//            }
-//
-//        return trackerCategoryIndex
-//    }
-    
     private func linkTrackerToCategory(trackerID: UUID, categoryName: String) -> Bool {
         var newIds: [UUID] = []
         
@@ -262,9 +250,9 @@ class TrackersViewController: UIViewController {
         
         // вызываем Update
         return trackerCategoryStore.updateCategory(TrackerCategory(trackerIDs: newIds, categoryName: categoryName))
-
+        
     }
-
+    
     private func addTrackersCollectionsView() -> UICollectionView? {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -294,7 +282,7 @@ class TrackersViewController: UIViewController {
         noTrackersImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         return noTrackersImageView
     }
-
+    
     private func addDefaultLabel() ->  UILabel? {
         guard let noTrackersImageView = logoImageView else { return nil }
         

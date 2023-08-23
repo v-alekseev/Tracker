@@ -144,8 +144,6 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @IBAction private func createButtonPressed(_ sender: UIButton) {
-        print("CreateTrackerViewController createButtonPressed")
-        
         guard let label = label,
               let trackerName = label.text,
               trackerName != "" else {
@@ -167,7 +165,7 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerColor: selectedColor,
                                  trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays())
         
-        // TODO снять заглушку(testCategory) с категорий в 15м спринте
+        //TODO: снять заглушку(testCategory) с категорий в 16м спринте
         trackersViewController?.addTracker(tracker: newTracker, trackerCategoryName: testCategory)
         trackersViewController?.dismiss(animated: true)
         

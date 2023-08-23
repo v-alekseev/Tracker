@@ -95,19 +95,11 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func addTracker(_ record: Tracker) -> Bool {
         let trackerCoreData = TrackerCoreData(context: context)
-        // fillTrackerCoreData(trackerCoreData: trackerCoreData, tracker: record)
+
         trackerCoreData.set(tracker: record)
         do { try context.save() } catch { return false }
         return true
     }
-    
-    //    private func fillTrackerCoreData(trackerCoreData: TrackerCoreData, tracker: Tracker) {
-    //        trackerCoreData.trackerID = tracker.trackerID
-    //        trackerCoreData.trackerEmodji = tracker.trackerEmodji
-    //        trackerCoreData.trackerName = tracker.trackerName
-    //        trackerCoreData.trackerColorHEX = UIColorMarshalling(color: tracker.trackerColor).colorHex
-    //        trackerCoreData.daysOfWeek = TrackerStore.getActiveDaysString(days: tracker.trackerScheduleDays) // [1,2,3] в строку daysOfWeek  "1,2,3"
-    //    }
     
     func deleteTrackerByIndexPath(at indexPath: IndexPath) throws {
         //TODO:
