@@ -67,8 +67,6 @@ final class TrackerStore: NSObject {
     }
 }
 
-
-
 // TODO: добавить в DataProviderProtocol<Tracker>
 extension TrackerStore: TrackerStoreDataProviderProtocol {
     
@@ -81,17 +79,13 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         return fetchedResultsController.fetchedObjects!.map { Tracker(tracker: $0)}
     }
     
-    var numberOfSections: Int {
-        fetchedResultsController.sections?.count ?? 0
-    }
-    
-    func numberOfRowsInSection(_ section: Int) -> Int {
-        fetchedResultsController.sections?[section].numberOfObjects ?? 0
-    }
-    
-    //    func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
-    //        return Tracker(tracker: fetchedResultsController.object(at: indexPath))
-    //    }
+//    var numberOfSections: Int {
+//        fetchedResultsController.sections?.count ?? 0
+//    }
+//    
+//    func numberOfRowsInSection(_ section: Int) -> Int {
+//        fetchedResultsController.sections?[section].numberOfObjects ?? 0
+//    }
     
     func addTracker(_ record: Tracker) -> Bool {
         let trackerCoreData = TrackerCoreData(context: context)
@@ -100,17 +94,12 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         do { try context.save() } catch { return false }
         return true
     }
-    
-    func deleteTrackerByIndexPath(at indexPath: IndexPath) throws {
-        //TODO:
-    }
 }
-
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackerStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("TrackerStore controllerWillChangeContent")
+
         insertedIndexes = IndexSet()
         deletedIndexes = IndexSet()
         updatedIndexes = IndexSet()
@@ -118,7 +107,7 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("TrackerStore controllerDidChangeContent")
+        
         delegate?.didUpdate(
             updateIndexes: TrackerStoreUpdateIndexes(
                 insertedIndexes: insertedIndexes!,
@@ -138,7 +127,6 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
                      at indexPath: IndexPath?,
                      for type: NSFetchedResultsChangeType,
                      newIndexPath: IndexPath?) {
-        //print("TrackerStore controller() newIndexPath = \(newIndexPath), type = \(type), indexPath = \(indexPath)")
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { fatalError() }

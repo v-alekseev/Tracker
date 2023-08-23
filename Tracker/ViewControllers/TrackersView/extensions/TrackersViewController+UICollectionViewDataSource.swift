@@ -12,12 +12,10 @@ import UIKit
 extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("TrackersViewController numberOfItemsInSection: \(visibleTrackers.count )")
-        return visibleTrackers.count //trackers.count
+        return visibleTrackers.count 
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("TrackersViewController cellForItemAt: \(indexPath)")
    
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? TrackerCollectionViewCell
         let tracker =  visibleTrackers[indexPath.row] //   trackers[indexPath.row]

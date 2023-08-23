@@ -36,11 +36,11 @@ extension EmojiViewControllerDelegate: UICollectionViewDataSource {
 
 extension EmojiViewControllerDelegate: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print("didSelectItemAt \(indexPath)")
         
         let cell = collectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell
         cell?.backgroundColor = .ypLightGray  
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell
         cell?.backgroundColor = .clear

@@ -22,8 +22,8 @@ class TrackersViewController: UIViewController {
     
     // MARK: - Public Properties
     var visibleTrackers: [Tracker] = []
-    //var trackers: [Tracker] = []
     var collectionView: UICollectionView?
+    
     var trackerStore = TrackerStore()
     var trackerRecordStore = TrackerRecordStore()
     var trackerCategoryStore = TrackerCategoryStore()
@@ -31,9 +31,6 @@ class TrackersViewController: UIViewController {
     private (set) var currentDate: Date = Date()
     
     // MARK: - Private Properties
-    
-    // private var categories: [TrackerCategory] = []
-    //private var completedTrackers: [TrackerRecord] = []
     private var logoImageView: UIImageView?
     private var logoLabel: UILabel?
     private var datePicker: UIDatePicker?
@@ -148,7 +145,6 @@ class TrackersViewController: UIViewController {
     }
     
     func addTrackerRecord(trackerID: UUID) -> Bool {
-        
         return trackerRecordStore.addRecord(TrackerRecord(trackerID: trackerID, date: currentDate))
     }
     
@@ -158,13 +154,11 @@ class TrackersViewController: UIViewController {
     
     // Обработка нажатия на кнопку Сохранить на форме создания трекера
     func addTracker(tracker: Tracker, trackerCategoryName: String) {
-        print("TrackersViewController addTracker tracker = \(tracker), trackerCategory = \(trackerCategoryName)")
         // Обрабатываем создание категории category
         // TODO: это блок кода будет переписан в 16 спринте когда будут добавлена работа с категориями
         if linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) == false { return }
         
         if trackerStore.addTracker(tracker) == false { return }
-        print("TrackersViewController final")
     }
     
     // сколько дней выполнен трекер
@@ -217,7 +211,6 @@ class TrackersViewController: UIViewController {
     
     // выбрали новую дату
     @IBAction private func didChangeDate(_ sender: UIButton) {
-        print("didChangeDate")
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
         
@@ -239,7 +232,6 @@ class TrackersViewController: UIViewController {
         
         // Получаем TrackerCategory
         guard let trackerCategoryRecord = trackerCategoryStore.getCategory(categoryName) else  {
-            print("linkTrackerToCategory I have to add category \(categoryName)")
             newIds.append(trackerID)
             return trackerCategoryStore.addCategory(TrackerCategory(trackerIDs: newIds, categoryName: categoryName))
         }

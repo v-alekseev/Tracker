@@ -31,22 +31,17 @@ final class TrackerCategoryStore: NSObject {
 extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     
     func getTrackerCategory(trackerID: UUID) -> String? {
-        print("getTrackerCategory trackerI = \(trackerID)")
+        var records: [TrackerCategoryCoreData] = []
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format:  "%K CONTAINS[n] %@",
-                                        #keyPath(TrackerCategoryCoreData.trackerIDs),
-                                        trackerID.uuidString)
+        request.predicate = NSPredicate(format:  "%K CONTAINS[n] %@", #keyPath(TrackerCategoryCoreData.trackerIDs), trackerID.uuidString)
         
-        var records: [TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
         
-        //print("getTrackerCategory category.first = \(records.first)")
         return records.first?.categoryName
     }
     
     func getCategoriesCount() -> Int {
-        print("getCategoriesCount")
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.resultType = .countResultType
         
@@ -56,23 +51,8 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         return countRecords
     }
     
-    private func getRecordObject(_ category: String) -> TrackerCategoryCoreData? {
-        print("TrackerCategoryStore getRecordObject")
-        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "%K == %@",
-                                        #keyPath(TrackerCategoryCoreData.categoryName),
-                                        category)
-        
-        var records:[TrackerCategoryCoreData] = []
-        do { records = try context.fetch(request) } catch { return nil }
-        //print("TrackerCategoryStore getRecordObject = \(records.first?.categoryName)")
-        return records.first
-    }
-    
     func updateCategory(_ category: TrackerCategory) -> Bool  {
-        print("addCategory \(category)")
-        guard let categoryObject = getRecordObject(category.categoryName) else { return false }
+        guard let categoryObject = getCategoryObject(category.categoryName) else { return false }
         
         categoryObject.trackerIDs = category.trackerIDsString
         do { try context.save() } catch { return false }
@@ -80,7 +60,6 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     }
     
     func addCategory(_ category: TrackerCategory) -> Bool {
-        print("addCategory \(category)")
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         
         trackerCategoryCoreData.categoryName = category.categoryName
@@ -91,9 +70,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     }
     
     func getCategory(_ category: String) -> TrackerCategory? {
-        
-        print("getCategory category = \(category)")
-        guard let categoryObject = getRecordObject(category) else { return nil}
+        guard let categoryObject = getCategoryObject(category) else { return nil}
         
         return TrackerCategory(
             trackerIDs: TrackerCategory.trackerIDsFromString(udids: (categoryObject.trackerIDs)!),
@@ -101,25 +78,32 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     }
     
     func getCategories() -> [TrackerCategory]? {
-        // getRecordObjects(record)
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
         
-        print("getCategory category.first = \(records)")
-        return records.map {TrackerCategory(
+        return records.map { TrackerCategory(
             trackerIDs: TrackerCategory.trackerIDsFromString(udids: ($0.trackerIDs)!),
-            categoryName: $0.categoryName!)}
+            categoryName: $0.categoryName!) }
     }
     
     func deleteCategory(_ categoryName: String) -> Bool {
-        print("deleteCategory \(categoryName)")
-        guard let categoryObject = getRecordObject(categoryName) else { return false}
+        guard let categoryObject = getCategoryObject(categoryName) else { return false}
         
         context.delete(categoryObject)
         return true
+    }
+    
+    private func getCategoryObject(_ category: String) -> TrackerCategoryCoreData? {
+        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.categoryName), category)
+        
+        var records:[TrackerCategoryCoreData] = []
+        do { records = try context.fetch(request) } catch { return nil }
+        return records.first
     }
     
     

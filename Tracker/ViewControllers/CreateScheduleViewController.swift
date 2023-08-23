@@ -103,7 +103,6 @@ extension CreateScheduleViewController: UITableViewDataSource {
         if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
             cell = reusedCell
         } else {
-            print("[cell] UITableViewCell()n)")
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
         

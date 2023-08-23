@@ -43,6 +43,7 @@ class ScheduleDays {
                 activeDays.append(day.dayOfWeek.rawValue)
             }
         }
+        
         return activeDays
     }
     

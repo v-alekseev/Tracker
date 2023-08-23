@@ -110,7 +110,7 @@ final class CreateTrackerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         guard let emojiCollectionsView = emojiCollectionsView,
               let colorCollectionsView = colorCollectionsView else { return }
-        //print("viewWillAppear")
+
         selectFirstItemInCollection(collection: emojiCollectionsView)
         selectFirstItemInCollection(collection: colorCollectionsView)
     }

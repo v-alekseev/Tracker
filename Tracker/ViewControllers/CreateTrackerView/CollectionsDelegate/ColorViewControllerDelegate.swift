@@ -28,7 +28,6 @@ extension ColorViewControllerDelegate: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createTrackerViewController.colorCellId, for: indexPath) as? ColorsCollectionViewCell
         cell?.colorView.backgroundColor = createTrackerViewController.cellColors[indexPath.row]
-        //cell?.titleLabel.text = createTrackerViewController.emojis[indexPath.row]
         return cell!
     }
     

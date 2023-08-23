@@ -15,4 +15,3 @@ final class Alert {
         viewController.present(alert, animated: true)
     }
 }
-//"Отметить выполнение привычки в будущем никак нельзя)"
