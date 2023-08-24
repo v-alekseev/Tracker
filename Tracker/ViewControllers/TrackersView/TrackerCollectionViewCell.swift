@@ -43,24 +43,25 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     // нажали кнопку +
     @IBAction private func completButtonTapped(_ sender: UIButton) {
         guard let trackersVC = trackersViewController,
-              let trackerID = trackerID else { return }
+              let trackerID = trackerID,
+              let currentDate = trackersVC.currentDate else { return }
         
        
-        if trackersVC.currentDate > Date() {
+        if currentDate > Date() {
             Alert.alertInformation(viewController: trackersVC, text: "Отметить выполнение привычки в будущем никак нельзя)")
             return
         }
         
         // проверка повторного нажатия
-        let isCompleted = trackersVC.isTrackerCompleted(trackerID: trackerID, date: trackersVC.currentDate)
+        let isCompleted = trackersVC.isTrackerCompleted(trackerID: trackerID, date: currentDate)
         if isCompleted == false {
             // записываем в TrackerRecord
-            if trackersVC.addTrackerRecord(trackerID: trackerID) == false { return }
+            guard trackersVC.addTrackerRecord(trackerID: trackerID) else { return }
             //меняем картинку на галочку
             sender.setImage(imageTrackerCellCompleted, for: .normal)
         } else {
             // удаляем запись в TrackerRecod
-            if trackersVC.removeTrackerRecord(trackerID: trackerID, date: trackersVC.currentDate) == false { return }
+            guard trackersVC.removeTrackerRecord(trackerID: trackerID, date: currentDate) else { return }
             //меняем картинку на галочку
             sender.setImage(imageTrackerCellPlus, for: .normal)
         }

@@ -23,17 +23,18 @@ class TrackersViewController: UIViewController {
     // MARK: - Public Properties
     var visibleTrackers: [Tracker] = []
     var collectionView: UICollectionView?
-    
-    var trackerStore = TrackerStore()
-    var trackerRecordStore = TrackerRecordStore()
-    var trackerCategoryStore = TrackerCategoryStore()
-    
-    private (set) var currentDate: Date = Date()
+
+    private (set) var currentDate: Date? = Date()
+    private (set) var trackerStore = TrackerStore()
+    private (set) var trackerRecordStore = TrackerRecordStore()
+    private (set) var trackerCategoryStore = TrackerCategoryStore()
     
     // MARK: - Private Properties
     private var logoImageView: UIImageView?
     private var logoLabel: UILabel?
     private var datePicker: UIDatePicker?
+    
+
     
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
@@ -111,6 +112,7 @@ class TrackersViewController: UIViewController {
     }
     
     func isTrackerCompleted(trackerID: UUID, date: Date) -> Bool {
+        guard let currentDate = currentDate else { return false }
         return trackerRecordStore.isRecordExist(TrackerRecord(trackerID: trackerID, date: currentDate))
     }
     
@@ -118,7 +120,9 @@ class TrackersViewController: UIViewController {
     func getVisibleTrackers(trackers: [Tracker]) -> [Tracker] {
         var visibleTrackers: [Tracker] = []
         
-        guard let calendar = NSCalendar(identifier: .ISO8601) else { return visibleTrackers }
+        guard let calendar = NSCalendar(identifier: .ISO8601),
+              let currentDate = currentDate else { return visibleTrackers }
+        
         let currentDay = calendar.component(.weekday, from: currentDate)
         let currentDayOfWeek =  DaysOfWeek(rawValue: currentDay)
         
@@ -145,10 +149,12 @@ class TrackersViewController: UIViewController {
     }
     
     func addTrackerRecord(trackerID: UUID) -> Bool {
+        guard let currentDate = currentDate else { return false }
         return trackerRecordStore.addRecord(TrackerRecord(trackerID: trackerID, date: currentDate))
     }
     
     func removeTrackerRecord(trackerID: UUID, date: Date) -> Bool {
+        guard let currentDate = currentDate else { return false }
         return trackerRecordStore.deleteRecord(TrackerRecord(trackerID: trackerID, date: currentDate))
     }
     
@@ -156,9 +162,15 @@ class TrackersViewController: UIViewController {
     func addTracker(tracker: Tracker, trackerCategoryName: String) {
         // Обрабатываем создание категории category
         // TODO: это блок кода будет переписан в 16 спринте когда будут добавлена работа с категориями
-        if linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) == false { return }
         
-        if trackerStore.addTracker(tracker) == false { return }
+        guard linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) else { return }
+              
+  //      if linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) == false { return }
+        print("[test] addTracker")
+        if trackerStore.addTracker(tracker) == false {
+            Alert.alertInformation(viewController: self, text: "Не получилось создать трекер. Давай попробуем еще раз.")
+        }
+        
     }
     
     // сколько дней выполнен трекер
@@ -200,13 +212,13 @@ class TrackersViewController: UIViewController {
         
     }
     
-    func getCurrentDate(incomingDate: Date) -> Date{
+    func getCurrentDate(incomingDate: Date) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: incomingDate)
-        print(dateString)
+        //print(dateString)
         
-        return dateFormatter.date(from: dateString)!
+        return dateFormatter.date(from: dateString)
     }
     
     // выбрали новую дату

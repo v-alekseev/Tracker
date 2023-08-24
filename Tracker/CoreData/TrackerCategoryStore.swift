@@ -70,23 +70,30 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     }
     
     func getCategory(_ category: String) -> TrackerCategory? {
-        guard let categoryObject = getCategoryObject(category) else { return nil}
+        guard let categoryObject = getCategoryObject(category),
+              let trackerIDs = categoryObject.trackerIDs,
+              let categoryName = categoryObject.categoryName else { return nil}
         
         return TrackerCategory(
-            trackerIDs: TrackerCategory.trackerIDsFromString(udids: (categoryObject.trackerIDs)!),
-            categoryName: (categoryObject.categoryName)!)
+            trackerIDs: TrackerCategory.trackerIDsFromString(udids: trackerIDs),
+            categoryName: categoryName)
     }
     
     func getCategories() -> [TrackerCategory]? {
+        print("[test] getCategories ")
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
         
-        return records.map { TrackerCategory(
-            trackerIDs: TrackerCategory.trackerIDsFromString(udids: ($0.trackerIDs)!),
-            categoryName: $0.categoryName!) }
+        return records.compactMap {
+            guard let trackerIDs = $0.trackerIDs,
+                  let categoryName = $0.categoryName else { return nil}
+            
+            return TrackerCategory(trackerIDs: TrackerCategory.trackerIDsFromString(udids: trackerIDs),
+                                categoryName: categoryName)
+        }
     }
     
     func deleteCategory(_ categoryName: String) -> Bool {

@@ -21,8 +21,9 @@ struct TrackerCategory {
     }
     
     static func trackerIDsFromString(udids: String) -> [UUID] {
+        print("[test] trackerIDsFromString")
         let udidStingArray = udids.split(separator: ",")
-        return udidStingArray.map { UUID(uuidString: String($0))! }
+        return udidStingArray.compactMap{ UUID(uuidString: String($0))}
     }
 }
 
@@ -40,7 +41,7 @@ struct Tracker {
     let trackerColor: UIColor
     let trackerActiveDays: [Int]
     
-    init(tracker: TrackerCoreData) {
+    init?(tracker: TrackerCoreData) {
         trackerID = tracker.trackerID!
         trackerName = tracker.trackerName!
         trackerEmodji = tracker.trackerEmodji!
@@ -61,3 +62,5 @@ struct Tracker {
     }
     
 }
+
+

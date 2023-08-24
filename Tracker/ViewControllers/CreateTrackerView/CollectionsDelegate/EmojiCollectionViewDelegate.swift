@@ -27,10 +27,10 @@ extension EmojiViewControllerDelegate: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let createTrackerViewController = createTrackerViewController else { return UICollectionViewCell()}
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createTrackerViewController.emojiCellId, for: indexPath) as? EmojiCollectionViewCell
+        let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: createTrackerViewController.emojiCellId, for: indexPath) as? EmojiCollectionViewCell) ?? EmojiCollectionViewCell()
        
-        cell?.titleLabel.text = createTrackerViewController.emojis[indexPath.row]
-        return cell!
+        cell.titleLabel.text = createTrackerViewController.emojis[indexPath.row]
+        return cell
     }
 }
 

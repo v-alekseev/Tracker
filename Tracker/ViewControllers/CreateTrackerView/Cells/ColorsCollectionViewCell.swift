@@ -11,10 +11,25 @@ import UIKit
 class ColorsCollectionViewCell: UICollectionViewCell {
     
     let colorView = UIView()
+    let backView = UIView()
     var isPressed = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        contentView.addSubview(backView)
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        backView.layer.masksToBounds = true
+        backView.layer.cornerRadius = 8
+        backView.backgroundColor = .ypWhite
+
+        
+        NSLayoutConstraint.activate([
+            backView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            backView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            backView.widthAnchor.constraint(equalToConstant: 52),
+            backView.heightAnchor.constraint(equalToConstant: 52)
+        ])
         
         contentView.addSubview(colorView)
         colorView.translatesAutoresizingMaskIntoConstraints = false

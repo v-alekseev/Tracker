@@ -72,21 +72,17 @@ final class TrackerStore: NSObject {
 extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackersByTextInName(text: String) -> [Tracker] {
-        let filtredTrackers = fetchedResultsController.fetchedObjects!.filter { ($0.trackerName?.contains(text))! }
-        return  filtredTrackers.map { Tracker(tracker: $0) }
+        print("[test] getTrackersByTextInName ")
+        guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
+        let filtredTrackers = trackers.filter { $0.trackerName?.contains(text) ?? false }
+        return  filtredTrackers.compactMap { Tracker(tracker: $0) }
     }
     
     func getTrackers() -> [Tracker] {
-        return fetchedResultsController.fetchedObjects!.map { Tracker(tracker: $0)}
+        print("[test] getTrackers ")
+        guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
+        return trackers.compactMap { Tracker(tracker: $0)}
     }
-    
-//    var numberOfSections: Int {
-//        fetchedResultsController.sections?.count ?? 0
-//    }
-//    
-//    func numberOfRowsInSection(_ section: Int) -> Int {
-//        fetchedResultsController.sections?[section].numberOfObjects ?? 0
-//    }
     
     func addTracker(_ record: Tracker) -> Bool {
         let trackerCoreData = TrackerCoreData(context: context)
