@@ -278,6 +278,7 @@ final class CreateTrackerViewController: UIViewController {
         
         colorCollectionView.dataSource = colorViewControllerDelegate
         colorCollectionView.delegate = colorViewControllerDelegate
+        colorCollectionView.isScrollEnabled = false
         
         colorCollectionView.allowsMultipleSelection = false
         colorCollectionView.register(ColorsCollectionViewCell.self, forCellWithReuseIdentifier: colorCellId)
