@@ -42,11 +42,15 @@ extension ColorViewControllerDelegate: UICollectionViewDelegate {
         cell?.layer.borderWidth = 3
         cell?.layer.cornerRadius = 8
         cell?.layer.borderColor = cell?.colorView.backgroundColor?.withAlphaComponent(0.3).cgColor
+        
+        self.createTrackerViewController?.changeFieldValueEvent()
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? ColorsCollectionViewCell
         //cell?.layer.borderWidth = 0
         cell?.layer.borderColor = UIColor.clear.cgColor
+        
+        self.createTrackerViewController?.changeFieldValueEvent()
     }
 }
 

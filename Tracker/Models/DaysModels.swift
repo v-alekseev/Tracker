@@ -29,11 +29,8 @@ class ScheduleDays {
         Day(dayName: "Суббота", dayValue: false, shortDatName: "Сб", dayOfWeek: DaysOfWeek.Saturday),
         Day(dayName: "Воскресенье", dayValue: false, shortDatName: "Вс", dayOfWeek: DaysOfWeek.Sunday)
     ]
-    
 
-    
     //MARK: public functions
-    
     // возвращает список дней недели в которые активирован трекер
     func getActiveDayInScheduleDays() -> [Int] {
         var activeDays: [Int] = []
@@ -76,8 +73,6 @@ class ScheduleDays {
         
         return description
     }
-    
-
 }
 
 

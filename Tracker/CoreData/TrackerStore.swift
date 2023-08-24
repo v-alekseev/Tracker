@@ -26,6 +26,7 @@ protocol TrackerStoreDelegate: AnyObject {
     func didUpdate(updateIndexes: TrackerStoreUpdateIndexes)
 }
 
+
 final class TrackerStore: NSObject {
     
     weak var delegate: TrackerStoreDelegate?

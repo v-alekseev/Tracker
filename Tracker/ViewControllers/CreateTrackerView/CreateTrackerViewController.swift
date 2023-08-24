@@ -62,6 +62,7 @@ final class CreateTrackerViewController: UIViewController {
     private var colorViewControllerDelegate: ColorViewControllerDelegate?
     
     private var scrollView = UIScrollView()
+    
     // MARK: - Initializers
     
     // MARK: - UIViewController(*)
@@ -69,7 +70,6 @@ final class CreateTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         view.backgroundColor = .ypWhiteDay
         
         if isEvent {
@@ -79,15 +79,12 @@ final class CreateTrackerViewController: UIViewController {
         self.navigationItem.title = isEvent ? "Новое нерегулярное событие" : "Новая привычка"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
-        
-        
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-
 
         (labelView, label) = addTrackerNameFied()
         tableView = addCategoryAndSchedule()
@@ -105,6 +102,7 @@ final class CreateTrackerViewController: UIViewController {
         
         createButton?.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor,constant: -20).isActive = true
         
+        changeFieldValueEvent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,7 +134,30 @@ final class CreateTrackerViewController: UIViewController {
         setupCell(cell: cell, cellIndex: cellIndex)
     }
     
+    func changeFieldValueEvent() {
+        guard let label = label,
+              let trackerName = label.text,
+              trackerName != "",
+              (getSelectedEmoji() != nil),
+              (getSelectedColor() != nil)
+        else {
+            // выключаем кнопку
+            createButton?.backgroundColor = .ypGray
+            createButton?.isEnabled = false
+            return
+        }
+        
+        // включаем кнопку
+        createButton?.backgroundColor = .ypBlackDay
+        createButton?.isEnabled = true
+    }
+    
     // MARK: - IBAction
+    @IBAction private func labelTextChanged(_ sender: UIButton) {
+       self.changeFieldValueEvent()
+        return
+    }
+    
     
     @IBAction private func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
@@ -303,10 +324,12 @@ final class CreateTrackerViewController: UIViewController {
         label.textColor = .ypBlackDay
         label.font = YFonts.fontYPRegular17
         label.backgroundColor = .clear
+        label.addTarget(self, action: #selector(self.labelTextChanged), for: .editingChanged)
         textBackgroundView.addSubview(label)
         label.topAnchor.constraint(equalTo: textBackgroundView.topAnchor, constant: 27).isActive = true
         label.leadingAnchor.constraint(equalTo: textBackgroundView.leadingAnchor, constant: 16).isActive = true
         label.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -16).isActive = true
+        
         
         return (textBackgroundView, label)
     }
