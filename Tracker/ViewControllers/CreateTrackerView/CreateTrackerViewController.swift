@@ -349,7 +349,7 @@ final class CreateTrackerViewController: UIViewController {
         table.topAnchor.constraint(equalTo: labelView.bottomAnchor, constant: 27).isActive = true
         table.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         table.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16).isActive = true
-        table.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        table.heightAnchor.constraint(equalToConstant: CGFloat( 75 * tableItems.count)).isActive = true
         table.widthAnchor.constraint(equalTo: scrollView.widthAnchor,constant: -32).isActive = true
       
         return table
@@ -427,6 +427,7 @@ final class CreateTrackerViewController: UIViewController {
 }
 
 extension CreateTrackerViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableItems.count
     }
