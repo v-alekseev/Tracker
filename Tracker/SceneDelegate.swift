@@ -37,6 +37,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBar = TabBarController()
         tabBar.tabBar.backgroundColor = .ypWhiteDay
         tabBar.viewControllers = [navigationController, statisticViewController]
+        tabBar.tabBar.layer.borderWidth = 0.50
+        tabBar.tabBar.layer.borderColor = UIColor.ypGray.cgColor
+        tabBar.tabBar.clipsToBounds = true
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = tabBar
