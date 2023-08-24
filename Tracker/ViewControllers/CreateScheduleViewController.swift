@@ -111,6 +111,7 @@ extension CreateScheduleViewController: UITableViewDataSource {
         cell.textLabel?.text = scheduleDays.weekDays[indexPath.row].dayName
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
+        switchCell.onTintColor = .ypBlue
         cell.accessoryView = switchCell
         switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
         cell.selectionStyle = .none
