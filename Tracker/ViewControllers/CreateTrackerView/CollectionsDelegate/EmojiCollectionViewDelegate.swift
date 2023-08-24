@@ -11,7 +11,7 @@ import UIKit
 
 
 final class EmojiViewControllerDelegate: NSObject {
-    var createTrackerViewController: CreateTrackerViewController?
+    weak var createTrackerViewController: CreateTrackerViewController?
     
     init(createTrackerViewController: CreateTrackerViewController? = nil) {
         self.createTrackerViewController = createTrackerViewController
