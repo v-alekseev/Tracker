@@ -72,14 +72,12 @@ final class TrackerStore: NSObject {
 extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackersByTextInName(text: String) -> [Tracker] {
-        print("[test] getTrackersByTextInName ")
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
         let filtredTrackers = trackers.filter { $0.trackerName?.contains(text) ?? false }
         return  filtredTrackers.compactMap { Tracker(tracker: $0) }
     }
     
     func getTrackers() -> [Tracker] {
-        print("[test] getTrackers ")
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
         return trackers.compactMap { Tracker(tracker: $0)}
     }
@@ -107,12 +105,13 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
         
         delegate?.didUpdate(
             updateIndexes: TrackerStoreUpdateIndexes(
-                insertedIndexes: insertedIndexes!,
-                deletedIndexes: deletedIndexes!,
-                updatedIndexes: updatedIndexes!
-                // movedIndexes: movedIndexes!
+                insertedIndexes: insertedIndexes ?? IndexSet(),
+                deletedIndexes: deletedIndexes ?? IndexSet(),
+                updatedIndexes: updatedIndexes ?? IndexSet()
+                // movedIndexes: movedIndexes  ?? IndexSet()
             )
         )
+        
         insertedIndexes = nil
         deletedIndexes = nil
         updatedIndexes = nil

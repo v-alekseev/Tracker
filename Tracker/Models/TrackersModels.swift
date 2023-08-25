@@ -21,7 +21,6 @@ struct TrackerCategory {
     }
     
     static func trackerIDsFromString(udids: String) -> [UUID] {
-        print("[test] trackerIDsFromString")
         let udidStingArray = udids.split(separator: ",")
         return udidStingArray.compactMap{ UUID(uuidString: String($0))}
     }
@@ -42,11 +41,18 @@ struct Tracker {
     let trackerActiveDays: [Int]
     
     init?(tracker: TrackerCoreData) {
-        trackerID = tracker.trackerID!
-        trackerName = tracker.trackerName!
-        trackerEmodji = tracker.trackerEmodji!
-        trackerColor = UIColorMarshalling(colorHex: tracker.trackerColorHEX!).color!
-        trackerActiveDays = DaysConverter.getActiveDaysInt(days: tracker.daysOfWeek!)
+        guard let  trackerID = tracker.trackerID,
+        let trackerName = tracker.trackerName,
+        let trackerEmodji = tracker.trackerEmodji,
+        let trackerColorHEX = tracker.trackerColorHEX,
+        let daysOfWeek = tracker.daysOfWeek else { return nil }
+        
+        
+        self.trackerID = trackerID
+        self.trackerName = trackerName
+        self.trackerEmodji = trackerEmodji
+        self.trackerColor = UIColorMarshalling(colorHex: trackerColorHEX).color
+        self.trackerActiveDays = DaysConverter.getActiveDaysInt(days: daysOfWeek)
     }
     
     init(trackerID: UUID,
@@ -54,6 +60,7 @@ struct Tracker {
          trackerEmodji: String,
          trackerColor: UIColor,
          trackerScheduleDays: [Int]) {
+        
         self.trackerID = trackerID
         self.trackerName = trackerName
         self.trackerEmodji = trackerEmodji
@@ -62,5 +69,6 @@ struct Tracker {
     }
     
 }
+
 
 

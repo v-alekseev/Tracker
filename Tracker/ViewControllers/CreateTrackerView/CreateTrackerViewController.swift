@@ -188,7 +188,7 @@ final class CreateTrackerViewController: UIViewController {
         
         //TODO: снять заглушку(testCategory) с категорий в 16м спринте
         trackersViewController?.addTracker(tracker: newTracker, trackerCategoryName: testCategory)
-        trackersViewController?.dismiss(animated: true)
+        trackersViewController?.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
         
         return
     }
@@ -346,7 +346,6 @@ final class CreateTrackerViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.addSubview(table)
-        //labelView.backgroundColor = .red
         table.topAnchor.constraint(equalTo: labelView.bottomAnchor, constant: 27).isActive = true
         table.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         table.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16).isActive = true

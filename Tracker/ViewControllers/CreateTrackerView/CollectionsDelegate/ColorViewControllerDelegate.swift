@@ -39,7 +39,6 @@ extension ColorViewControllerDelegate: UICollectionViewDataSource {
 extension ColorViewControllerDelegate: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didSelectItemAt \(indexPath) ")
         
         let cell = (collectionView.cellForItem(at: indexPath) as? ColorsCollectionViewCell) ?? ColorsCollectionViewCell()
         
@@ -67,8 +66,6 @@ extension ColorViewControllerDelegate: UICollectionViewDelegateFlowLayout {
     // размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var cellWight = (collectionView.bounds.width-18-19-(5*5))/6
-        //cellWight = 52
-        print("cellWight = \(cellWight)")
         return CGSize(width: cellWight, height: cellWight)
     }
     // отступ между яейками в одном ряду

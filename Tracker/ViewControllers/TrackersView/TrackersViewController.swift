@@ -165,8 +165,6 @@ class TrackersViewController: UIViewController {
         
         guard linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) else { return }
               
-  //      if linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) == false { return }
-        print("[test] addTracker")
         if trackerStore.addTracker(tracker) == false {
             Alert.alertInformation(viewController: self, text: "Не получилось создать трекер. Давай попробуем еще раз.")
         }
@@ -216,7 +214,6 @@ class TrackersViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: incomingDate)
-        //print(dateString)
         
         return dateFormatter.date(from: dateString)
     }

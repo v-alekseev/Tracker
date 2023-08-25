@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class UIColorMarshalling {
-    var color: UIColor?
-    var colorHex: String?
+    var color: UIColor  = UIColor.black
+    var colorHex: String = ""
     
     init(color: UIColor) {
         self.color = color
@@ -19,7 +19,7 @@ class UIColorMarshalling {
     
     init(colorHex: String) {
         self.colorHex = colorHex
-        self.color = self.colorWithHexString(hexString: self.colorHex!)
+        self.color = self.colorWithHexString(hexString: self.colorHex)
     }
     
     func hexStringFromColor(color: UIColor) -> String {

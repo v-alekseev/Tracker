@@ -80,7 +80,6 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     }
     
     func getCategories() -> [TrackerCategory]? {
-        print("[test] getCategories ")
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         
