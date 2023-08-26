@@ -222,7 +222,7 @@ class TrackersViewController: UIViewController {
     @IBAction private func didChangeDate(_ sender: UIButton) {
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
-        
+
         currentDate = getCurrentDate(incomingDate: datePicker.date as Date)
         
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())

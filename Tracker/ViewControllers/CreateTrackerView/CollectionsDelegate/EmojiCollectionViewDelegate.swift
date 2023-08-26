@@ -52,7 +52,7 @@ extension EmojiViewControllerDelegate: UICollectionViewDelegateFlowLayout {
     // размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWight = (collectionView.bounds.width-18-19-(5*5))/6
-        return CGSize(width: cellWight, height: 52)
+        return CGSize(width: cellWight, height: cellWight)
     }
     // отступ между яейками в одном ряду
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

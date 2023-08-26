@@ -241,7 +241,8 @@ final class CreateTrackerViewController: UIViewController {
         
         emojiCollectionView.dataSource = emojiViewControllerDelegate
         emojiCollectionView.delegate = emojiViewControllerDelegate
-
+        emojiCollectionView.isScrollEnabled = false
+        
         emojiCollectionView.register(EmojiCollectionViewCell.self, forCellWithReuseIdentifier: emojiCellId)
         emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -373,7 +374,9 @@ final class CreateTrackerViewController: UIViewController {
         cancelButton.topAnchor.constraint(equalTo: colorCollectionsView.bottomAnchor, constant: 16).isActive = true
         //cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,constant: 20).isActive = true
-        cancelButton.widthAnchor.constraint(equalToConstant: 166).isActive = true
+       
+        let buttonSize =  (view.frame.size.width - 20 - 8 - 20)/2
+        cancelButton.widthAnchor.constraint(equalToConstant:  buttonSize).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         return cancelButton
