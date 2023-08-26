@@ -103,7 +103,6 @@ extension CreateScheduleViewController: UITableViewDataSource {
         if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
             cell = reusedCell
         } else {
-            print("[cell] UITableViewCell()n)")
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
         
@@ -112,6 +111,7 @@ extension CreateScheduleViewController: UITableViewDataSource {
         cell.textLabel?.text = scheduleDays.weekDays[indexPath.row].dayName
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
+        switchCell.onTintColor = .ypBlue
         cell.accessoryView = switchCell
         switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
         cell.selectionStyle = .none

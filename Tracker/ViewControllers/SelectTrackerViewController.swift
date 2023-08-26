@@ -17,7 +17,7 @@ class SelectTrackerViewController: UIViewController {
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("NewTrackerSelectViewController viewDidLoad()")
+
         view.backgroundColor = .ypWhiteDay
         
         self.navigationItem.title = "Создание трекера"
@@ -62,13 +62,11 @@ class SelectTrackerViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction private func buttonNewEventTapped(_ sender: UIButton) {
-        print("buttonNewEventTapped")
         presentCreteEventController(isEvent: true)
         return
     }
     
     @IBAction private func buttonNewTrackerTapped(_ sender: UIButton) {
-        print("buttonNewTrackerTapped")
         presentCreteEventController(isEvent: false)
         return
     }

@@ -20,7 +20,7 @@ struct  Day {
 
 class ScheduleDays {
     
-     var weekDays: [Day] = [
+    var weekDays: [Day] = [
         Day(dayName: "Понедельник", dayValue: false, shortDatName: "Пн", dayOfWeek: DaysOfWeek.Monday),
         Day(dayName: "Вторник", dayValue: false, shortDatName: "Вт", dayOfWeek: DaysOfWeek.Tuesday),
         Day(dayName: "Среда", dayValue: false, shortDatName: "Ср", dayOfWeek: DaysOfWeek.Wednesday),
@@ -29,32 +29,30 @@ class ScheduleDays {
         Day(dayName: "Суббота", dayValue: false, shortDatName: "Сб", dayOfWeek: DaysOfWeek.Saturday),
         Day(dayName: "Воскресенье", dayValue: false, shortDatName: "Вс", dayOfWeek: DaysOfWeek.Sunday)
     ]
-    
-    // если это нерегулярное событие (все дни неактивны), возвращаем true  Кстати это = привычка без рассписания
-    func isUnregularEvent() -> Bool {
-        for day in weekDays {
-            if day.dayValue {
-                return false
-            }
-        }
-        
-        return true
-    }
-    
+
+    //MARK: public functions
     // возвращает список дней недели в которые активирован трекер
-    func getActiveDayInScheduleDays() -> [Day] {
-        var activeDays: [Day] = []
+    func getActiveDayInScheduleDays() -> [Int] {
+        var activeDays: [Int] = []
         
         for day in weekDays {
             if day.dayValue {
-                activeDays.append(day)
+                activeDays.append(day.dayOfWeek.rawValue)
             }
         }
+        
         return activeDays
     }
     
+    // добавляет перенос строки перед строкой расписания.
+    func getScheduleAsTextWithNewLine() -> String {
+        let desription = getScheduleAsText()
+        
+        return  desription == "" ? desription : ("\n" + desription)
+    }
+    
     // возвращает рассписание ативности трекера в виде строки  "Вт, Чт"
-    func getScheduleAsText() -> String {
+    private func getScheduleAsText() -> String {
         var countDays: Int = 0
         var description: String = ""
         
@@ -74,13 +72,6 @@ class ScheduleDays {
         }
         
         return description
-    }
-    
-    // добавляет перенос строки перед строкой расписания.
-    func getScheduleAsTextWithNewLine() -> String {
-        let desription = getScheduleAsText()
-        
-        return  desription == "" ? desription : ("\n" + desription)
     }
 }
 
