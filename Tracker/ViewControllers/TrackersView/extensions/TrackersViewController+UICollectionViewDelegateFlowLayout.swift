@@ -42,7 +42,9 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! SupplementaryView
         
-        view.titleLabel.text = getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
+        print("viewForSupplementaryElementOfKind indexPath = \(indexPath)")
+        
+        view.titleLabel.text = visibleTrackers.keys.sorted()[indexPath.section] //visibleTrackers[indexPath.row].trackerCategoryName //getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
         return view
     }
     
@@ -55,8 +57,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         //FIXIT  UICollectionView internal inconsistency: attempting to apply nil layout attributes to view.
         let headerView = SupplementaryView()
         var categoryName = ""
-        if(visibleTrackers.count != 0){
-            categoryName = getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
+        if(visibleTrackers.keys.count > 0 ) { //visibleTrackers.count != 0){
+            categoryName = visibleTrackers.keys.sorted()[section] // visibleTrackers[indexPath.row].trackerCategoryName //  getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
         }
         
         headerView.titleLabel.text = categoryName

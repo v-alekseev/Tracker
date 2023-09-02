@@ -9,11 +9,17 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
+
 final class TrackerCategoryStore: NSObject {
     
+    
+    var delegate: TrackerCategoryStoreDelegateProtocol?
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext
+    
 
     // MARK: - Initializers
     //
@@ -29,18 +35,7 @@ final class TrackerCategoryStore: NSObject {
 
 
 extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
-    
-    func getTrackerCategory(trackerID: UUID) -> String? {
-        var records: [TrackerCategoryCoreData] = []
-        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format:  "%K CONTAINS[n] %@", #keyPath(TrackerCategoryCoreData.trackerIDs), trackerID.uuidString)
-        
-        do { records = try context.fetch(request) } catch { return nil }
-        
-        return records.first?.categoryName
-    }
-    
+
     func getCategoriesCount() -> Int {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.resultType = .countResultType
@@ -51,11 +46,13 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         return countRecords
     }
     
-    func updateCategory(_ category: TrackerCategory) -> Bool  {
-        guard let categoryObject = getCategoryObject(category.categoryName) else { return false }
+    func updateCategory(category: TrackerCategory, newCategory: TrackerCategory) -> Bool  {
         
-        categoryObject.trackerIDs = category.trackerIDsString
+        guard let categoryObject = getCategoryObject(category.categoryName) else { return false }
+
+        categoryObject.categoryName = newCategory.categoryName
         do { try context.save() } catch { return false }
+        delegate?.didUpdate()
         return true
     }
     
@@ -63,52 +60,57 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         
         trackerCategoryCoreData.categoryName = category.categoryName
-        trackerCategoryCoreData.trackerIDs = category.trackerIDsString
         
         do { try context.save() } catch { return false }
+        
+        delegate?.didUpdate()
         return true
     }
     
     func getCategory(_ category: String) -> TrackerCategory? {
         guard let categoryObject = getCategoryObject(category),
-              let trackerIDs = categoryObject.trackerIDs,
               let categoryName = categoryObject.categoryName else { return nil}
         
-        return TrackerCategory(
-            trackerIDs: TrackerCategory.trackerIDsFromString(udids: trackerIDs),
-            categoryName: categoryName)
+        return TrackerCategory(categoryName: categoryName)
     }
     
     func getCategories() -> [TrackerCategory]? {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
+        request.sortDescriptors = [NSSortDescriptor(key: "categoryName", ascending: true)]
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
-        
+
         return records.compactMap {
-            guard let trackerIDs = $0.trackerIDs,
-                  let categoryName = $0.categoryName else { return nil}
+            guard let categoryName = $0.categoryName else { return nil}
             
-            return TrackerCategory(trackerIDs: TrackerCategory.trackerIDsFromString(udids: trackerIDs),
-                                categoryName: categoryName)
+            return TrackerCategory(categoryName: categoryName)
         }
     }
     
     func deleteCategory(_ categoryName: String) -> Bool {
         guard let categoryObject = getCategoryObject(categoryName) else { return false}
-        
+        if (categoryObject.tracker?.count ?? 0) > 0 {
+            return false
+        }
         context.delete(categoryObject)
+
+        do {  try context.save() } catch { return false }
+
+        delegate?.didUpdate()
         return true
     }
     
-    private func getCategoryObject(_ category: String) -> TrackerCategoryCoreData? {
+    func getCategoryObject(_ category: String) -> TrackerCategoryCoreData? {
+
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.categoryName), category)
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
+
         return records.first
     }
     

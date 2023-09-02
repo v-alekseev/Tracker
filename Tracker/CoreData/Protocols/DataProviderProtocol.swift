@@ -27,13 +27,16 @@ protocol TrackerRecordStoreDataProviderProtocol {
 }
 
 protocol TrackerCategoryStoreDataProviderProtocol {
-    func getTrackerCategory(trackerID: UUID) -> String?
+    //func getTrackerCategory(trackerID: UUID) -> String?
     func getCategoriesCount() -> Int
     
     func addCategory(_ category: TrackerCategory) -> Bool
-    func updateCategory(_ category: TrackerCategory) -> Bool
+    func updateCategory(category: TrackerCategory, newCategory: TrackerCategory) -> Bool
     func getCategory(_ category: String) -> TrackerCategory?
     func getCategories() -> [TrackerCategory]?
     func deleteCategory(_ category: String) -> Bool
+}
 
+protocol TrackerCategoryStoreDelegateProtocol {
+    func didUpdate()
 }

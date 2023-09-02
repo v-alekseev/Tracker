@@ -31,6 +31,8 @@ final class TrackerStore: NSObject {
     
     weak var delegate: TrackerStoreDelegate?
     
+    private var trackerCategoryStore = TrackerCategoryStore()
+    
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext
@@ -79,13 +81,20 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackers() -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
+//        for tracker in trackers {
+//            print("getTrackers tracker = \(tracker.trackerName),  categoryName = \(tracker.category?.categoryName)")
+//        }
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
     func addTracker(_ record: Tracker) -> Bool {
+        guard record.trackerCategoryName != "",
+              let categoryObj = trackerCategoryStore.getCategoryObject(record.trackerCategoryName) else { return false }
+        
         let trackerCoreData = TrackerCoreData(context: context)
-
         trackerCoreData.set(tracker: record)
+        trackerCoreData.category = categoryObj
+        //print("addTracker tracker name = \(trackerCoreData.trackerName) , category = \(categoryObj.categoryName)")
         do { try context.save() } catch { return false }
         return true
     }

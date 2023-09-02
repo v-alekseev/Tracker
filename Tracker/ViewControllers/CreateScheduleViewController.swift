@@ -35,12 +35,14 @@ final class CreateScheduleViewController: UIViewController {
     // MARK: - IBAction
     @IBAction private func readyButtonTapped(_ sender: UIButton) {
         guard let scheduleDays = scheduleDays else { return }
-        for cellIndex in 0..<scheduleDays.weekDays.count { //}   tableItems.count {
+        for cellIndex in 0..<scheduleDays.weekDays.count {
             let cellSwitchView = scheduleTable?.cellForRow(at: IndexPath(row: cellIndex, section: 0))?.accessoryView
             let cellSwitch: UISwitch? = cellSwitchView as? UISwitch
             
             scheduleDays.weekDays[cellIndex].dayValue = (cellSwitch?.isOn) ?? false
         }
+        
+        //createTrackerViewController.sche2
         createTrackerViewController?.updateSchedulerCelltext()
         dismiss(animated: true)
         return

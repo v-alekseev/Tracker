@@ -7,11 +7,10 @@
 
 import Foundation
 import UIKit
-//CreateTrackerViewController+UICollectionViewDelegateFlowLayout
-//CreateTrackerViewController+UICollectionViewDataSource
+
+
 final class CreateTrackerViewController: UIViewController {
     
-    // MARK: - Types
     
     // MARK: - Constants
     let cellColors = [UIColor.ypColorselection1,
@@ -63,12 +62,27 @@ final class CreateTrackerViewController: UIViewController {
     
     private var scrollView = UIScrollView()
     
-    // MARK: - Initializers
+    private var categoryName: String = "" {
+        didSet {
+                    let cellIndex = 0
+            
+                    guard let tableView = tableView else { return }
+                    let cell = tableView.cellForRow(at: IndexPath(row: cellIndex, section: 0))
+            
+                    guard let cell = cell else {return}
+                    setupCell(cell: cell, cellIndex: cellIndex)
+            
+                    changeFieldValueEvent()
+                    print(" categoryName did set")
+        }
+    }
     
     // MARK: - UIViewController(*)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //categoryName = testCategory
         
         view.backgroundColor = .ypWhiteDay
         
@@ -134,10 +148,21 @@ final class CreateTrackerViewController: UIViewController {
         setupCell(cell: cell, cellIndex: cellIndex)
     }
     
+//    func updateGroupCelltext() {
+//        let cellIndex = 0
+//
+//        guard let tableView = tableView else { return }
+//        let cell = tableView.cellForRow(at: IndexPath(row: cellIndex, section: 0))
+//
+//        guard let cell = cell else {return}
+//        setupCell(cell: cell, cellIndex: cellIndex)
+//    }
+    
     func changeFieldValueEvent() {
         guard let label = label,
               let trackerName = label.text,
               trackerName != "",
+              categoryName != "",
               (getSelectedEmoji() != nil),
               (getSelectedColor() != nil)
         else {
@@ -150,6 +175,10 @@ final class CreateTrackerViewController: UIViewController {
         // включаем кнопку
         createButton?.backgroundColor = .ypBlackDay
         createButton?.isEnabled = true
+    }
+    
+    func setCategoryName(name: String) {
+        categoryName = name
     }
     
     // MARK: - IBAction
@@ -165,29 +194,19 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @IBAction private func createButtonPressed(_ sender: UIButton) {
-        guard let label = label,
-              let trackerName = label.text,
-              trackerName != "" else {
-            Alert.alertInformation(viewController: self, text: "Введите название трекера.")
-            return
-        }
-        guard let selectedEmoji = getSelectedEmoji() else {
-            Alert.alertInformation(viewController: self, text: "Обязательно выберети Emoji.")
-            return
-        }
-        guard let selectedColor = getSelectedColor() else {
-            Alert.alertInformation(viewController: self, text: "Обязательно выберети цвет.")
-            return
-        }
+        guard let trackerName = label?.text,
+              let selectedEmoji = getSelectedEmoji(),
+              let selectedColor = getSelectedColor() else { return }
         
         let newTracker = Tracker(trackerID: UUID(),
                                  trackerName: trackerName,
                                  trackerEmodji: selectedEmoji,
                                  trackerColor: selectedColor,
-                                 trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays())
+                                 trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays(),
+                                 trackerCategoryName: categoryName)
         
         //TODO: снять заглушку(testCategory) с категорий в 16м спринте
-        trackersViewController?.addTracker(tracker: newTracker, trackerCategoryName: testCategory)
+        trackersViewController?.addTracker(tracker: newTracker)
         trackersViewController?.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
         
         return
@@ -227,7 +246,6 @@ final class CreateTrackerViewController: UIViewController {
         view.addSubview(label)
         label.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 32).isActive = true
         label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28).isActive = true
-        //label.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -16).isActive = true
         return label
     }
     
@@ -297,9 +315,22 @@ final class CreateTrackerViewController: UIViewController {
         
         let createScheduleViewController = CreateScheduleViewController()
         createScheduleViewController.scheduleDays = scheduleDays
-        createScheduleViewController.createTrackerViewController = self
         
+        createScheduleViewController.createTrackerViewController = self
+
         let navigationController = UINavigationController(rootViewController: createScheduleViewController)
+        navigationController.modalPresentationStyle = .pageSheet
+        self.present(navigationController, animated: true)
+    }
+    
+    
+    private func presentSelectGroupViewController() {
+        
+        let selectGroupViewController = SelectGroupViewController()
+        selectGroupViewController.setCurrentCategory(name: categoryName)
+        selectGroupViewController.createTrackerViewController = self
+//
+        let navigationController = UINavigationController(rootViewController: selectGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
         self.present(navigationController, animated: true)
     }
@@ -412,7 +443,7 @@ final class CreateTrackerViewController: UIViewController {
     private func setupCell(cell: UITableViewCell, cellIndex: Int) {
         
         let firstCellLine = tableItems[cellIndex]
-        let secondCellLine = (cellIndex == 0) ? "\n\(testCategory)" : scheduleDays.getScheduleAsTextWithNewLine()
+        let secondCellLine = (cellIndex == 0) ? "\n\(categoryName)" : scheduleDays.getScheduleAsTextWithNewLine()
         
         let cellText = NSMutableAttributedString(string: firstCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay])
         let secondCellLineAttrString = NSAttributedString(string: secondCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypGray] )
@@ -458,6 +489,10 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 1 {
             presentCreateScheduleViewController()
+        }
+        else
+        {
+            presentSelectGroupViewController()
         }
     }
     

@@ -65,7 +65,7 @@ extension ColorViewControllerDelegate: UICollectionViewDelegate {
 extension ColorViewControllerDelegate: UICollectionViewDelegateFlowLayout {
     // размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var cellWight = (collectionView.bounds.width-18-19-(5*5))/6
+        let cellWight = (collectionView.bounds.width-18-19-(5*5))/6
         return CGSize(width: cellWight, height: cellWight)
     }
     // отступ между яейками в одном ряду
