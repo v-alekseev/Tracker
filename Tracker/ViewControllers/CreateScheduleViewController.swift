@@ -88,8 +88,6 @@ final class CreateScheduleViewController: UIViewController {
         
         return readyButton
     }
-    
-    
 }
 
 extension CreateScheduleViewController: UITableViewDataSource {

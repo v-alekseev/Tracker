@@ -23,7 +23,7 @@ final class SelectGroupViewController: UIViewController {
     //private var createNewGroupButton = UIButton()
     private var groupsTable:  UITableView = {
         let table = UITableView()
-
+        
         table.layer.cornerRadius = 16
         table.layer.masksToBounds = true
         table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16);
@@ -62,19 +62,16 @@ final class SelectGroupViewController: UIViewController {
         button.backgroundColor = .ypBlackDay
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
-    
+        
         return button
     }()
     
     
     @objc func buttonCreateNewCategoryTapped() {
-        print("buttonCreateNewCategoryTapped")
         let createGroupViewController = CreateGroupViewController(isUpdateAction: false)
         
         createGroupViewController.selectGroupViewModel = self.selectGroupViewModel
-
-//        self.navigationItem.setHidesBackButton(true, animated: true)
-//        self.navigationController?.pushViewController(createGroupViewController, animated: true)
+        
         let navigationController = UINavigationController(rootViewController: createGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
         self.present(navigationController, animated: true)
@@ -96,15 +93,14 @@ final class SelectGroupViewController: UIViewController {
         groupsTable.dataSource = self
         groupsTable.delegate = self
         groupsTable.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        //groupsTable.backgroundColor = .red
-
+        
         setUpUI()
         
         selectGroupViewModel.$categories.bind { [weak self]  in
-            print("observable $categories changed")
+            //print("observable $categories changed")
             self?.groupsTable.reloadData()
         }
-
+        
         selectGroupViewModel.selectGroupViewController = self
         
         showLogo(true)
@@ -118,8 +114,6 @@ final class SelectGroupViewController: UIViewController {
     func showLogo(_ uiShow: Bool) {
         noCategoryImageView.isHidden = !uiShow
         noCategoryLabel.isHidden = !uiShow
- 
-        //collectionView?.isHidden = uiShow
     }
     
     private func setUpUI() {
@@ -146,21 +140,17 @@ final class SelectGroupViewController: UIViewController {
         ])
         
         view.addSubview(groupsTable)
-
+        
         NSLayoutConstraint.activate([
             groupsTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             groupsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             groupsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             groupsTable.bottomAnchor.constraint(equalTo: createGroupButton.topAnchor, constant: -24)
-            //groupsTable.heightAnchor.constraint(equalToConstant: CGFloat( 75 * tableItems.count)),
-           // groupsTable.widthAnchor.constraint(equalTo: view.widthAnchor,constant: -32)
         ])
         
     }
     
 }
-
-
 
 extension SelectGroupViewController: UITableViewDataSource {
     
@@ -188,33 +178,31 @@ extension SelectGroupViewController: UITableViewDataSource {
         }
         
         cell.selectionStyle = .none
-
+        
         return cell
     }
 }
 
 extension SelectGroupViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Categories pressed")
-        
         guard let createTrackerViewController = createTrackerViewController else { return }
         createTrackerViewController.setCategoryName(name: selectGroupViewModel.categories[indexPath.row])
         
-        //createTrackerViewController.updateGroupCelltext()
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView,
-                            contextMenuConfigurationForRowAt indexPath: IndexPath,
-                            point: CGPoint) -> UIContextMenuConfiguration? {
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint) -> UIContextMenuConfiguration? {
         
         let menu = UIContextMenuConfiguration(identifier: nil,
                                               previewProvider: nil,
-                                          actionProvider: { [weak self] suggestedActions in
+                                              actionProvider: { [weak self] suggestedActions in
             let duplicateAction = UIAction(title: NSLocalizedString("Редактировать", comment: ""), image: nil) { action in
                 guard let self = self else { return }
                 
@@ -226,20 +214,18 @@ extension SelectGroupViewController: UITableViewDelegate {
                 let navigationController = UINavigationController(rootViewController: createGroupViewController)
                 navigationController.modalPresentationStyle = .pageSheet
                 self.present(navigationController, animated: true)
-                }
-            
+            }
             
             let deleteAction = UIAction(title: NSLocalizedString("Удалить", comment: ""), image: nil, attributes: .destructive) { action in
-
+                
                 guard let categoryName = self?.selectGroupViewModel.categories[indexPath.row] else { return }
                 if self?.selectGroupViewModel.deleteCategory(name: categoryName) == false {
                     self?.alert(text: "Ошибка удаления категории. Пожалуйста, сначала удалите все трекеры в этой категории.")
-                    }
                 }
+            }
             
             return UIMenu(title: "", children: [duplicateAction, deleteAction])
         })
-        
         
         return menu
     }

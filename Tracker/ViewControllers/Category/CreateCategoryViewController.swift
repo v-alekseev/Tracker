@@ -66,25 +66,21 @@ final class CreateGroupViewController: UIViewController {
         button.backgroundColor = .ypGray
         button.layer.cornerRadius = 16
         button.isEnabled = false
-    
+        
         return button
     }()
     
     
     @objc func buttonCreateCategoryTapped() {
         guard let selectGroupViewModel = selectGroupViewModel,
-              let text = categoryNameTextView.text,
-              let currentCategoryName = currentCategoryName else { return }
+              let text = categoryNameTextView.text else { return }
         
         if self.isUpdateAction {
-            if selectGroupViewModel.renameCategory(name:  currentCategoryName, newCategoryName: text) == false {
-                Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории")
-            }
-            //selectGroupViewModel.didUpdate()
+            if selectGroupViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
+                Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") }
         } else {
             if selectGroupViewModel.addCategory(name:  text) == false {
-                Alert.alertInformation(viewController: self, text: "Ошибка создания категории")
-            }
+                Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
         }
         
         
@@ -115,7 +111,7 @@ final class CreateGroupViewController: UIViewController {
     // MARK: Private functions
     
     private func setUpUI() {
-
+        
         view.addSubview(textBackgroundView)
         NSLayoutConstraint.activate([
             textBackgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),

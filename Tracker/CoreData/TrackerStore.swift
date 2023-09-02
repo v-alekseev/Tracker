@@ -81,9 +81,6 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackers() -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
-//        for tracker in trackers {
-//            print("getTrackers tracker = \(tracker.trackerName),  categoryName = \(tracker.category?.categoryName)")
-//        }
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
@@ -94,7 +91,6 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         let trackerCoreData = TrackerCoreData(context: context)
         trackerCoreData.set(tracker: record)
         trackerCoreData.category = categoryObj
-        //print("addTracker tracker name = \(trackerCoreData.trackerName) , category = \(categoryObj.categoryName)")
         do { try context.save() } catch { return false }
         return true
     }
@@ -103,7 +99,7 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackerStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
+        
         insertedIndexes = IndexSet()
         deletedIndexes = IndexSet()
         updatedIndexes = IndexSet()

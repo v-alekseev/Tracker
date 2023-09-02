@@ -10,14 +10,13 @@ import Foundation
 final class SelectGroupViewModel {
     
     @Observable
-    var categories: [String] =  [] //["Важное", "Радостные мелочи", "Самочувствие", "Привычки"]
-    
-    var selectedCategory: String = "" //Важное"
+    var categories: [String] =  []
+    var selectedCategory: String = ""
     
     weak var selectGroupViewController: SelectGroupViewController?
     
     
-    // did set setCategoryName
+    //TODO: did set setCategoryName
     
     private var trackerCategoryStore = TrackerCategoryStore()
     
@@ -28,9 +27,8 @@ final class SelectGroupViewModel {
               let currentCategory = a.first  else { return }
         
         categories = a.map { $0.categoryName }
-        
         selectedCategory = currentCategory.categoryName
-      
+        
     }
     
     func addCategory(name: String)  -> Bool {
@@ -42,14 +40,15 @@ final class SelectGroupViewModel {
     }
     
     func renameCategory(name: String, newCategoryName: String)  -> Bool {
+        if(name == "") {
+            return false
+        }
         return trackerCategoryStore.updateCategory(category: TrackerCategory(categoryName: name), newCategory: TrackerCategory(categoryName: newCategoryName))
     }
 }
 
 extension SelectGroupViewModel: TrackerCategoryStoreDelegateProtocol {
     func didUpdate() {
-        //print("TrackerCategoryStoreDelegateProtocol didUpdate")
-        
         guard let a = trackerCategoryStore.getCategories() else { return }
         categories = a.map { $0.categoryName }
     }

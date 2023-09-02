@@ -14,8 +14,6 @@ let trackerCoreDataModel = "TrackerCoreDataModel"
 let barControllerTrackers = "Трекеры"
 let barControllerStatisic = "Статистика"
 
-let testCategory = "Важное"
-
 let imageTrackerCellPlus = UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate)
 let imageTrackerCellCompleted = UIImage(named: "done_button")?.withRenderingMode(.alwaysTemplate)
 

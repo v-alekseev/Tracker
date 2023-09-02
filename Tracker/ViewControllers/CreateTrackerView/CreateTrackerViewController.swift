@@ -64,16 +64,14 @@ final class CreateTrackerViewController: UIViewController {
     
     private var categoryName: String = "" {
         didSet {
-                    let cellIndex = 0
+            let cellIndex = 0 // категория в первой строке таблицы у нас
+            guard let tableView = tableView else { return }
+            let cell = tableView.cellForRow(at: IndexPath(row: cellIndex, section: 0))
             
-                    guard let tableView = tableView else { return }
-                    let cell = tableView.cellForRow(at: IndexPath(row: cellIndex, section: 0))
+            guard let cell = cell else {return}
+            setupCell(cell: cell, cellIndex: cellIndex)
             
-                    guard let cell = cell else {return}
-                    setupCell(cell: cell, cellIndex: cellIndex)
-            
-                    changeFieldValueEvent()
-                    print(" categoryName did set")
+            changeFieldValueEvent()
         }
     }
     
@@ -81,8 +79,6 @@ final class CreateTrackerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //categoryName = testCategory
         
         view.backgroundColor = .ypWhiteDay
         
@@ -99,30 +95,28 @@ final class CreateTrackerViewController: UIViewController {
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-
+        
         (labelView, label) = addTrackerNameFied()
         tableView = addCategoryAndSchedule()
-//
+        
         emojiLabel = addEmojiTextLabel()
         emojiViewControllerDelegate  = EmojiViewControllerDelegate(createTrackerViewController: self)
         emojiCollectionsView = addEmojiCollectionsView()
-//
+        
         colorLabel = addColorTextLabel()
         colorViewControllerDelegate = ColorViewControllerDelegate(createTrackerViewController: self)
         colorCollectionsView = addColorCollectionsView()
-//
+        
         cancelButton = addCancelButton()
         createButton = addCreateButton()
         
-        createButton?.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor,constant: -20).isActive = true
-        
-        changeFieldValueEvent()
+        changeFieldValueEvent()  // задизайблим кнопку Создать
     }
     
     override func viewDidAppear(_ animated: Bool) {
         guard let emojiCollectionsView = emojiCollectionsView,
               let colorCollectionsView = colorCollectionsView else { return }
-
+        
         selectFirstItemInCollection(collection: emojiCollectionsView)
         selectFirstItemInCollection(collection: colorCollectionsView)
     }
@@ -147,16 +141,6 @@ final class CreateTrackerViewController: UIViewController {
         guard let cell = cell else {return}
         setupCell(cell: cell, cellIndex: cellIndex)
     }
-    
-//    func updateGroupCelltext() {
-//        let cellIndex = 0
-//
-//        guard let tableView = tableView else { return }
-//        let cell = tableView.cellForRow(at: IndexPath(row: cellIndex, section: 0))
-//
-//        guard let cell = cell else {return}
-//        setupCell(cell: cell, cellIndex: cellIndex)
-//    }
     
     func changeFieldValueEvent() {
         guard let label = label,
@@ -183,7 +167,7 @@ final class CreateTrackerViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction private func labelTextChanged(_ sender: UIButton) {
-       self.changeFieldValueEvent()
+        self.changeFieldValueEvent()
         return
     }
     
@@ -196,7 +180,8 @@ final class CreateTrackerViewController: UIViewController {
     @IBAction private func createButtonPressed(_ sender: UIButton) {
         guard let trackerName = label?.text,
               let selectedEmoji = getSelectedEmoji(),
-              let selectedColor = getSelectedColor() else { return }
+              let selectedColor = getSelectedColor(),
+              let trackersViewController = trackersViewController else { return }
         
         let newTracker = Tracker(trackerID: UUID(),
                                  trackerName: trackerName,
@@ -205,9 +190,9 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays(),
                                  trackerCategoryName: categoryName)
         
-        //TODO: снять заглушку(testCategory) с категорий в 16м спринте
-        trackersViewController?.addTracker(tracker: newTracker)
-        trackersViewController?.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
+        
+        trackersViewController.addTracker(tracker: newTracker)
+        trackersViewController.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
         
         return
     }
@@ -217,7 +202,7 @@ final class CreateTrackerViewController: UIViewController {
     private func getSelectedEmoji() -> String? {
         guard let emojiCollectionsView = emojiCollectionsView,
               let indexPath = emojiCollectionsView.indexPathsForSelectedItems?.first else { return  nil }
-                
+        
         let cell = emojiCollectionsView.cellForItem(at: indexPath) as? EmojiCollectionViewCell
         return cell?.titleLabel.text
     }
@@ -317,7 +302,7 @@ final class CreateTrackerViewController: UIViewController {
         createScheduleViewController.scheduleDays = scheduleDays
         
         createScheduleViewController.createTrackerViewController = self
-
+        
         let navigationController = UINavigationController(rootViewController: createScheduleViewController)
         navigationController.modalPresentationStyle = .pageSheet
         self.present(navigationController, animated: true)
@@ -329,7 +314,7 @@ final class CreateTrackerViewController: UIViewController {
         let selectGroupViewController = SelectGroupViewController()
         selectGroupViewController.setCurrentCategory(name: categoryName)
         selectGroupViewController.createTrackerViewController = self
-//
+
         let navigationController = UINavigationController(rootViewController: selectGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
         self.present(navigationController, animated: true)
@@ -344,7 +329,6 @@ final class CreateTrackerViewController: UIViewController {
         scrollView.addSubview(textBackgroundView)
         textBackgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
         textBackgroundView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
-        //textBackgroundView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16).isActive = true
         textBackgroundView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         textBackgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor,constant: -32).isActive = true
         
@@ -362,7 +346,6 @@ final class CreateTrackerViewController: UIViewController {
         label.topAnchor.constraint(equalTo: textBackgroundView.topAnchor, constant: 27).isActive = true
         label.leadingAnchor.constraint(equalTo: textBackgroundView.leadingAnchor, constant: 16).isActive = true
         label.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -16).isActive = true
-        
         
         return (textBackgroundView, label)
     }
@@ -383,7 +366,7 @@ final class CreateTrackerViewController: UIViewController {
         table.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16).isActive = true
         table.heightAnchor.constraint(equalToConstant: CGFloat( 75 * tableItems.count)).isActive = true
         table.widthAnchor.constraint(equalTo: scrollView.widthAnchor,constant: -32).isActive = true
-      
+        
         return table
     }
     
@@ -403,9 +386,8 @@ final class CreateTrackerViewController: UIViewController {
         
         scrollView.addSubview(cancelButton)
         cancelButton.topAnchor.constraint(equalTo: colorCollectionsView.bottomAnchor, constant: 16).isActive = true
-        //cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,constant: 20).isActive = true
-       
+        
         let buttonSize =  (view.frame.size.width - 20 - 8 - 20)/2
         cancelButton.widthAnchor.constraint(equalToConstant:  buttonSize).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -425,16 +407,15 @@ final class CreateTrackerViewController: UIViewController {
         createButton.layer.cornerRadius = 19
         createButton.backgroundColor = .ypGray
         createButton.addTarget(self, action: #selector(self.createButtonPressed), for: .touchUpInside)
-        
         createButton.translatesAutoresizingMaskIntoConstraints =  false
         
         scrollView.addSubview(createButton)
-        // createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
         createButton.topAnchor.constraint(equalTo: colorCollectionsView.bottomAnchor, constant: 16).isActive = true
         createButton.leadingAnchor.constraint(equalTo: cancelButton.trailingAnchor,constant: 8).isActive = true
         createButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor,constant: -20).isActive = true
-        //createButton.widthAnchor.constraint(equalToConstant: 161).isActive = true
         createButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor).isActive = true
+        createButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor,constant: -20).isActive = true
         
         return createButton
     }

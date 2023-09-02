@@ -20,7 +20,7 @@ final class TrackerCategoryStore: NSObject {
     //
     private let context: NSManagedObjectContext
     
-
+    
     // MARK: - Initializers
     //
     convenience override init() {
@@ -35,7 +35,7 @@ final class TrackerCategoryStore: NSObject {
 
 
 extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
-
+    
     func getCategoriesCount() -> Int {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.resultType = .countResultType
@@ -49,7 +49,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
     func updateCategory(category: TrackerCategory, newCategory: TrackerCategory) -> Bool  {
         
         guard let categoryObject = getCategoryObject(category.categoryName) else { return false }
-
+        
         categoryObject.categoryName = newCategory.categoryName
         do { try context.save() } catch { return false }
         delegate?.didUpdate()
@@ -81,7 +81,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
-
+        
         return records.compactMap {
             guard let categoryName = $0.categoryName else { return nil}
             
@@ -95,22 +95,22 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
             return false
         }
         context.delete(categoryObject)
-
+        
         do {  try context.save() } catch { return false }
-
+        
         delegate?.didUpdate()
         return true
     }
     
     func getCategoryObject(_ category: String) -> TrackerCategoryCoreData? {
-
+        
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.categoryName), category)
         
         var records:[TrackerCategoryCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
-
+        
         return records.first
     }
     

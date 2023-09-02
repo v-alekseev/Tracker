@@ -41,30 +41,23 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! SupplementaryView
-        
-        print("viewForSupplementaryElementOfKind indexPath = \(indexPath)")
-        
-        view.titleLabel.text = visibleTrackers.keys.sorted()[indexPath.section] //visibleTrackers[indexPath.row].trackerCategoryName //getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
+
+        view.titleLabel.text = visibleTrackers.keys.sorted()[indexPath.section]
         return view
     }
     
     // устанавливаем размер хидера в секции
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        let indexPath = IndexPath(row: 0, section: section)
-        
-        
-        //FIXIT  UICollectionView internal inconsistency: attempting to apply nil layout attributes to view.
+    
+        // FIXIT: UICollectionView internal inconsistency: attempting to apply nil layout attributes to view.
         let headerView = SupplementaryView()
         var categoryName = ""
-        if(visibleTrackers.keys.count > 0 ) { //visibleTrackers.count != 0){
-            categoryName = visibleTrackers.keys.sorted()[section] // visibleTrackers[indexPath.row].trackerCategoryName //  getTrackerCategoryName(trackerID:  visibleTrackers[indexPath.row].trackerID )
+        if(visibleTrackers.keys.count > 0 ) {
+            categoryName = visibleTrackers.keys.sorted()[section]
         }
         
         headerView.titleLabel.text = categoryName
-        
-//        let headerView = self.collectionView(collectionView,viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-//
+
         return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width,
                                                          height: UIView.layoutFittingExpandedSize.height),
                                                   withHorizontalFittingPriority: .required,
