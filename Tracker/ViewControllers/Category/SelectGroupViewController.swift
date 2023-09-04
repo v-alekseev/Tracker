@@ -11,10 +11,8 @@ import UIKit
 
 final class SelectGroupViewController: UIViewController {
     
-    
-    // MARK: Constans
-    private let cellID = "cell"
     // MARK: public properties
+    var i = 0
     var createTrackerViewController: CreateTrackerViewController?
     
     var selectGroupViewModel = SelectGroupViewModel()
@@ -24,9 +22,11 @@ final class SelectGroupViewController: UIViewController {
     private var groupsTable:  UITableView = {
         let table = UITableView()
         
+        //table.backgroundColor = .ypBlue
         table.layer.cornerRadius = 16
         table.layer.masksToBounds = true
-        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16);
+        //table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16);
+        table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         
         return table
@@ -68,6 +68,7 @@ final class SelectGroupViewController: UIViewController {
     
     
     @objc func buttonCreateNewCategoryTapped() {
+        print("CREATE")
         let createGroupViewController = CreateGroupViewController(isUpdateAction: false)
         
         createGroupViewController.selectGroupViewModel = self.selectGroupViewModel
@@ -92,12 +93,13 @@ final class SelectGroupViewController: UIViewController {
         
         groupsTable.dataSource = self
         groupsTable.delegate = self
-        groupsTable.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        groupsTable.register(SelectGroupTableViewCell.self, forCellReuseIdentifier: SelectGroupTableViewCell.cellID)
         
         setUpUI()
         
         selectGroupViewModel.$categories.bind { [weak self]  in
-            //print("observable $categories changed")
+            print("groupsTable.reloadData() index =\(self!.i)")
+            self!.i = self!.i + 1
             self?.groupsTable.reloadData()
         }
         
@@ -159,12 +161,12 @@ extension SelectGroupViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell =  UITableViewCell()
         
-        if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: cellID)  {
+        print("cellForRowAt index = \(indexPath.row)")
+        var cell =  SelectGroupTableViewCell()
+        
+        if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: SelectGroupTableViewCell.cellID) as? SelectGroupTableViewCell {
             cell = reusedCell
-        } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellID)
         }
         
         cell.textLabel?.text = selectGroupViewModel.categories[indexPath.row];
@@ -176,6 +178,32 @@ extension SelectGroupViewController: UITableViewDataSource {
         } else {
             cell.accessoryType = .none
         }
+    
+         
+        if indexPath.row == 0 { //это первая ячейка
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 16
+            cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
+        if indexPath.row == selectGroupViewModel.categories.count - 1 {  // это последняя ячейка
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 16
+            cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            
+            cell.separator.isHidden = true
+        }
+        
+//        cell.layer.borderWidth = 1
+//        cell.layer.borderColor = UIColor.red.cgColor
+//        cell.layer.masksToBounds = true
+        
+        cell.separator.frame.size = CGSize(width:  tableView.frame.width - 16 - 16, height: 1)
+        cell.separator.frame.origin = CGPoint(x: 16, y: 75 - 1)
+        
+        print("Separator cell.bounds = \(cell.bounds),  cell.frame = \(cell.frame), seperaor.frame = \(cell.separator.frame), tableView.frame.width = \(tableView.frame.width)")
+        
+        
         
         cell.selectionStyle = .none
         
@@ -204,6 +232,7 @@ extension SelectGroupViewController: UITableViewDelegate {
                                               previewProvider: nil,
                                               actionProvider: { [weak self] suggestedActions in
             let duplicateAction = UIAction(title: NSLocalizedString("Редактировать", comment: ""), image: nil) { action in
+                print("EDIT")
                 guard let self = self else { return }
                 
                 let categoryName = self.selectGroupViewModel.categories[indexPath.row]
@@ -218,6 +247,7 @@ extension SelectGroupViewController: UITableViewDelegate {
             
             let deleteAction = UIAction(title: NSLocalizedString("Удалить", comment: ""), image: nil, attributes: .destructive) { action in
                 
+                print("DELETE")
                 guard let categoryName = self?.selectGroupViewModel.categories[indexPath.row] else { return }
                 if self?.selectGroupViewModel.deleteCategory(name: categoryName) == false {
                     self?.alert(text: "Ошибка удаления категории. Пожалуйста, сначала удалите все трекеры в этой категории.")

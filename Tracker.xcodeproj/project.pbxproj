@@ -47,6 +47,7 @@
 		D84559212A93632300A225DD /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84559202A93632300A225DD /* DataProviderProtocol.swift */; };
 		D84559262A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */; };
 		D882CF3F2AA2C94F001A23B6 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */; };
+		D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		D84559202A93632300A225DD /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
 		D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+TrackerStoreDelegate.swift"; sourceTree = "<group>"; };
 		D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
+		D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				D82DE9822AA07CEC0028DF70 /* SelectGroupViewController.swift */,
+				D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */,
 				D82DE9852AA0CA9C0028DF70 /* SelectGroupViewModel.swift */,
 				D82DE9872AA10CB50028DF70 /* CreateCategoryViewController.swift */,
 			);
@@ -365,6 +368,7 @@
 				8B36FD4C2A8770E8000DF488 /* CreateScheduleViewController.swift in Sources */,
 				D84559192A934F8500A225DD /* TrackerStore.swift in Sources */,
 				D82DE94E2A964D7E0028DF70 /* TrackerCoreData+extension.swift in Sources */,
+				D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */,
 				8B36FD5A2A8A44FD000DF488 /* TrackersViewController+UICollectionViewDelegateFlowLayout.swift in Sources */,
 				D845591B2A934FA300A225DD /* TrackerCategoryStore.swift in Sources */,
 				D81C11DC2A8AF4C1001A16E7 /* ColorsCollectionViewCell.swift in Sources */,
