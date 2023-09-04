@@ -8,11 +8,20 @@
 import Foundation
 import UIKit
 
+struct SelectCategoryDesine {
+    static let tableConerRadius: CGFloat = 16
+    static let buttonHeight: CGFloat = 60
+    static let cellHeight: CGFloat = 75
+    static let separatorIndenXLeft: CGFloat = 16
+    static let separatorIndenXRight: CGFloat = 16
+    static let separatorHeight: CGFloat = 1
+}
+
 
 final class SelectGroupViewController: UIViewController {
     
     // MARK: public properties
-    var i = 0
+
     var createTrackerViewController: CreateTrackerViewController?
     
     var selectGroupViewModel = SelectGroupViewModel()
@@ -23,7 +32,7 @@ final class SelectGroupViewController: UIViewController {
         let table = UITableView()
         
         //table.backgroundColor = .ypBlue
-        table.layer.cornerRadius = 16
+        table.layer.cornerRadius = SelectCategoryDesine.tableConerRadius
         table.layer.masksToBounds = true
         //table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16);
         table.separatorStyle = .none
@@ -51,7 +60,7 @@ final class SelectGroupViewController: UIViewController {
         return noCategoryLabel
     }()
     
-    lazy var createGroupButton: UIButton = {
+    lazy var createCategoryButton: UIButton = {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +69,7 @@ final class SelectGroupViewController: UIViewController {
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateNewCategoryTapped), for: .touchUpInside)
         button.backgroundColor = .ypBlackDay
-        button.layer.cornerRadius = 16
+        button.layer.cornerRadius = SelectCategoryDesine.tableConerRadius
         button.layer.masksToBounds = true
         
         return button
@@ -69,7 +78,7 @@ final class SelectGroupViewController: UIViewController {
     
     @objc func buttonCreateNewCategoryTapped() {
         print("CREATE")
-        let createGroupViewController = CreateGroupViewController(isUpdateAction: false)
+        let createGroupViewController = CreateGroupViewController()
         
         createGroupViewController.selectGroupViewModel = self.selectGroupViewModel
         
@@ -98,8 +107,6 @@ final class SelectGroupViewController: UIViewController {
         setUpUI()
         
         selectGroupViewModel.$categories.bind { [weak self]  in
-            print("groupsTable.reloadData() index =\(self!.i)")
-            self!.i = self!.i + 1
             self?.groupsTable.reloadData()
         }
         
@@ -120,13 +127,13 @@ final class SelectGroupViewController: UIViewController {
     
     private func setUpUI() {
         
-        view.addSubview(createGroupButton)
+        view.addSubview(createCategoryButton)
         NSLayoutConstraint.activate([
-            createGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createGroupButton.heightAnchor.constraint(equalToConstant: 60),
-            createGroupButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            createGroupButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            createGroupButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            createCategoryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createCategoryButton.heightAnchor.constraint(equalToConstant: SelectCategoryDesine.buttonHeight),
+            createCategoryButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            createCategoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            createCategoryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
         view.addSubview(noCategoryImageView)
@@ -147,7 +154,7 @@ final class SelectGroupViewController: UIViewController {
             groupsTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             groupsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             groupsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            groupsTable.bottomAnchor.constraint(equalTo: createGroupButton.topAnchor, constant: -24)
+            groupsTable.bottomAnchor.constraint(equalTo: createCategoryButton.topAnchor, constant: -24)
         ])
         
     }
@@ -182,24 +189,20 @@ extension SelectGroupViewController: UITableViewDataSource {
          
         if indexPath.row == 0 { //это первая ячейка
             cell.layer.masksToBounds = true
-            cell.layer.cornerRadius = 16
+            cell.layer.cornerRadius = SelectCategoryDesine.tableConerRadius
             cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
         
         if indexPath.row == selectGroupViewModel.categories.count - 1 {  // это последняя ячейка
             cell.layer.masksToBounds = true
-            cell.layer.cornerRadius = 16
+            cell.layer.cornerRadius = SelectCategoryDesine.tableConerRadius
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             
             cell.separator.isHidden = true
         }
         
-//        cell.layer.borderWidth = 1
-//        cell.layer.borderColor = UIColor.red.cgColor
-//        cell.layer.masksToBounds = true
-        
-        cell.separator.frame.size = CGSize(width:  tableView.frame.width - 16 - 16, height: 1)
-        cell.separator.frame.origin = CGPoint(x: 16, y: 75 - 1)
+        cell.separator.frame.size = CGSize(width:  tableView.frame.width - SelectCategoryDesine.separatorIndenXLeft - SelectCategoryDesine.separatorIndenXRight, height: SelectCategoryDesine.separatorHeight)
+        cell.separator.frame.origin = CGPoint(x: SelectCategoryDesine.separatorIndenXLeft, y: SelectCategoryDesine.cellHeight - SelectCategoryDesine.separatorHeight)
         
         print("Separator cell.bounds = \(cell.bounds),  cell.frame = \(cell.frame), seperaor.frame = \(cell.separator.frame), tableView.frame.width = \(tableView.frame.width)")
         
@@ -214,7 +217,7 @@ extension SelectGroupViewController: UITableViewDataSource {
 extension SelectGroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        return SelectCategoryDesine.cellHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -237,7 +240,7 @@ extension SelectGroupViewController: UITableViewDelegate {
                 
                 let categoryName = self.selectGroupViewModel.categories[indexPath.row]
                 
-                let createGroupViewController = CreateGroupViewController(isUpdateAction: true, currentCategory: categoryName)
+                let createGroupViewController = EditCategoryViewController(currentCategory: categoryName)
                 createGroupViewController.selectGroupViewModel = self.selectGroupViewModel
                 
                 let navigationController = UINavigationController(rootViewController: createGroupViewController)

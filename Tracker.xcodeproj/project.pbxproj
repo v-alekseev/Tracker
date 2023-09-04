@@ -48,6 +48,7 @@
 		D84559262A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */; };
 		D882CF3F2AA2C94F001A23B6 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */; };
 		D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */; };
+		D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+TrackerStoreDelegate.swift"; sourceTree = "<group>"; };
 		D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupTableViewCell.swift; sourceTree = "<group>"; };
+		D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */,
 				D82DE9852AA0CA9C0028DF70 /* SelectGroupViewModel.swift */,
 				D82DE9872AA10CB50028DF70 /* CreateCategoryViewController.swift */,
+				D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 			files = (
 				D82DE9832AA07CEC0028DF70 /* SelectGroupViewController.swift in Sources */,
 				D82DE98C2AA281DF0028DF70 /* UserDefaultsBacked.swift in Sources */,
+				D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */,
 				8B36FD4A2A850D8A000DF488 /* CreateTrackerViewController.swift in Sources */,
 				8B36FD542A8820EB000DF488 /* TrackersModels.swift in Sources */,
 				8B36FD562A883895000DF488 /* SupplementaryView.swift in Sources */,

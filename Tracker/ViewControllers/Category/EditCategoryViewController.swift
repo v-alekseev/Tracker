@@ -1,17 +1,20 @@
 //
-//  CreateCategoryViewController.swift
+//  EditGroupViewController.swift
 //  Tracker
 //
-//  Created by Vitaly on 31.08.2023.
+//  Created by Vitaly on 05.09.2023.
 //
 
 import Foundation
 import UIKit
 
 
-final class CreateGroupViewController: UIViewController {
+final class EditCategoryViewController: UIViewController {
     
-    init() {
+    private var currentCategoryName: String?
+    
+    init(currentCategory: String? = nil) {
+        self.currentCategoryName = currentCategory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,6 +44,7 @@ final class CreateGroupViewController: UIViewController {
         label.textColor = .ypBlackDay
         label.font = YFonts.fontYPRegular17
         label.backgroundColor = .clear
+        label.text = currentCategoryName
         
         label.addTarget(self, action: #selector(self.labelTextChanged), for: .editingChanged)
         
@@ -51,7 +55,7 @@ final class CreateGroupViewController: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle("Готово", for: .normal)
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateCategoryTapped), for: .touchUpInside)
@@ -67,8 +71,8 @@ final class CreateGroupViewController: UIViewController {
         guard let selectGroupViewModel = selectGroupViewModel,
               let text = categoryNameTextView.text else { return }
         
-        if selectGroupViewModel.addCategory(name:  text) == false {
-            Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
+        if selectGroupViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
+            Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") }
 
         dismiss(animated: true)
     }
@@ -85,7 +89,7 @@ final class CreateGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Новая категория"
+        self.navigationItem.title = "Редактирование категории"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         self.navigationItem.setHidesBackButton(true, animated: true)
         
