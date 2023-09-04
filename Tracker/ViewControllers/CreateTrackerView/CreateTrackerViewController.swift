@@ -421,10 +421,15 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     
+    func getCategoryeAsTextWithNewLine() -> String {
+        
+        return  categoryName == "" ? categoryName : ("\n" + categoryName)
+    }
+    
     private func setupCell(cell: UITableViewCell, cellIndex: Int) {
         
         let firstCellLine = tableItems[cellIndex]
-        let secondCellLine = (cellIndex == 0) ? "\n\(categoryName)" : scheduleDays.getScheduleAsTextWithNewLine()
+        let secondCellLine = (cellIndex == 0) ? getCategoryeAsTextWithNewLine() : scheduleDays.getScheduleAsTextWithNewLine()
         
         let cellText = NSMutableAttributedString(string: firstCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay])
         let secondCellLineAttrString = NSAttributedString(string: secondCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypGray] )
