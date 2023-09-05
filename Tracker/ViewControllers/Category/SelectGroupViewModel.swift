@@ -29,12 +29,11 @@ final class SelectGroupViewModel {
     init() {
         trackerCategoryStore.delegate = self
         
-        guard let a = trackerCategoryStore.getCategories(),
-              let currentCategory = a.first  else { return }
+        guard let trackersCategories = trackerCategoryStore.getCategories(),
+              let currentCategory = trackersCategories.first  else { return }
         
-        categories = a.map { $0.categoryName }
+        categories = trackersCategories.map { $0.categoryName }
         selectedCategory = currentCategory.categoryName
-        
     }
     
     func addCategory(name: String)  -> Bool {
@@ -46,17 +45,15 @@ final class SelectGroupViewModel {
     }
     
     func renameCategory(name: String, newCategoryName: String)  -> Bool {
-        if(name == "") {
-            return false
-        }
+        guard !name.isEmpty else { return false }
         return trackerCategoryStore.updateCategory(category: TrackerCategory(categoryName: name), newCategory: TrackerCategory(categoryName: newCategoryName))
     }
     
     func showCreateNewCategoryScreen() {
         guard let selectGroupViewController = selectGroupViewController else { return }
-        let createGroupViewController = CreateGroupViewController()
+        let createGroupViewController = CreateGroupViewController(selectGroupViewModel: selectGroupViewController.selectGroupViewModel)
         
-        createGroupViewController.selectGroupViewModel = selectGroupViewController.selectGroupViewModel
+       // createGroupViewController.selectGroupViewModel =
         
         let navigationController = UINavigationController(rootViewController: createGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
@@ -73,15 +70,11 @@ final class SelectGroupViewModel {
         navigationController.modalPresentationStyle = .pageSheet
         selectGroupViewController.present(navigationController, animated: true)
     }
-    
 }
 
 extension SelectGroupViewModel: TrackerCategoryStoreDelegateProtocol {
     func didUpdate() {
-        guard let a = trackerCategoryStore.getCategories() else { return }
-        categories = a.map { $0.categoryName }
+        guard let trackersCategories = trackerCategoryStore.getCategories() else { return }
+        categories = trackersCategories.map { $0.categoryName }
     }
-    
-    
-    
 }

@@ -8,13 +8,13 @@
 import Foundation
 
 // TODO: Переделать на протокол BaseDataProviderProtocol  c Generic <Тип записи, тип ключа для поиска>
-protocol TrackerStoreDataProviderProtocol {
+protocol TrackerStoreDataProviderProtocol: AnyObject {
     func addTracker(_ record: Tracker) -> Bool
     func getTrackers() -> [Tracker]
     func getTrackersByTextInName(text: String) -> [Tracker]
 }
 
-protocol TrackerRecordStoreDataProviderProtocol {
+protocol TrackerRecordStoreDataProviderProtocol: AnyObject {
     func getTrackerComletedDays(trackerID: UUID) -> Int
     func isRecordExist(_ record: TrackerRecord) -> Bool
     
@@ -23,7 +23,7 @@ protocol TrackerRecordStoreDataProviderProtocol {
     func deleteRecord(_ record: TrackerRecord) -> Bool
 }
 
-protocol TrackerCategoryStoreDataProviderProtocol {
+protocol TrackerCategoryStoreDataProviderProtocol: AnyObject {
     func getCategoriesCount() -> Int
     
     func addCategory(_ category: TrackerCategory) -> Bool
@@ -33,6 +33,6 @@ protocol TrackerCategoryStoreDataProviderProtocol {
     func deleteCategory(_ category: String) -> Bool
 }
 
-protocol TrackerCategoryStoreDelegateProtocol {
+protocol TrackerCategoryStoreDelegateProtocol: AnyObject {
     func didUpdate()
 }

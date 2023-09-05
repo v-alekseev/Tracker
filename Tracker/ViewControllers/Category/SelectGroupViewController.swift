@@ -19,13 +19,12 @@ struct SelectCategoryDesign {
 
 
 final class SelectGroupViewController: UIViewController {
-    
-    // MARK: public properties
+    // MARK: - Public Properties
+    //
     var createTrackerViewController: CreateTrackerViewController?
     var selectGroupViewModel = SelectGroupViewModel()
     
     // MARK: - UI elemants
-    //private var createNewGroupButton = UIButton()
     private var groupsTable:  UITableView = {
         let table = UITableView()
         
@@ -37,13 +36,13 @@ final class SelectGroupViewController: UIViewController {
         return table
     }()
     
-    lazy private var noCategoryImageView: UIImageView  = {
+    private lazy var noCategoryImageView: UIImageView  = {
         let noCategoryImageView =  UIImageView(image: UIImage(named: "NoTrackers"))
         noCategoryImageView.translatesAutoresizingMaskIntoConstraints = false
         return noCategoryImageView
     }()
     
-    lazy private var noCategoryLabel: UILabel = {
+    private lazy var noCategoryLabel: UILabel = {
         let noCategoryLabel = UILabel()
         noCategoryLabel.numberOfLines = 0
         noCategoryLabel.text = """
@@ -56,7 +55,7 @@ final class SelectGroupViewController: UIViewController {
         return noCategoryLabel
     }()
     
-    lazy var createCategoryButton: UIButton = {
+    private lazy var createCategoryButton: UIButton = {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -72,13 +71,10 @@ final class SelectGroupViewController: UIViewController {
     }()
     
     
-    @objc func buttonCreateNewCategoryTapped() {
+    @objc private func buttonCreateNewCategoryTapped() {
         selectGroupViewModel.showCreateNewCategoryScreen()
     }
     
-    func setCurrentCategory(name: String) {
-        selectGroupViewModel.selectedCategory = name
-    }
     
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
@@ -103,19 +99,23 @@ final class SelectGroupViewController: UIViewController {
         
         showLogo(true)
     }
+    // MARK: - Public Methods
+    //
     
-
-    // MARK: Public functions
+    func setCurrentCategory(name: String) {
+        selectGroupViewModel.selectedCategory = name
+    }
+    
     func alert(text: String) {
         Alert.alertInformation(viewController: self, text: text)
     }
-    
-    func showLogo(_ uiShow: Bool) {
+
+    // MARK: Private functions
+    private func showLogo(_ uiShow: Bool) {
         noCategoryImageView.isHidden = !uiShow
         noCategoryLabel.isHidden = !uiShow
     }
     
-    // MARK: Private functions
     private func setUpUI() {
         view.addSubview(createCategoryButton)
         NSLayoutConstraint.activate([
@@ -147,7 +147,6 @@ final class SelectGroupViewController: UIViewController {
         ])
     }
 }
-
 
 
 

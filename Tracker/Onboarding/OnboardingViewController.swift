@@ -11,32 +11,30 @@ import UIKit
 extension UIPageControl {
     
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        print("sizeThatFits")
         return CGSize(width: 180, height: 60)
     }
     
 }
 
 
-class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
-    lazy var pages: [UIViewController] = {
-
-// первый экран
+final class OnboardingViewController: UIPageViewController {
+    
+    private lazy var pages: [UIViewController] = {
+        // первый экран
         let first = setUPPage(imageName: "Onboarding1", text: "Отслеживайте только то, что хотите" )
-                              
-// второй экран
+        
+        // второй экран
         let second = setUPPage(imageName: "Onboarding2",
-                  text:
+                               text:
                 """
                 Даже если это
                 не литры воды и йога
                 """
-                  )
+        )
         return [first, second]
     }()
     
-    func setUPPage(imageName: String, text: String) -> UIViewController {
+    private func setUPPage(imageName: String, text: String) -> UIViewController {
         let viewController = UIViewController()
         let backgroundImageView = UIImageView(image: UIImage(named: imageName))
         backgroundImageView.contentMode =  .scaleAspectFill
@@ -51,7 +49,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         
         let labelText = UILabel()
         labelText.text = text
-
+        
         labelText.numberOfLines = 0
         labelText.textAlignment = .center
         labelText.font = YFonts.fontYPBold32
@@ -59,27 +57,29 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         labelText.translatesAutoresizingMaskIntoConstraints = false
         labelText.textColor = .ypBlackDay
         
-        labelText.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor).isActive  = true
-        labelText.topAnchor.constraint(equalTo: viewController.view.topAnchor, constant: 432).isActive = true
-        labelText.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: 16).isActive = true
-        labelText.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor, constant: -16).isActive = true
-
+        NSLayoutConstraint.activate([
+            labelText.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+            labelText.topAnchor.constraint(equalTo: viewController.view.topAnchor, constant: 432),
+            labelText.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: 16),
+            labelText.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor, constant: -16)
+        ])
+        
         return viewController
     }
-
-    lazy var pageControl: UIPageControl = {
+    
+    private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
-
+        
         pageControl.currentPageIndicatorTintColor = .ypBlackDay
         pageControl.pageIndicatorTintColor = .ypGray
-
+        
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
     
-    lazy var buttonOnboardinComplete: UIButton = {
+    private lazy var buttonOnboardinComplete: UIButton = {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -87,14 +87,14 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonOnboardinCompleteTapped), for: .touchUpInside)
-
+        
         button.backgroundColor = .ypBlackDay
         button.layer.cornerRadius = 16
-    
+        
         return button
     }()
-
-
+    
+    
     @objc func buttonOnboardinCompleteTapped() {
         // первый экран на tabBar
         guard let application = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -108,14 +108,14 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         dataSource = self
         delegate = self
-
+        
         if let first = pages.first {
             setViewControllers([first], direction: .forward, animated: true, completion: nil)
         }
-
+        
         view.addSubview(buttonOnboardinComplete)
         NSLayoutConstraint.activate([
             buttonOnboardinComplete.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -130,11 +130,12 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
             pageControl.bottomAnchor.constraint(equalTo: buttonOnboardinComplete.topAnchor, constant: -24),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-
+        
     }
+}
 
     // MARK: - UIPageViewControllerDataSource
-
+extension OnboardingViewController: UIPageViewControllerDataSource {
     // предыдущий экран
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
@@ -163,17 +164,15 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
 
         return pages[nextIndex]
     }
-
-    // MARK: - UIPageViewControllerDelegate
-
+}
+// MARK: - UIPageViewControllerDelegate
+extension OnboardingViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-
+        
         if let currentViewController = pageViewController.viewControllers?.first,
            let currentIndex = pages.firstIndex(of: currentViewController) {
             pageControl.currentPage = currentIndex
         }
     }
+    
 }
-
-
-

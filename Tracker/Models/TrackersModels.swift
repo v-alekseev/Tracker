@@ -10,20 +10,7 @@ import UIKit
 
 // TrackerCategory  - содержит имя категории и список трекеров с этой категориией
 struct TrackerCategory {
-    //let trackerIDs: [UUID]     // массив ID трекеров у которых эта категория
     let categoryName: String    // название категории
-    
-//    var trackerIDsString: String {
-//        get {
-//            let stringArray = trackerIDs.map { $0.uuidString}
-//            return stringArray.joined(separator: ",")
-//        }
-//    }
-//
-//    static func trackerIDsFromString(udids: String) -> [UUID] {
-//        let udidStingArray = udids.split(separator: ",")
-//        return udidStingArray.compactMap{ UUID(uuidString: String($0))}
-//    }
 }
 
 //  TrackerRecord структурв с информацией о том, что некий трекер был выполнен на некоторую дату;

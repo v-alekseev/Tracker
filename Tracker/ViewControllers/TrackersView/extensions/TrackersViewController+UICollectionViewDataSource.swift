@@ -21,7 +21,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? TrackerCollectionViewCell) ?? TrackerCollectionViewCell()
         
         let categoryName = visibleTrackers.getKeyByIndex(index: indexPath.section)
-        let tracker = visibleTrackers[categoryName]![indexPath.row]
+        guard let trackers = visibleTrackers[categoryName] else { return TrackerCollectionViewCell() }
+        
+        let tracker = trackers[indexPath.row]
         cell.trackersViewController = self
         cell.trackerID = tracker.trackerID
         cell.titleLabel?.text = tracker.trackerName

@@ -11,7 +11,9 @@ import UIKit
 
 final class CreateGroupViewController: UIViewController {
     
-    init() {
+    init(selectGroupViewModel: SelectGroupViewModel) {
+        self.selectGroupViewModel = selectGroupViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -19,8 +21,13 @@ final class CreateGroupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+
     // MARK: public properties
-    var selectGroupViewModel: SelectGroupViewModel?
+    private var selectGroupViewModel: SelectGroupViewModel
+
+    
+    // MARK: - UI elemants
+    
     
     let textBackgroundView: UIView = {
         let textBackgroundView = UIView()
@@ -30,7 +37,6 @@ final class CreateGroupViewController: UIViewController {
         return textBackgroundView
     }()
     
-    // MARK: - UI elemants
     lazy private var categoryNameTextView: UITextField = {
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -62,25 +68,6 @@ final class CreateGroupViewController: UIViewController {
         return button
     }()
     
-    
-    @objc func buttonCreateCategoryTapped() {
-        guard let selectGroupViewModel = selectGroupViewModel,
-              let text = categoryNameTextView.text else { return }
-        
-        if selectGroupViewModel.addCategory(name:  text) == false {
-            Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
-
-        dismiss(animated: true)
-    }
-    
-    @objc func labelTextChanged() {
-        guard let text = categoryNameTextView.text else { return }
-        
-        createGroupButton.isEnabled = !text.isEmpty
-        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
-    }
-    
-    
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +82,22 @@ final class CreateGroupViewController: UIViewController {
     }
     
     // MARK: Private functions
+    
+    @objc private func buttonCreateCategoryTapped() {
+        guard let text = categoryNameTextView.text else { return }
+        
+        if selectGroupViewModel.addCategory(name:  text) == false {
+            Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
+
+        dismiss(animated: true)
+    }
+    
+    @objc private func labelTextChanged() {
+        guard let text = categoryNameTextView.text else { return }
+        
+        createGroupButton.isEnabled = !text.isEmpty
+        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
+    }
     
     private func setUpUI() {
         

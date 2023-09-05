@@ -55,11 +55,11 @@ final class CreateTrackerViewController: UIViewController {
     private var createButton: UIButton?
     
 
-    private var scheduleDays = ScheduleDays()
+    private let scheduleDays = ScheduleDays()
     private var emojiViewControllerDelegate: EmojiViewControllerDelegate?
     private var colorViewControllerDelegate: ColorViewControllerDelegate?
     
-    private var scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
     private var categoryName: String = "" {
         didSet {

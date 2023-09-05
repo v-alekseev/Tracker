@@ -15,7 +15,8 @@ import CoreData
 final class TrackerCategoryStore: NSObject {
     
     
-    var delegate: TrackerCategoryStoreDelegateProtocol?
+    weak var delegate: TrackerCategoryStoreDelegateProtocol?
+    
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext

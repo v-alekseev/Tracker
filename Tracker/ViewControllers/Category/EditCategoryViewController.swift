@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 final class EditCategoryViewController: UIViewController {
     
     private var currentCategoryName: String?
@@ -67,24 +66,6 @@ final class EditCategoryViewController: UIViewController {
     }()
     
     
-    @objc func buttonCreateCategoryTapped() {
-        guard let selectGroupViewModel = selectGroupViewModel,
-              let text = categoryNameTextView.text else { return }
-        
-        if selectGroupViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
-            Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") }
-
-        dismiss(animated: true)
-    }
-    
-    @objc func labelTextChanged() {
-        guard let text = categoryNameTextView.text else { return }
-        
-        createGroupButton.isEnabled = !text.isEmpty
-        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
-    }
-    
-    
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,8 +81,27 @@ final class EditCategoryViewController: UIViewController {
     
     // MARK: Private functions
     
-    private func setUpUI() {
+    @objc private func buttonCreateCategoryTapped() {
+        guard let selectGroupViewModel = selectGroupViewModel,
+              let text = categoryNameTextView.text else { return }
         
+        if selectGroupViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
+            Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") {[weak self] _ in
+                self?.dismiss(animated: true)
+            }
+        } else {
+            dismiss(animated: true)
+        }
+    }
+    
+    @objc private func labelTextChanged() {
+        guard let text = categoryNameTextView.text else { return }
+        
+        createGroupButton.isEnabled = !text.isEmpty
+        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
+    }
+    
+    private func setUpUI() {
         view.addSubview(textBackgroundView)
         NSLayoutConstraint.activate([
             textBackgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
@@ -126,5 +126,4 @@ final class EditCategoryViewController: UIViewController {
             createGroupButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
-    
 }

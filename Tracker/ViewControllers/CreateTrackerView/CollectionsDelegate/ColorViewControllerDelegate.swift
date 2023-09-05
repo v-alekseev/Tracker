@@ -12,6 +12,11 @@ import UIKit
 final class ColorViewControllerDelegate: NSObject {
     weak var createTrackerViewController: CreateTrackerViewController?
     
+    let pointsBetwinCells: CGFloat = 5
+    let countCellInRow: CGFloat = 6
+    let pointsIndenXLeft: CGFloat = 18
+    let pointsIndenXRight: CGFloat = 19
+    
     init(createTrackerViewController: CreateTrackerViewController? = nil) {
         self.createTrackerViewController = createTrackerViewController
     }
@@ -65,16 +70,18 @@ extension ColorViewControllerDelegate: UICollectionViewDelegate {
 extension ColorViewControllerDelegate: UICollectionViewDelegateFlowLayout {
     // размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWight = (collectionView.bounds.width-18-19-(5*5))/6
+        let allCellsWidth = pointsBetwinCells * (countCellInRow-1)
+        let collectionWidth = collectionView.bounds.width - (pointsIndenXLeft + pointsIndenXRight + allCellsWidth)
+        let cellWight = collectionWidth/countCellInRow
         return CGSize(width: cellWight, height: cellWight)
     }
     // отступ между яейками в одном ряду
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return pointsBetwinCells
     }
     // отступы ячеек от краев  коллекции
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 19)
+        return UIEdgeInsets(top: 24, left: pointsIndenXLeft, bottom: 24, right: pointsIndenXRight)
     }
     // отвечает за вертикальные отступы  между яцейками в коллекции;
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
