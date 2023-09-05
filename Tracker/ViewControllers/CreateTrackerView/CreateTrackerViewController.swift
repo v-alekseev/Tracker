@@ -8,10 +8,7 @@
 import Foundation
 import UIKit
 
-
 final class CreateTrackerViewController: UIViewController {
-    
-    
     // MARK: - Constants
     let cellColors = [UIColor.ypColorselection1,
                       UIColor.ypColorselection2,
@@ -41,6 +38,8 @@ final class CreateTrackerViewController: UIViewController {
     var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
     var trackersViewController: TrackersViewController?
     
+    private (set) var tableItems = ["Категория", "Расписание"]
+    
     // MARK: - IBOutlet
     
     // MARK: - Private Properties
@@ -55,7 +54,7 @@ final class CreateTrackerViewController: UIViewController {
     private var cancelButton: UIButton?
     private var createButton: UIButton?
     
-    private var tableItems = ["Категория", "Расписание"]
+
     private var scheduleDays = ScheduleDays()
     private var emojiViewControllerDelegate: EmojiViewControllerDelegate?
     private var colorViewControllerDelegate: ColorViewControllerDelegate?
@@ -165,6 +164,47 @@ final class CreateTrackerViewController: UIViewController {
         categoryName = name
     }
     
+    func presentCreateScheduleViewController() {
+        
+        let createScheduleViewController = CreateScheduleViewController()
+        createScheduleViewController.scheduleDays = scheduleDays
+        
+        createScheduleViewController.createTrackerViewController = self
+        
+        let navigationController = UINavigationController(rootViewController: createScheduleViewController)
+        navigationController.modalPresentationStyle = .pageSheet
+        self.present(navigationController, animated: true)
+    }
+    
+    func presentSelectGroupViewController() {
+        
+        let selectGroupViewController = SelectGroupViewController()
+        selectGroupViewController.setCurrentCategory(name: categoryName)
+        selectGroupViewController.createTrackerViewController = self
+
+        let navigationController = UINavigationController(rootViewController: selectGroupViewController)
+        navigationController.modalPresentationStyle = .pageSheet
+        self.present(navigationController, animated: true)
+    }
+    
+    func setupCell(cell: UITableViewCell, cellIndex: Int) {
+        
+        let firstCellLine = tableItems[cellIndex]
+        let secondCellLine = (cellIndex == 0) ? getCategoryeAsTextWithNewLine() : scheduleDays.getScheduleAsTextWithNewLine()
+        
+        let cellText = NSMutableAttributedString(string: firstCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay])
+        let secondCellLineAttrString = NSAttributedString(string: secondCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypGray] )
+        cellText.append(secondCellLineAttrString)
+        
+        cell.textLabel?.attributedText = cellText
+        
+        cell.textLabel?.font = YFonts.fontYPRegular17
+        cell.textLabel?.numberOfLines = 2
+        cell.backgroundColor = .ypBackground
+        cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
+    }
+    
     // MARK: - IBAction
     @IBAction private func labelTextChanged(_ sender: UIButton) {
         self.changeFieldValueEvent()
@@ -197,6 +237,7 @@ final class CreateTrackerViewController: UIViewController {
         return
     }
     
+
     
     // MARK: - Private Methods
     private func getSelectedEmoji() -> String? {
@@ -296,29 +337,7 @@ final class CreateTrackerViewController: UIViewController {
         return colorCollectionView
     }
     
-    private func presentCreateScheduleViewController() {
-        
-        let createScheduleViewController = CreateScheduleViewController()
-        createScheduleViewController.scheduleDays = scheduleDays
-        
-        createScheduleViewController.createTrackerViewController = self
-        
-        let navigationController = UINavigationController(rootViewController: createScheduleViewController)
-        navigationController.modalPresentationStyle = .pageSheet
-        self.present(navigationController, animated: true)
-    }
-    
-    
-    private func presentSelectGroupViewController() {
-        
-        let selectGroupViewController = SelectGroupViewController()
-        selectGroupViewController.setCurrentCategory(name: categoryName)
-        selectGroupViewController.createTrackerViewController = self
 
-        let navigationController = UINavigationController(rootViewController: selectGroupViewController)
-        navigationController.modalPresentationStyle = .pageSheet
-        self.present(navigationController, animated: true)
-    }
     
     private func addTrackerNameFied() -> (UIView?, UITextField?) {
         
@@ -426,60 +445,9 @@ final class CreateTrackerViewController: UIViewController {
         return  categoryName == "" ? categoryName : ("\n" + categoryName)
     }
     
-    private func setupCell(cell: UITableViewCell, cellIndex: Int) {
-        
-        let firstCellLine = tableItems[cellIndex]
-        let secondCellLine = (cellIndex == 0) ? getCategoryeAsTextWithNewLine() : scheduleDays.getScheduleAsTextWithNewLine()
-        
-        let cellText = NSMutableAttributedString(string: firstCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay])
-        let secondCellLineAttrString = NSAttributedString(string: secondCellLine, attributes: [ NSAttributedString.Key.foregroundColor: UIColor.ypGray] )
-        cellText.append(secondCellLineAttrString)
-        
-        cell.textLabel?.attributedText = cellText
-        
-        cell.textLabel?.font = YFonts.fontYPRegular17
-        cell.textLabel?.numberOfLines = 2
-        cell.backgroundColor = .ypBackground
-        cell.accessoryType = .disclosureIndicator
-        cell.selectionStyle = .none
-    }
+
     
 }
 
-extension CreateTrackerViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell =  UITableViewCell()
-        
-        if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
-            cell = reusedCell
-        } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        }
-        
-        setupCell(cell: cell, cellIndex: indexPath.row)
-        
-        return cell
-    }
-}
 
-extension CreateTrackerViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
-            presentCreateScheduleViewController()
-        }
-        else
-        {
-            presentSelectGroupViewController()
-        }
-    }
-    
-}
+

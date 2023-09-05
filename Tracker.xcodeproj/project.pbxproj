@@ -51,6 +51,9 @@
 		D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */; };
 		D882CF452AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF442AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift */; };
 		D882CF472AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF462AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift */; };
+		D882CF492AA731A7001A23B6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */; };
+		D882CF4B2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF4A2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift */; };
+		D882CF4D2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF4C2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +103,9 @@
 		D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		D882CF442AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectGroupViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		D882CF462AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectGroupViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
+		D882CF4A2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTrackerViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		D882CF4C2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTrackerViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +177,7 @@
 				D82DE9522A96A9980028DF70 /* DaysConverter.swift */,
 				D82DE98B2AA281DF0028DF70 /* UserDefaultsBacked.swift */,
 				D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */,
+				D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -210,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				8B36FD492A850D8A000DF488 /* CreateTrackerViewController.swift */,
+				D882CF4C2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift */,
+				D882CF4A2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift */,
 				D81C11DA2A8AF498001A16E7 /* Cells */,
 				D81C11D12A8AE207001A16E7 /* CollectionsDelegate */,
 			);
@@ -355,6 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D882CF4B2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift in Sources */,
 				D82DE9832AA07CEC0028DF70 /* SelectGroupViewController.swift in Sources */,
 				D82DE98C2AA281DF0028DF70 /* UserDefaultsBacked.swift in Sources */,
 				D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */,
@@ -378,6 +388,7 @@
 				D84559172A9347EE00A225DD /* TrackerCoreDataModel.xcdatamodeld in Sources */,
 				8B36FD4C2A8770E8000DF488 /* CreateScheduleViewController.swift in Sources */,
 				D84559192A934F8500A225DD /* TrackerStore.swift in Sources */,
+				D882CF4D2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift in Sources */,
 				D82DE94E2A964D7E0028DF70 /* TrackerCoreData+extension.swift in Sources */,
 				D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */,
 				8B36FD5A2A8A44FD000DF488 /* TrackersViewController+UICollectionViewDelegateFlowLayout.swift in Sources */,
@@ -386,6 +397,7 @@
 				8B36FD582A8A44BC000DF488 /* TrackersViewController+UISearchResultsUpdating.swift in Sources */,
 				8B36FD482A84DE63000DF488 /* SelectTrackerViewController.swift in Sources */,
 				D845591F2A935AD500A225DD /* ColorToHEX.swift in Sources */,
+				D882CF492AA731A7001A23B6 /* UIViewController+extension.swift in Sources */,
 				D81C11D92A8AF346001A16E7 /* ColorViewControllerDelegate.swift in Sources */,
 				8B36FD462A83B4D5000DF488 /* Consts.swift in Sources */,
 				D82DE9532A96A9980028DF70 /* DaysConverter.swift in Sources */,

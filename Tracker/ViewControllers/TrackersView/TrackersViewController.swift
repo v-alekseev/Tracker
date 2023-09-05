@@ -92,12 +92,7 @@ class TrackersViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(self.didChangeDate), for: .valueChanged)
         let rightButton = UIBarButtonItem(customView: datePicker)
         navBar.topItem?.setRightBarButton(rightButton, animated: false)
-        
-        // TODO выводит дату не так как в ТЗ. В паке есть тред про это.,но решения нет
-        //            datePicker.translatesAutoresizingMaskIntoConstraints = false
-        //            datePicker.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        //            datePicker.locale = Locale(identifier: "en")
-        
+    
         view.frame.size.height = 200
     }
     
