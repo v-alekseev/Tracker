@@ -11,6 +11,8 @@ import UIKit
 final class SelectGroupViewModel {
     
     @Observable
+    var isShouldControllerClose = false
+    @Observable
     var categories: [String] =  []
     var selectedCategory: String = ""
     var selectionIndex: Int? {
@@ -36,19 +38,10 @@ final class SelectGroupViewModel {
         selectedCategory = currentCategory.categoryName
     }
     
-//    func addCategory(name: String)  -> Bool {
-//        return trackerCategoryStore.addCategory(TrackerCategory(categoryName: name))
-//    }
-    
     func deleteCategory(name: String) -> Bool {
         return trackerCategoryStore.deleteCategory(name)
     }
-    
-//    func renameCategory(name: String, newCategoryName: String)  -> Bool {
-//        guard !name.isEmpty else { return false }
-//        return trackerCategoryStore.updateCategory(category: TrackerCategory(categoryName: name), newCategory: TrackerCategory(categoryName: newCategoryName))
-//    }
-//    
+      
     func showCreateNewCategoryScreen() {
         guard let selectGroupViewController = selectGroupViewController else { return }
         let createGroupViewController = CreateGroupViewController()
@@ -62,7 +55,6 @@ final class SelectGroupViewModel {
         guard let selectGroupViewController = selectGroupViewController else { return }
 
         let editCategoryViewController = EditCategoryViewController(currentCategory: categoryName)
-        //editCategoryViewController.selectGroupViewModel = self
         
         let navigationController = UINavigationController(rootViewController: editCategoryViewController)
         navigationController.modalPresentationStyle = .pageSheet
@@ -74,17 +66,13 @@ final class SelectGroupViewModel {
     }
     
     func didSelectRow(index: Int) {
-        guard let selectGroupViewController = selectGroupViewController else { return }
-        
-        createTrackerViewController?.setCategoryName(name: categories[index])
-        
-        selectGroupViewController.dismiss(animated: true)
+        createTrackerViewController?.setCategoryName(name: categories[index])        
+        isShouldControllerClose = true
     }
 }
 
 extension SelectGroupViewModel: TrackerCategoryStoreDelegateProtocol {
     func didUpdate() {
-        print("Did Update")
         guard let trackersCategories = trackerCategoryStore.getCategories() else { return }
         categories = trackersCategories.map { $0.categoryName }
     }

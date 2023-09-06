@@ -68,6 +68,25 @@ final class CreateGroupViewController: UIViewController {
         view.backgroundColor = .ypWhiteDay
         
         setUpUI()
+        
+        createGroupViewModel.$categoryName.bind { [weak self]  in
+            guard let self = self else { return }
+            createGroupButton.isEnabled = !createGroupViewModel.categoryName.isEmpty
+            createGroupButton.backgroundColor = createGroupViewModel.categoryName.isEmpty ? .ypGray : .ypBlackDay
+        }
+        
+        
+        createGroupViewModel.$isAddCategorySuccsesed.bind { [weak self]  in
+            guard let self = self else { return }
+            if(createGroupViewModel.isAddCategorySuccsesed == false) {
+                Alert.alertInformation(viewController: self, text: "Ошибка создания категории")  {[weak self] _ in
+                    self?.dismiss(animated: true)
+                    return
+                }
+            } else {
+                self.dismiss(animated: true)
+            }
+        }
     }
     
     // MARK: Private functions
@@ -75,17 +94,14 @@ final class CreateGroupViewController: UIViewController {
     @objc private func buttonCreateCategoryTapped() {
         guard let text = categoryNameTextView.text else { return }
         
-        if createGroupViewModel.addCategory(name:  text) == false {
-            Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
-
-        dismiss(animated: true)
+        createGroupViewModel.addCategory(name:  text)
     }
     
     @objc private func labelTextChanged() {
         guard let text = categoryNameTextView.text else { return }
         
-        createGroupButton.isEnabled = !text.isEmpty
-        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
+        createGroupViewModel.categoryName = text
+
     }
     
     private func setUpUI() {

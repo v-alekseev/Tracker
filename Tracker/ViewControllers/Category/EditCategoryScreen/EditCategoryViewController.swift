@@ -9,11 +9,46 @@ import Foundation
 import UIKit
 
 final class EditCategoryViewController: UIViewController {
+    // MARK: - Private Properties
+    //
+    private let editCategoryViewModel = EditCategoryViewModel()
     
-    private var currentCategoryName: String?
+    // MARK: - UIViewController(*)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.title = "Редактирование категории"
+        self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        view.backgroundColor = .ypWhiteDay
+        
+        editCategoryViewModel.$newCategoryName.bind { [weak self]  in
+            guard let self = self else { return }
+            self.createGroupButton.isEnabled = !self.editCategoryViewModel.newCategoryName.isEmpty
+            self.createGroupButton.backgroundColor = self.editCategoryViewModel.newCategoryName.isEmpty ? .ypGray : .ypBlackDay
+        }
+        
+        editCategoryViewModel.$isRenameSuccsesed.bind { [weak self]  in
+            guard let self = self else { return }
+            if(editCategoryViewModel.isRenameSuccsesed == false) {
+                Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") {[weak self] _ in
+                    self?.dismiss(animated: true)
+                    return
+                }
+            } else {
+                self.dismiss(animated: true)
+            }
+           
+        }
+        
+        setUpUI()
+    }
     
-    init(currentCategory: String? = nil) {
-        self.currentCategoryName = currentCategory
+    // MARK: - Initializers
+    //
+    init(currentCategory: String) {
+        editCategoryViewModel.currentCategoryName = currentCategory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -21,19 +56,7 @@ final class EditCategoryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: public properties
-   // var selectGroupViewModel: SelectGroupViewModel?
-    let editCategoryViewModel = EditCategoryViewModel()
-    
-    let textBackgroundView: UIView = {
-        let textBackgroundView = UIView()
-        textBackgroundView.backgroundColor = .ypBackground
-        textBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        textBackgroundView.layer.cornerRadius = 16
-        return textBackgroundView
-    }()
-    
-    // MARK: - UI elemants
+    // MARK: - UI elements
     lazy private var categoryNameTextView: UITextField = {
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,7 +67,7 @@ final class EditCategoryViewController: UIViewController {
         label.textColor = .ypBlackDay
         label.font = YFonts.fontYPRegular17
         label.backgroundColor = .clear
-        label.text = currentCategoryName
+        label.text = editCategoryViewModel.currentCategoryName
         
         label.addTarget(self, action: #selector(self.labelTextChanged), for: .editingChanged)
         
@@ -66,41 +89,29 @@ final class EditCategoryViewController: UIViewController {
         return button
     }()
     
-    
-    // MARK: - UIViewController(*)
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.navigationItem.title = "Редактирование категории"
-        self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        
-        view.backgroundColor = .ypWhiteDay
-        
-        setUpUI()
-    }
-    
-    // MARK: Private functions
-    
+    let textBackgroundView: UIView = {
+        let textBackgroundView = UIView()
+        textBackgroundView.backgroundColor = .ypBackground
+        textBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        textBackgroundView.layer.cornerRadius = 16
+        return textBackgroundView
+    }()
+
+    // MARK: - IBAction
+    //
     @objc private func buttonCreateCategoryTapped() {
-        guard let text = categoryNameTextView.text else { return }
-        
-        if editCategoryViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
-            Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") {[weak self] _ in
-                self?.dismiss(animated: true)
-            }
-        } else {
-            dismiss(animated: true)
-        }
+        editCategoryViewModel.renameCategory()
     }
     
     @objc private func labelTextChanged() {
         guard let text = categoryNameTextView.text else { return }
-        
-        createGroupButton.isEnabled = !text.isEmpty
-        createGroupButton.backgroundColor = text.isEmpty ? .ypGray : .ypBlackDay
+        editCategoryViewModel.newCategoryName = text
     }
+    // MARK: - Public Methods
+    //
     
+    // MARK: - Private Methods
+    //
     private func setUpUI() {
         view.addSubview(textBackgroundView)
         NSLayoutConstraint.activate([

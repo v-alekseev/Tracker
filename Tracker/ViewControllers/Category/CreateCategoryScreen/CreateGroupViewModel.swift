@@ -6,15 +6,23 @@
 //
 
 import Foundation
-import UIKit
 
 final class CreateGroupViewModel {
     
     private var trackerCategoryStore = TrackerCategoryStore()
     
-    func addCategory(name: String)  -> Bool {
-        return trackerCategoryStore.addCategory(TrackerCategory(categoryName: name))
-    }
+    @Observable
+    var categoryName = ""
     
-
+    @Observable
+    var isAddCategorySuccsesed: Bool = true
+    
+    func addCategory(name: String) {
+        if trackerCategoryStore.addCategory(TrackerCategory(categoryName: name)) == false  {
+            isAddCategorySuccsesed = false
+            return
+        }
+        
+        isAddCategorySuccsesed = true
+    }
 }

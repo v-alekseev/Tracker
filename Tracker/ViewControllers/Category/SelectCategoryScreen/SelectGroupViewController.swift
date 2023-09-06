@@ -17,7 +17,6 @@ struct SelectCategoryDesign {
     static let separatorHeight: CGFloat = 1
 }
 
-
 final class SelectGroupViewController: UIViewController {
     // MARK: - Public Properties
     //
@@ -95,6 +94,10 @@ final class SelectGroupViewController: UIViewController {
         }
         
         selectGroupViewModel.selectGroupViewController = self
+        
+        selectGroupViewModel.$isShouldControllerClose.bind { [weak self] in
+            self?.dismiss(animated: true)
+        }
         
         showLogo(true)
     }

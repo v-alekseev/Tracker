@@ -7,17 +7,25 @@
 
 import Foundation
 
-import Foundation
-import UIKit
-
 final class EditCategoryViewModel {
+
+    var currentCategoryName: String = ""
+    @Observable
+    var newCategoryName: String = ""
+    @Observable
+    var isRenameSuccsesed: Bool = true
     
     private var trackerCategoryStore = TrackerCategoryStore()
     
-    func renameCategory(name: String, newCategoryName: String)  -> Bool {
-        guard !name.isEmpty else { return false }
-        return trackerCategoryStore.updateCategory(category: TrackerCategory(categoryName: name), newCategory: TrackerCategory(categoryName: newCategoryName))
+    func renameCategory() {
+        guard !newCategoryName.isEmpty else { return }
+        
+        if trackerCategoryStore.updateCategory(category: TrackerCategory(categoryName: currentCategoryName), newCategory: TrackerCategory(categoryName: newCategoryName)) == false {
+            isRenameSuccsesed = false
+            return
+        }
+        
+        isRenameSuccsesed = true
     }
-    
 }
 
