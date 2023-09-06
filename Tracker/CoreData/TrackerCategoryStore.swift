@@ -21,6 +21,8 @@ final class TrackerCategoryStore: NSObject {
     //
     private let context: NSManagedObjectContext
     
+    private var fetchedResultsController: NSFetchedResultsController<TrackerCategoryCoreData>!
+    
     
     // MARK: - Initializers
     //
@@ -31,6 +33,22 @@ final class TrackerCategoryStore: NSObject {
     
     init(context: NSManagedObjectContext) throws {
         self.context = context
+        super.init()
+        
+        let fetchRequest = TrackerCategoryCoreData.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \TrackerCategoryCoreData.categoryName, ascending: true)
+        ]
+        let controller = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        controller.delegate = self
+        self.fetchedResultsController = controller
+        try controller.performFetch()
     }
 }
 
@@ -53,7 +71,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         categoryObject.categoryName = newCategory.categoryName
         do { try context.save() } catch { return false }
-        delegate?.didUpdate()
+       // delegate?.didUpdate()
         return true
     }
     
@@ -64,7 +82,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         do { try context.save() } catch { return false }
         
-        delegate?.didUpdate()
+       // delegate?.didUpdate()
         return true
     }
     
@@ -99,7 +117,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         do {  try context.save() } catch { return false }
         
-        delegate?.didUpdate()
+        //delegate?.didUpdate()
         return true
     }
     
@@ -114,6 +132,19 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         return records.first
     }
-    
-    
 }
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
+    
+    func controller( _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                     didChange anObject: Any,
+                     at indexPath: IndexPath?,
+                     for type: NSFetchedResultsChangeType,
+                     newIndexPath: IndexPath?) {
+
+        self.delegate?.didUpdate()
+
+    }
+}
+

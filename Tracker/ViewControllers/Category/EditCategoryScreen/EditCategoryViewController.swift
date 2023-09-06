@@ -22,7 +22,8 @@ final class EditCategoryViewController: UIViewController {
     }
     
     // MARK: public properties
-    var selectGroupViewModel: SelectGroupViewModel?
+   // var selectGroupViewModel: SelectGroupViewModel?
+    let editCategoryViewModel = EditCategoryViewModel()
     
     let textBackgroundView: UIView = {
         let textBackgroundView = UIView()
@@ -82,10 +83,9 @@ final class EditCategoryViewController: UIViewController {
     // MARK: Private functions
     
     @objc private func buttonCreateCategoryTapped() {
-        guard let selectGroupViewModel = selectGroupViewModel,
-              let text = categoryNameTextView.text else { return }
+        guard let text = categoryNameTextView.text else { return }
         
-        if selectGroupViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
+        if editCategoryViewModel.renameCategory(name:  currentCategoryName ?? "", newCategoryName: text) == false {
             Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") {[weak self] _ in
                 self?.dismiss(animated: true)
             }

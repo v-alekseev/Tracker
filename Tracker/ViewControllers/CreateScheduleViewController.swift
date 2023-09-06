@@ -43,7 +43,6 @@ final class CreateScheduleViewController: UIViewController {
             scheduleDays.weekDays[cellIndex].dayValue = (cellSwitch?.isOn) ?? false
         }
         
-        //createTrackerViewController.sche2
         createTrackerViewController?.updateSchedulerCelltext()
         dismiss(animated: true)
         return

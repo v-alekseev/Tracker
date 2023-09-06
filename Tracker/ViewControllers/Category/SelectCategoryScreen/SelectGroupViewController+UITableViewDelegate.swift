@@ -15,10 +15,7 @@ extension SelectGroupViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let createTrackerViewController = createTrackerViewController else { return }
-        createTrackerViewController.setCategoryName(name: selectGroupViewModel.categories[indexPath.row])
-        
-        dismiss(animated: true)
+        selectGroupViewModel.didSelectRow(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView,

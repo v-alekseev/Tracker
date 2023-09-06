@@ -10,20 +10,9 @@ import UIKit
 
 
 final class CreateGroupViewController: UIViewController {
-    
-    init(selectGroupViewModel: SelectGroupViewModel) {
-        self.selectGroupViewModel = selectGroupViewModel
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 
     // MARK: public properties
-    private var selectGroupViewModel: SelectGroupViewModel
+    private var createGroupViewModel = CreateGroupViewModel()
 
     
     // MARK: - UI elemants
@@ -86,7 +75,7 @@ final class CreateGroupViewController: UIViewController {
     @objc private func buttonCreateCategoryTapped() {
         guard let text = categoryNameTextView.text else { return }
         
-        if selectGroupViewModel.addCategory(name:  text) == false {
+        if createGroupViewModel.addCategory(name:  text) == false {
             Alert.alertInformation(viewController: self, text: "Ошибка создания категории") }
 
         dismiss(animated: true)

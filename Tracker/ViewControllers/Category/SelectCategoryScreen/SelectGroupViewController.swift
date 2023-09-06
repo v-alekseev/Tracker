@@ -21,7 +21,6 @@ struct SelectCategoryDesign {
 final class SelectGroupViewController: UIViewController {
     // MARK: - Public Properties
     //
-    var createTrackerViewController: CreateTrackerViewController?
     var selectGroupViewModel = SelectGroupViewModel()
     
     // MARK: - UI elemants

@@ -180,7 +180,7 @@ final class CreateTrackerViewController: UIViewController {
         
         let selectGroupViewController = SelectGroupViewController()
         selectGroupViewController.setCurrentCategory(name: categoryName)
-        selectGroupViewController.createTrackerViewController = self
+        selectGroupViewController.selectGroupViewModel.initViewModel(createTrackerViewController: self)
 
         let navigationController = UINavigationController(rootViewController: selectGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
