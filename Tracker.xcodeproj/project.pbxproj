@@ -46,6 +46,8 @@
 		D845591F2A935AD500A225DD /* ColorToHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845591E2A935AD500A225DD /* ColorToHEX.swift */; };
 		D84559212A93632300A225DD /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84559202A93632300A225DD /* DataProviderProtocol.swift */; };
 		D84559262A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */; };
+		D86D1D592AAB623F00E14A95 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D86D1D5B2AAB623F00E14A95 /* Localizable.stringsdict */; };
+		D86D1D5E2AAB62D900E14A95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D86D1D602AAB62D900E14A95 /* Localizable.strings */; };
 		D882CF3F2AA2C94F001A23B6 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */; };
 		D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */; };
 		D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */; };
@@ -100,6 +102,11 @@
 		D845591E2A935AD500A225DD /* ColorToHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorToHEX.swift; sourceTree = "<group>"; };
 		D84559202A93632300A225DD /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
 		D84559252A93B08F00A225DD /* TrackersViewController+TrackerStoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+TrackerStoreDelegate.swift"; sourceTree = "<group>"; };
+		D86D1D5A2AAB623F00E14A95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D86D1D5C2AAB62CC00E14A95 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		D86D1D5D2AAB62CC00E14A95 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D86D1D5F2AAB62D900E14A95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D86D1D612AAB62DE00E14A95 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupTableViewCell.swift; sourceTree = "<group>"; };
 		D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +159,7 @@
 				8B36FD4D2A87947F000DF488 /* Models */,
 				8B36FD442A83B4C3000DF488 /* Utils */,
 				8B36FD432A83AF6E000DF488 /* ViewControllers */,
+				D86D1D542AAB5C9900E14A95 /* Resources */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -294,6 +302,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D86D1D542AAB5C9900E14A95 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D86D1D602AAB62D900E14A95 /* Localizable.strings */,
+				D86D1D5B2AAB623F00E14A95 /* Localizable.stringsdict */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D882CF522AA87764001A23B6 /* SelectCategoryScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +383,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 8B36FCB22A7E27C5000DF488;
 			productRefGroup = 8B36FCBC2A7E27C5000DF488 /* Products */;
@@ -383,6 +401,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B36FCCB2A7E27CA000DF488 /* LaunchScreen.storyboard in Resources */,
+				D86D1D592AAB623F00E14A95 /* Localizable.stringsdict in Resources */,
+				D86D1D5E2AAB62D900E14A95 /* Localizable.strings in Resources */,
 				8B36FCC82A7E27CA000DF488 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,8 +471,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B36FCCA2A7E27CA000DF488 /* Base */,
+				D86D1D5C2AAB62CC00E14A95 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D86D1D5B2AAB623F00E14A95 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D86D1D5A2AAB623F00E14A95 /* en */,
+				D86D1D5D2AAB62CC00E14A95 /* ru */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
+		D86D1D602AAB62D900E14A95 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D86D1D5F2AAB62D900E14A95 /* en */,
+				D86D1D612AAB62DE00E14A95 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -462,6 +501,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -522,6 +562,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

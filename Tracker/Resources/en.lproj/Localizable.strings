@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Vitaly on 08.09.2023.
+  
+*/
+
+"tracker.title" = "Трекеры";
+"tracker.logo_text" = "Что будем отслеживать?";
+"tracker.not_found" = "Ничего не найдено";
+"tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
+
