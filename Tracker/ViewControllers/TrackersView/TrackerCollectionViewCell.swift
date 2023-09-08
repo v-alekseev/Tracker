@@ -77,7 +77,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
 
     private func addCardTrackerView() -> UIView? {
         let cardTrackerView = UIView()
-        //cardTrackerView.backgroundColor = UIColor(named: "Color selection 5")!
         cardTrackerView.layer.cornerRadius = 16
         contentView.addSubview(cardTrackerView)
         cardTrackerView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +92,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
         let titleLabel = UILabel()
         titleLabel.backgroundColor = .clear
-        //titleLabel.text = "Поливать растения"
         titleLabel.font = YFonts.fontYPMedium12
         titleLabel.textColor = .ypWhite
         contentView.addSubview(titleLabel)
@@ -113,7 +111,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         emojiLabel.layer.masksToBounds = true
         emojiLabel.layer.cornerRadius = 12
         emojiLabel.backgroundColor = .ypWhite30
-        //emojiLabel.text = "❤️"
         emojiLabel.textAlignment = .center
         emojiLabel.font = YFonts.fontYPMedium12
         contentView.addSubview(emojiLabel)

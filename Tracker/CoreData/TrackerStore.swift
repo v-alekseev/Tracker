@@ -31,6 +31,8 @@ final class TrackerStore: NSObject {
     
     weak var delegate: TrackerStoreDelegate?
     
+    private var trackerCategoryStore = TrackerCategoryStore()
+    
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext
@@ -83,9 +85,12 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     }
     
     func addTracker(_ record: Tracker) -> Bool {
+        guard record.trackerCategoryName != "",
+              let categoryObj = trackerCategoryStore.getCategoryObject(record.trackerCategoryName) else { return false }
+        
         let trackerCoreData = TrackerCoreData(context: context)
-
         trackerCoreData.set(tracker: record)
+        trackerCoreData.category = categoryObj
         do { try context.save() } catch { return false }
         return true
     }
@@ -94,7 +99,7 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackerStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
+        
         insertedIndexes = IndexSet()
         deletedIndexes = IndexSet()
         updatedIndexes = IndexSet()

@@ -50,6 +50,7 @@ class ScheduleDays {
         
         return  desription == "" ? desription : ("\n" + desription)
     }
+
     
     // возвращает рассписание ативности трекера в виде строки  "Вт, Чт"
     private func getScheduleAsText() -> String {

@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+extension Dictionary where  Key : Comparable {
+    func getKeyByIndex(index: Int) -> Key {
+        return self.keys.sorted()[index]
+    }
+}
+
 
 class TrackersViewController: UIViewController {
     
@@ -21,7 +27,7 @@ class TrackersViewController: UIViewController {
     let cellId = "TrackerCell"
     
     // MARK: - Public Properties
-    var visibleTrackers: [Tracker] = []
+    var visibleTrackers: [String : [Tracker]] = [:]
     var collectionView: UICollectionView?
 
     private (set) var currentDate: Date? = Date()
@@ -62,10 +68,12 @@ class TrackersViewController: UIViewController {
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
         
+        
         // Добавляем +
         let leftButton = UIBarButtonItem(image: UIImage(named: "AddTracker"), style: .plain, target: self, action: #selector(addNewTrackerButtonTap))
         leftButton.tintColor = .black
         navBar.topItem?.setLeftBarButton(leftButton, animated: false)
+        navBar.topItem?.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         
         // добавляем строку поиска
         let seachController = UISearchController()  //
@@ -84,12 +92,7 @@ class TrackersViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(self.didChangeDate), for: .valueChanged)
         let rightButton = UIBarButtonItem(customView: datePicker)
         navBar.topItem?.setRightBarButton(rightButton, animated: false)
-        
-        // TODO выводит дату не так как в ТЗ. В паке есть тред про это.,но решения нет
-        //            datePicker.translatesAutoresizingMaskIntoConstraints = false
-        //            datePicker.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        //            datePicker.locale = Locale(identifier: "en")
-        
+    
         view.frame.size.height = 200
     }
     
@@ -117,8 +120,8 @@ class TrackersViewController: UIViewController {
     }
     
     // функция возвращает массив терекеров у которых либо нет рассписания, либо он должен быть показан в выбранную дату (день недели совпадает)
-    func getVisibleTrackers(trackers: [Tracker]) -> [Tracker] {
-        var visibleTrackers: [Tracker] = []
+    func getVisibleTrackers(trackers: [Tracker]) ->  [String : [Tracker]] {
+        var visibleTrackers: [String : [Tracker]] = [:]
         
         guard let calendar = NSCalendar(identifier: .ISO8601),
               let currentDate = currentDate else { return visibleTrackers }
@@ -128,24 +131,23 @@ class TrackersViewController: UIViewController {
         
         for tracker in trackers {
             if tracker.trackerActiveDays.count == 0 { // расписания нет, показываем каждый день
-                visibleTrackers.append(tracker)
+                if visibleTrackers[tracker.trackerCategoryName] == nil {
+                    visibleTrackers[tracker.trackerCategoryName] = []
+                }
+                visibleTrackers[tracker.trackerCategoryName]?.append(tracker)
+                
             } else {
-                let a = tracker.trackerActiveDays.filter { DaysOfWeek(rawValue: $0 ) == currentDayOfWeek }
-                if a.count > 0 { // один из дней совпас с сегодняшним днкм недели
-                    visibleTrackers.append(tracker)
+                let activeDayOnCurrentDay = tracker.trackerActiveDays.filter { DaysOfWeek(rawValue: $0 ) == currentDayOfWeek }
+                if activeDayOnCurrentDay.count > 0 { // один из дней совпас с сегодняшним днкм недели
+                    if visibleTrackers[tracker.trackerCategoryName] == nil {
+                        visibleTrackers[tracker.trackerCategoryName] = []
+                    }
+                    visibleTrackers[tracker.trackerCategoryName]?.append(tracker)
                 }
             }
         }
+        
         return visibleTrackers
-    }
-    
-    // возвращает индекс массива и название категории по  ID трекера
-    func getTrackersCategoriesCount(trackers: [Tracker]) -> Int {
-        var categories = Set<String>()
-        for tracker in trackers {
-            categories.insert(getTrackerCategoryName(trackerID: tracker.trackerID))
-        }
-        return categories.count
     }
     
     func addTrackerRecord(trackerID: UUID) -> Bool {
@@ -159,12 +161,7 @@ class TrackersViewController: UIViewController {
     }
     
     // Обработка нажатия на кнопку Сохранить на форме создания трекера
-    func addTracker(tracker: Tracker, trackerCategoryName: String) {
-        // Обрабатываем создание категории category
-        // TODO: это блок кода будет переписан в 16 спринте когда будут добавлена работа с категориями
-        
-        guard linkTrackerToCategory(trackerID: tracker.trackerID, categoryName: trackerCategoryName) else { return }
-              
+    func addTracker(tracker: Tracker) {
         if trackerStore.addTracker(tracker) == false {
             Alert.alertInformation(viewController: self, text: "Не получилось создать трекер. Давай попробуем еще раз.")
         }
@@ -175,27 +172,6 @@ class TrackersViewController: UIViewController {
     func getComletedDays(trackerID: UUID) -> Int {
         return trackerRecordStore.getTrackerComletedDays(trackerID: trackerID)
     }
-    
-    // возвращает индекс массива и название категории по  ID трекера
-    func getTrackerCategoryName(trackerID: UUID) -> String {
-        
-        // TODO: 16 спринт. Проблема с поддержкой множественных категорий
-        //        var trackerCategoryName: String = ""
-        //
-        //        for category in categories {
-        //            for uuid in category.trackerIDs {
-        //                if(uuid == trackerID) {
-        //                    trackerCategoryName = category.categoryName
-        //                    break
-        //                }
-        //            }
-        //        }
-        //
-        //        return trackerCategoryName
-        return testCategory
-    }
-    
-    
     
     // MARK: - IBAction
     // нажали кнопку добавить трекер
@@ -236,23 +212,6 @@ class TrackersViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    private func linkTrackerToCategory(trackerID: UUID, categoryName: String) -> Bool {
-        var newIds: [UUID] = []
-        
-        // Получаем TrackerCategory
-        guard let trackerCategoryRecord = trackerCategoryStore.getCategory(categoryName) else  {
-            newIds.append(trackerID)
-            return trackerCategoryStore.addCategory(TrackerCategory(trackerIDs: newIds, categoryName: categoryName))
-        }
-        
-        // добавляем в нее trackerIDs
-        newIds = trackerCategoryRecord.trackerIDs
-        newIds.append(trackerID)
-        
-        // вызываем Update
-        return trackerCategoryStore.updateCategory(TrackerCategory(trackerIDs: newIds, categoryName: categoryName))
-        
-    }
     
     private func addTrackersCollectionsView() -> UICollectionView? {
         

@@ -12,13 +12,18 @@ import UIKit
 extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleTrackers.count 
+        let categoryName = visibleTrackers.getKeyByIndex(index: section)
+        let trackers = visibleTrackers[categoryName] ?? []
+        return trackers.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-   
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? TrackerCollectionViewCell) ?? TrackerCollectionViewCell()
-        let tracker =  visibleTrackers[indexPath.row] //   trackers[indexPath.row]
+        
+        let categoryName = visibleTrackers.getKeyByIndex(index: indexPath.section)
+        guard let trackers = visibleTrackers[categoryName] else { return TrackerCollectionViewCell() }
+        
+        let tracker = trackers[indexPath.row]
         cell.trackersViewController = self
         cell.trackerID = tracker.trackerID
         cell.titleLabel?.text = tracker.trackerName
@@ -33,9 +38,13 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         
         cell.completeButton?.setImage(imageCellButtom, for: .normal)
-
-        return cell
         
+        return cell
     }
+    
+    func numberOfSections(in: UICollectionView) -> Int {
+        return visibleTrackers.keys.count
+    }
+    
     
 }

@@ -13,36 +13,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let scene = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene),
+              let application = UIApplication.shared.delegate as? AppDelegate,
+              let isCompleteOnbording = application.isCompleteOnbording else { return }
         
-        // первый экран на tabBar
-        let trackersViewController = TrackersViewController()
-        let navigationController = UINavigationController(rootViewController: trackersViewController)
-        navigationController.tabBarItem = UITabBarItem( // так, наверно, более правильно
-            title: barControllerTrackers,
-            image: UIImage(named: "trackers"),
-            selectedImage: nil
-        )
-        // второй экран на tabBar
-        let statisticViewController = StatisticViewController()
-        statisticViewController.tabBarItem = UITabBarItem(
-            title: barControllerStatisic,
-            image: UIImage(named: "Stats"),
-            selectedImage: nil
-        )
-        
-        let tabBar = TabBarController()
-        tabBar.tabBar.backgroundColor = .ypWhiteDay
-        tabBar.viewControllers = [navigationController, statisticViewController]
-        tabBar.tabBar.layer.borderWidth = 0.50
-        tabBar.tabBar.layer.borderColor = UIColor.ypGray.cgColor
-        tabBar.tabBar.clipsToBounds = true
-        
+
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = tabBar
+        let onboardingVC = OnboardingViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        let tabBarVC = application.getTabBarViewController()
+        let firstViewController = isCompleteOnbording ? tabBarVC : onboardingVC
+        
+        window?.rootViewController = firstViewController 
         window?.makeKeyAndVisible()
     }
 
