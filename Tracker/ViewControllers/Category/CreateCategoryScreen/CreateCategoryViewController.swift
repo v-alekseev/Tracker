@@ -12,7 +12,7 @@ import UIKit
 final class CreateGroupViewController: UIViewController {
 
     // MARK: public properties
-    private var createGroupViewModel = CreateGroupViewModel()
+    private let createGroupViewModel = CreateGroupViewModel()
 
     
     // MARK: - UI elemants

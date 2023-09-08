@@ -48,7 +48,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
        
         if currentDate > Date() {
-            Alert.alertInformation(viewController: trackersVC, text: "Отметить выполнение привычки в будущем никак нельзя)")
+            Alert.alertInformation(viewController: trackersVC, text: "Отметить выполнение привычки в будущем никак нельзя)")  // LOCALE "tracker.create_date_in_the_future"
             return
         }
         
@@ -68,9 +68,23 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
         // обновляем счетчик выполненного трекера
         let daysCompleted: Int = trackersVC.getComletedDays(trackerID: trackerID)
-        daysCompletedLabel?.text = "\(daysCompleted) дней"
+        
+//        let tasksString = String.localizedStringWithFormat(
+//            NSLocalizedString("numberOfDays", comment: "Number of remaining tasks"),
+//            daysCompleted
+//        )
+//        daysCompletedLabel?.text = tasksString //"\(daysCompleted) дней" // LOCALE
 
+        setDaysCompleted(daysCompleted: daysCompleted)
         return
+    }
+    
+    public func setDaysCompleted(daysCompleted: Int) {
+        let tasksString = String.localizedStringWithFormat(
+            NSLocalizedString("numberOfDays", comment: "Number of remaining tasks"),
+            daysCompleted
+        )
+        daysCompletedLabel?.text = tasksString //"\(daysCompleted) дней" // LOCALE
     }
 
     // MARK: - Private Methods
