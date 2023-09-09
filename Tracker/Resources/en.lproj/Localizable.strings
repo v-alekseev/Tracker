@@ -6,8 +6,10 @@
   
 */
 
-"tracker.title" = "Трекеры";
-"tracker.logo_text" = "Что будем отслеживать?";
-"tracker.not_found" = "Ничего не найдено";
-"tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
+"tracker.title" = "Trackers";
+"tracker.logo_text" = "What will we track?";
+"tracker.not_found" = "Nothing found";
+"tracker.create_date_in_the_future" = "There is no way to mark the implementation of a habit in the future)";
+"alert.header" = "Hi";
+"alert.button" = "Ok";
 

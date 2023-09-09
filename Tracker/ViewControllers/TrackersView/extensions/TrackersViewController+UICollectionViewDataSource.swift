@@ -28,7 +28,6 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.trackerID = tracker.trackerID
         cell.titleLabel?.text = tracker.trackerName
         cell.setDaysCompleted(daysCompleted: getComletedDays(trackerID: tracker.trackerID))
-        //cell.daysCompletedLabel?.text = "\(getComletedDays(trackerID: tracker.trackerID)) дней"
         cell.emojiLabel?.text = tracker.trackerEmodji
         cell.cardTrackerView?.backgroundColor = tracker.trackerColor
         cell.completeButton?.tintColor = tracker.trackerColor

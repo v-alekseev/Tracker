@@ -48,7 +48,8 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
        
         if currentDate > Date() {
-            Alert.alertInformation(viewController: trackersVC, text: "Отметить выполнение привычки в будущем никак нельзя)")  // LOCALE "tracker.create_date_in_the_future"
+            let alertText = NSLocalizedString("tracker.create_date_in_the_future", comment: "")
+            Alert.alertInformation(viewController: trackersVC, text: alertText)
             return
         }
         

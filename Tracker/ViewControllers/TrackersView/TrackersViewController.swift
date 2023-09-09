@@ -64,7 +64,8 @@ class TrackersViewController: UIViewController {
         guard let navBar = navigationController?.navigationBar else  { return }
         
         self.view.backgroundColor = .ypWhiteDay
-        navBar.topItem?.title = "Трекеры"  // LOCAL: tracker.title
+        
+        navBar.topItem?.title = NSLocalizedString("tracker.title", comment: "") // "Трекеры"  // LOCAL: tracker.title
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
         
@@ -100,7 +101,9 @@ class TrackersViewController: UIViewController {
         logoImageView?.isHidden = !uiShow
         logoImageView?.image = (whichLogo == .noTrackers) ? UIImage(named: "NoTrackers") : UIImage(named: "SearchError")
         logoLabel?.isHidden = !uiShow
-        logoLabel?.text = (whichLogo == .noTrackers) ? "Что будем отслеживать?" : "Ничего не найдено"  // LOGO: "tracker.logo_text" / "tracker.not_found"
+        let noTrackersText = NSLocalizedString("tracker.logo_text", comment: "")
+        let noNotFoundText = NSLocalizedString("tracker.not_found", comment: "")
+        logoLabel?.text = (whichLogo == .noTrackers) ? noTrackersText : noNotFoundText  
         collectionView?.isHidden = uiShow
     }
     

@@ -10,4 +10,6 @@
 "tracker.logo_text" = "Что будем отслеживать?";
 "tracker.not_found" = "Ничего не найдено";
 "tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
+"alert.header" = "Привет";
+"alert.button" = "Хорошо";
 
