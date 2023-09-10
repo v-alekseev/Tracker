@@ -56,6 +56,8 @@ class TrackersViewController: UIViewController {
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         
         showLogo(visibleTrackers.count == 0)
+        
+
     }
     
     // MARK: - Public Methods
@@ -64,8 +66,8 @@ class TrackersViewController: UIViewController {
         guard let navBar = navigationController?.navigationBar else  { return }
         
         self.view.backgroundColor = .ypWhiteDay
-        
-        navBar.topItem?.title = NSLocalizedString("tracker.title", comment: "") // "Трекеры"  // LOCAL: tracker.title
+ 
+        navBar.topItem?.title = L10n.Tracker.title  //NSLocalizedString("tracker.title", comment: "") // "Трекеры"  // LOCAL: tracker.title
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
         
@@ -87,8 +89,6 @@ class TrackersViewController: UIViewController {
         guard let datePicker = datePicker  else { return }
         
         datePicker.preferredDatePickerStyle = .compact
-        datePicker.calendar.firstWeekday = 2
-        //datePicker.tintColor = .ypBlackDay
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(self.didChangeDate), for: .valueChanged)
         let rightButton = UIBarButtonItem(customView: datePicker)
@@ -101,8 +101,8 @@ class TrackersViewController: UIViewController {
         logoImageView?.isHidden = !uiShow
         logoImageView?.image = (whichLogo == .noTrackers) ? UIImage(named: "NoTrackers") : UIImage(named: "SearchError")
         logoLabel?.isHidden = !uiShow
-        let noTrackersText = NSLocalizedString("tracker.logo_text", comment: "")
-        let noNotFoundText = NSLocalizedString("tracker.not_found", comment: "")
+        let noTrackersText = L10n.Tracker.logoText
+        let noNotFoundText = L10n.Tracker.notFound 
         logoLabel?.text = (whichLogo == .noTrackers) ? noTrackersText : noNotFoundText  
         collectionView?.isHidden = uiShow
     }
@@ -166,7 +166,7 @@ class TrackersViewController: UIViewController {
     // Обработка нажатия на кнопку Сохранить на форме создания трекера
     func addTracker(tracker: Tracker) {
         if trackerStore.addTracker(tracker) == false {
-            Alert.alertInformation(viewController: self, text: "Не получилось создать трекер. Давай попробуем еще раз.")
+            Alert.alertInformation(viewController: self, text: L10n.Tracker.errorCreateTracker) //"tracker.error_create_tracker" 
         }
         
     }
@@ -250,7 +250,7 @@ class TrackersViewController: UIViewController {
         guard let noTrackersImageView = logoImageView else { return nil }
         
         let noTrackersLabel = UILabel()
-        //noTrackersLabel.text = "Что будем отслеживать?"
+       // noTrackersLabel.text = "Что будем отслеживать?"
         noTrackersLabel.font = YFonts.fontYPMedium12
         noTrackersLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(noTrackersLabel)

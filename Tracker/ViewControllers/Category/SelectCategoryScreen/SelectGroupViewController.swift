@@ -57,7 +57,7 @@ final class SelectGroupViewController: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(L10n.CreateCategoryScreen.buttonAdd, for: .normal)
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateNewCategoryTapped), for: .touchUpInside)
@@ -78,7 +78,7 @@ final class SelectGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Категория"
+        self.navigationItem.title =  L10n.CategoryScreen.title //"Категория" //"categoryScreen.title"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         view.backgroundColor = .ypWhiteDay

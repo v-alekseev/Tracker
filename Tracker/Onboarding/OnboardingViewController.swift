@@ -21,15 +21,11 @@ final class OnboardingViewController: UIPageViewController {
     
     private lazy var pages: [UIViewController] = {
         // первый экран
-        let first = setUPPage(imageName: "Onboarding1", text: "Отслеживайте только то, что хотите" )
+        let first = setUPPage(imageName: "Onboarding1", text: L10n.Onbording.Screen1.text) //"Отслеживайте только то, что хотите" ) // "onbording.screen1.text"
         
         // второй экран
         let second = setUPPage(imageName: "Onboarding2",
-                               text:
-                """
-                Даже если это
-                не литры воды и йога
-                """
+                               text: L10n.Onbording.Screen2.text // "Даже если это\nне литры воды и йога" // "onbording.screen2.text"
         )
         return [first, second]
     }()
@@ -83,7 +79,7 @@ final class OnboardingViewController: UIPageViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Вот это технологии!", for: .normal)
+        button.setTitle(L10n.Onbording.Button.text, for: .normal) // "onbording.button.text" //"Вот это технологии!"
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonOnboardinCompleteTapped), for: .touchUpInside)

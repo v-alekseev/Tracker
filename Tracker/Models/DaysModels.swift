@@ -60,11 +60,14 @@ class ScheduleDays {
         for day in weekDays {
             if day.dayValue {
                 countDays += 1
-                description += day.shortDatName + ", "
+               // description += day.shortDatName + ", "
+                description += Locale.current.calendar.shortWeekdaySymbols[day.dayOfWeek.rawValue-1] + ", "
             }
         }
+        
+
         if countDays == 7 {
-            return "Каждый день"
+            return L10n.Sheduler.allDays //"Каждый день"  //"sheduler.all_days" 
         }
         
         if description.isEmpty == false {

@@ -25,15 +25,16 @@ extension SelectGroupViewController: UITableViewDelegate {
         let menu = UIContextMenuConfiguration(identifier: nil,
                                               previewProvider: nil,
                                               actionProvider: { [weak self] suggestedActions in
-            let duplicateAction = UIAction(title: NSLocalizedString("Редактировать", comment: ""), image: nil) { action in
+            //"categoryScreen.menuEdit //"Редактировать"
+            let duplicateAction = UIAction(title: NSLocalizedString(L10n.CategoryScreen.menuEdit, comment: ""), image: nil) { action in
                 guard let self = self else { return }
                 self.selectGroupViewModel.showEditCategoryScreen(categoryName: self.selectGroupViewModel.categories[indexPath.row])
             }
-            
-            let deleteAction = UIAction(title: NSLocalizedString("Удалить", comment: ""), image: nil, attributes: .destructive) { action in
+            //"categoryScreen.menuDelete" //"Удалить"
+            let deleteAction = UIAction(title: NSLocalizedString(L10n.CategoryScreen.menuDelete, comment: ""), image: nil, attributes: .destructive) { action in
                 guard let categoryName = self?.selectGroupViewModel.categories[indexPath.row] else { return }
                 if self?.selectGroupViewModel.deleteCategory(name: categoryName) == false {
-                    self?.alert(text: "Ошибка удаления категории. Пожалуйста, сначала удалите все трекеры в этой категории.")
+                    self?.alert(text: L10n.CategoryScreen.errorDelete) //"categoryScreen.errorDelete" //"Ошибка удаления категории. Пожалуйста, сначала удалите все трекеры в этой категории."
                 }
             }
             return UIMenu(title: "", children: [duplicateAction, deleteAction])

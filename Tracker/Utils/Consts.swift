@@ -11,8 +11,8 @@ import UIKit
 
 let trackerCoreDataModel = "TrackerCoreDataModel"
 
-let barControllerTrackers = "Трекеры"
-let barControllerStatisic = "Статистика"
+let barControllerTrackers = L10n.Navbar.text1 //"Трекеры" // "navbar.text1"
+let barControllerStatisic = L10n.Navbar.text2 // "Статистика" //"navbar.text2"
 
 let imageTrackerCellPlus = UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate)
 let imageTrackerCellCompleted = UIImage(named: "done_button")?.withRenderingMode(.alwaysTemplate)

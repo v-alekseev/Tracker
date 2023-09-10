@@ -19,19 +19,28 @@ final class CreateScheduleViewController: UIViewController {
     private var readyButton: UIButton?
     private var scheduleTable: UITableView?
     
+    private let weekDaysLocale: [Int] = {
+                let firstDay = Locale.current.calendar.firstWeekday
+                return (firstDay..<firstDay+7).map { $0 == 8 ? 0 : $0-1}
+    }()
+    
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .ypWhiteDay
+       // weekDaysLocale = getLocaledWeekDays(firstDay: Locale.current.calendar.firstWeekday)
+        print("weekDaysLocale = \(weekDaysLocale)")
         
-        self.navigationItem.title = "Расписание"
+        view.backgroundColor = .ypWhiteDay
+        self.navigationItem.title = L10n.Schedule.title //  "Расписание" //"schedule.title" 
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         readyButton = addReadyButton()
         scheduleTable = addScheduleTable()
         
     }
+    
+    
     
     // MARK: - IBAction
     @IBAction private func readyButtonTapped(_ sender: UIButton) {
@@ -73,7 +82,7 @@ final class CreateScheduleViewController: UIViewController {
         // первая кнопка
         let readyButton = UIButton()
         view.addSubview(readyButton)
-        readyButton.setTitle("Готово", for: .normal)
+        readyButton.setTitle(L10n.Schedule.buttonCreate, for: .normal) // "schedule.buttonCreate" //"Готово"
         readyButton.setTitleColor(.ypWhiteDay, for: .normal)
         readyButton.titleLabel?.font = YFonts.fontYPMedium16
         readyButton.layer.cornerRadius = 19
@@ -108,7 +117,20 @@ extension CreateScheduleViewController: UITableViewDataSource {
         
         guard let scheduleDays = scheduleDays else { return cell}
         
-        cell.textLabel?.text = scheduleDays.weekDays[indexPath.row].dayName
+//       // let dayIndex = Locale.current.calendar.component(.weekday, from: Date())
+//        print("Locale.current.calendar.component(.weekday, from: Date()) = \(Locale.current.calendar.component(.weekday, from: Date()))")
+//        print("Locale.current.calendar.weekdaySymbols = \(Locale.current.calendar.weekdaySymbols.first)")
+//        var l = 0
+//        for i in Locale.current.calendar.weekdaySymbols {
+//            print("day = \(i), index = \(l)")
+//            l += 1
+//        }
+//
+//
+//        print("Locale.current.calendar.firstWeekday = \(Locale.current.calendar.firstWeekday)")
+//
+        
+        cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[weekDaysLocale[indexPath.row]] //scheduleDays.weekDays[indexPath.row].dayName
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
         switchCell.onTintColor = .ypBlue

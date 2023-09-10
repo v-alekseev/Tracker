@@ -17,7 +17,7 @@ final class EditCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Редактирование категории"
+        self.navigationItem.title = L10n.EditCategoryScreen.title //"Редактирование категории" // "editCategoryScreen.title"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         self.navigationItem.setHidesBackButton(true, animated: true)
         
@@ -32,7 +32,8 @@ final class EditCategoryViewController: UIViewController {
         editCategoryViewModel.$isRenameSuccsesed.bind { [weak self]  in
             guard let self = self else { return }
             if(editCategoryViewModel.isRenameSuccsesed == false) {
-                Alert.alertInformation(viewController: self, text: "Ошибка редактирования категории") {[weak self] _ in
+                // "editCategoryScreen.errorEdit"
+                Alert.alertInformation(viewController: self, text: L10n.EditCategoryScreen.errorEdit) {[weak self] _ in
                     self?.dismiss(animated: true)
                     return
                 }
@@ -53,14 +54,14 @@ final class EditCategoryViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(L10n.Base.error)
     }
     
     // MARK: - UI elements
     lazy private var categoryNameTextView: UITextField = {
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.placeholder = "Введите название категории"
+        label.placeholder = L10n.EditCategoryScreen.placeholder  //"Введите название категории" //"editCategoryScreen.placeholder"
         label.clearsOnBeginEditing = true
         label.keyboardType = .default
         label.clearButtonMode = .whileEditing
@@ -78,7 +79,7 @@ final class EditCategoryViewController: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(L10n.EditCategoryScreen.buttonAdd, for: .normal) //"editCategoryScreen.buttonAdd"
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateCategoryTapped), for: .touchUpInside)

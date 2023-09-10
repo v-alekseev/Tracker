@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;pwd&#10;PATH=${PROJECT_DIR}/Tracker/swiftgen/:$PATH&#10;echo $PATH&#10;cd ${PROJECT_DIR}/Tracker/swiftgen/&#10;swiftgen config run&#10;pwd&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;pwd&#10;PATH=${PROJECT_DIR}/Tracker/swiftgenbin/:$PATH&#10;echo $PATH&#10;cd ${PROJECT_DIR}/Tracker/swiftgenbin/&#10;swiftgen config run&#10;pwd&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

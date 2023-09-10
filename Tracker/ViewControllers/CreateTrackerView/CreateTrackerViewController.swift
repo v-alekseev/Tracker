@@ -38,7 +38,7 @@ final class CreateTrackerViewController: UIViewController {
     var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
     var trackersViewController: TrackersViewController?
     
-    private (set) var tableItems = ["Категория", "Расписание"]
+    private (set) var tableItems = [L10n.CreateTracker.Category.buttonName] //"createTracker.category.buttonName" // "Категория"
     
     // MARK: - IBOutlet
     
@@ -81,11 +81,13 @@ final class CreateTrackerViewController: UIViewController {
         
         view.backgroundColor = .ypWhiteDay
         
-        if isEvent {
-            tableItems = ["Категория"]
+        if !isEvent { // добавим возможность выбора рассписания в трекер
+            tableItems.append(L10n.CreateTracker.Scheduler.buttonName) //("Расписание") //"createTracker.scheduler.buttonName"
         }
         
-        self.navigationItem.title = isEvent ? "Новое нерегулярное событие" : "Новая привычка"
+        // "createTracker.scheduler.title" : "createTracker.title"
+
+        self.navigationItem.title = isEvent ? L10n.CreateTracker.Scheduler.title : L10n.CreateTracker.title //"Новое нерегулярное событие" : "Новая привычка"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         view.addSubview(scrollView)
@@ -353,7 +355,7 @@ final class CreateTrackerViewController: UIViewController {
         
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.placeholder = "Введите название трекера"
+        label.placeholder = L10n.CreateTracker.inputName //"Введите название трекера"  //"createTracker.inputName"
         label.clearsOnBeginEditing = true
         label.keyboardType = .default
         label.clearButtonMode = .whileEditing
@@ -392,7 +394,7 @@ final class CreateTrackerViewController: UIViewController {
     private func addCancelButton() -> UIButton? {
         guard  let colorCollectionsView = colorCollectionsView else { return nil}
         let cancelButton = UIButton()
-        cancelButton.setTitle("Отменить", for: .normal)
+        cancelButton.setTitle(L10n.CreateTracker.buttonCancel, for: .normal)  //"createTracker.buttonCancel" "Отменить"
         cancelButton.setTitleColor(.ypRed, for: .normal)
         cancelButton.titleLabel?.font = YFonts.fontYPMedium16
         cancelButton.layer.cornerRadius = 19
@@ -420,7 +422,7 @@ final class CreateTrackerViewController: UIViewController {
               let colorCollectionsView = colorCollectionsView else { return nil}
         
         let createButton = UIButton()
-        createButton.setTitle("Создать", for: .normal)
+        createButton.setTitle(L10n.CreateTracker.buttonCreate, for: .normal) // "createTracker.buttonCreate"  ("Создать"
         createButton.setTitleColor(.ypWhiteDay, for: .normal)
         createButton.titleLabel?.font = YFonts.fontYPMedium16
         createButton.layer.cornerRadius = 19

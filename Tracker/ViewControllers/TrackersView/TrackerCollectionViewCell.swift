@@ -36,7 +36,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(L10n.Base.error)
     }
     
     // MARK: - IBAction
@@ -48,7 +48,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
        
         if currentDate > Date() {
-            let alertText = NSLocalizedString("tracker.create_date_in_the_future", comment: "")
+            let alertText = L10n.Tracker.createDateInTheFuture //NSLocalizedString("tracker.create_date_in_the_future", comment: "")
             Alert.alertInformation(viewController: trackersVC, text: alertText)
             return
         }
@@ -81,11 +81,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     public func setDaysCompleted(daysCompleted: Int) {
-        let tasksString = String.localizedStringWithFormat(
-            NSLocalizedString("numberOfDays", comment: "Number of remaining tasks"),
-            daysCompleted
-        )
-        daysCompletedLabel?.text = tasksString //"\(daysCompleted) дней" // LOCALE
+        daysCompletedLabel?.text = L10n.numberOfDays(daysCompleted) //"\(daysCompleted) дней" // LOCALE
     }
 
     // MARK: - Private Methods

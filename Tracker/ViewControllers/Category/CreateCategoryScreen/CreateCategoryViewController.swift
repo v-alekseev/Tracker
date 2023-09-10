@@ -29,7 +29,7 @@ final class CreateGroupViewController: UIViewController {
     lazy private var categoryNameTextView: UITextField = {
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.placeholder = "Введите название категории"
+        label.placeholder = L10n.CreateCategoryScreen.placeholder //"Введите название категории" // "createCategoryScreen.placeholder"
         label.clearsOnBeginEditing = true
         label.keyboardType = .default
         label.clearButtonMode = .whileEditing
@@ -46,7 +46,7 @@ final class CreateGroupViewController: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(L10n.CreateCategoryScreen.buttonAdd, for: .normal) // "Добавить категорию"
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateCategoryTapped), for: .touchUpInside)
@@ -61,7 +61,7 @@ final class CreateGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Новая категория"
+        self.navigationItem.title = L10n.CreateCategoryScreen.title //"Новая категория" //
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         self.navigationItem.setHidesBackButton(true, animated: true)
         

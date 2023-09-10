@@ -20,12 +20,12 @@ class SelectTrackerViewController: UIViewController {
 
         view.backgroundColor = .ypWhiteDay
         
-        self.navigationItem.title = "Создание трекера"
+        self.navigationItem.title = L10n.SelectTypeTracker.title
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         // первая кнопка
         let newTrackerButton = UIButton()
-        newTrackerButton.setTitle("Привычка", for: .normal)
+        newTrackerButton.setTitle(L10n.SelectTypeTracker.regularTracker, for: .normal)
         newTrackerButton.setTitleColor(.ypWhiteDay, for: .normal)
         newTrackerButton.titleLabel?.font = YFonts.fontYPMedium16
         newTrackerButton.layer.cornerRadius = 19
@@ -42,7 +42,7 @@ class SelectTrackerViewController: UIViewController {
         
         // втора кнопка
         let newEventButton = UIButton()
-        newEventButton.setTitle("Нерегулярное событие", for: .normal)
+        newEventButton.setTitle(L10n.SelectTypeTracker.irregularTracker, for: .normal)
         newEventButton.setTitleColor(.ypWhiteDay, for: .normal)
         newEventButton.titleLabel?.font = YFonts.fontYPMedium16
         newEventButton.layer.cornerRadius = 19
