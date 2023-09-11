@@ -69,13 +69,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
         // обновляем счетчик выполненного трекера
         let daysCompleted: Int = trackersVC.getComletedDays(trackerID: trackerID)
-        
-//        let tasksString = String.localizedStringWithFormat(
-//            NSLocalizedString("numberOfDays", comment: "Number of remaining tasks"),
-//            daysCompleted
-//        )
-//        daysCompletedLabel?.text = tasksString //"\(daysCompleted) дней" // LOCALE
-
         setDaysCompleted(daysCompleted: daysCompleted)
         return
     }

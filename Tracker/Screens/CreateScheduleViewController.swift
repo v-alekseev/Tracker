@@ -5,6 +5,8 @@
 //  Created by Vitaly Alekseev on 12.08.2023.
 //
 
+
+
 import Foundation
 import UIKit
 
@@ -28,7 +30,6 @@ final class CreateScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // weekDaysLocale = getLocaledWeekDays(firstDay: Locale.current.calendar.firstWeekday)
         print("weekDaysLocale = \(weekDaysLocale)")
         
         view.backgroundColor = .ypWhiteDay
@@ -45,10 +46,12 @@ final class CreateScheduleViewController: UIViewController {
     // MARK: - IBAction
     @IBAction private func readyButtonTapped(_ sender: UIButton) {
         guard let scheduleDays = scheduleDays else { return }
+        
         for cellIndex in 0..<scheduleDays.weekDays.count {
             let cellSwitchView = scheduleTable?.cellForRow(at: IndexPath(row: cellIndex, section: 0))?.accessoryView
             let cellSwitch: UISwitch? = cellSwitchView as? UISwitch
             
+            print(" scheduleDays.weekDays[cellIndex] = \( scheduleDays.weekDays[cellIndex].dayOfWeek)")
             scheduleDays.weekDays[cellIndex].dayValue = (cellSwitch?.isOn) ?? false
         }
         
@@ -116,27 +119,15 @@ extension CreateScheduleViewController: UITableViewDataSource {
         }
         
         guard let scheduleDays = scheduleDays else { return cell}
-        
-//       // let dayIndex = Locale.current.calendar.component(.weekday, from: Date())
-//        print("Locale.current.calendar.component(.weekday, from: Date()) = \(Locale.current.calendar.component(.weekday, from: Date()))")
-//        print("Locale.current.calendar.weekdaySymbols = \(Locale.current.calendar.weekdaySymbols.first)")
-//        var l = 0
-//        for i in Locale.current.calendar.weekdaySymbols {
-//            print("day = \(i), index = \(l)")
-//            l += 1
-//        }
-//
-//
-//        print("Locale.current.calendar.firstWeekday = \(Locale.current.calendar.firstWeekday)")
-//
-        
-        cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[weekDaysLocale[indexPath.row]] //scheduleDays.weekDays[indexPath.row].dayName
+  
+        cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[weekDaysLocale[indexPath.row]] 
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
         switchCell.onTintColor = .ypBlue
         cell.accessoryView = switchCell
         switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
         cell.selectionStyle = .none
+        
         
         return cell
     }

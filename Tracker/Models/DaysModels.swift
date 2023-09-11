@@ -12,22 +12,21 @@ enum DaysOfWeek: Int {
 }
 
 struct  Day {
-    let dayName: String
+   // let dayName: String
     var dayValue: Bool
-    let shortDatName: String
+   // let shortDatName: String
     let dayOfWeek: DaysOfWeek
 }
 
 class ScheduleDays {
-    
     var weekDays: [Day] = [
-        Day(dayName: "Понедельник", dayValue: false, shortDatName: "Пн", dayOfWeek: DaysOfWeek.Monday),
-        Day(dayName: "Вторник", dayValue: false, shortDatName: "Вт", dayOfWeek: DaysOfWeek.Tuesday),
-        Day(dayName: "Среда", dayValue: false, shortDatName: "Ср", dayOfWeek: DaysOfWeek.Wednesday),
-        Day(dayName: "Четверг", dayValue: false, shortDatName: "Чт", dayOfWeek: DaysOfWeek.Thursday),
-        Day(dayName: "Пятница", dayValue: false, shortDatName: "Пт", dayOfWeek: DaysOfWeek.Friday),
-        Day(dayName: "Суббота", dayValue: false, shortDatName: "Сб", dayOfWeek: DaysOfWeek.Saturday),
-        Day(dayName: "Воскресенье", dayValue: false, shortDatName: "Вс", dayOfWeek: DaysOfWeek.Sunday)
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Monday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Tuesday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Wednesday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Thursday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Friday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Saturday),
+        Day(dayValue: false, dayOfWeek: DaysOfWeek.Sunday)
     ]
 
     //MARK: public functions
@@ -60,7 +59,6 @@ class ScheduleDays {
         for day in weekDays {
             if day.dayValue {
                 countDays += 1
-               // description += day.shortDatName + ", "
                 description += Locale.current.calendar.shortWeekdaySymbols[day.dayOfWeek.rawValue-1] + ", "
             }
         }
