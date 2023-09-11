@@ -50,7 +50,6 @@
 		D86D1D5E2AAB62D900E14A95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D86D1D602AAB62D900E14A95 /* Localizable.strings */; };
 		D86D1D742AAC614300E14A95 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D86D1D732AAC614300E14A95 /* .gitignore */; };
 		D86D1D772AAC65E500E14A95 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86D1D762AAC65E500E14A95 /* Strings.swift */; };
-		D86D1D822AAF4C6D00E14A95 /* CreateScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86D1D812AAF4C6D00E14A95 /* CreateScheduleViewCell.swift */; };
 		D882CF3F2AA2C94F001A23B6 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */; };
 		D882CF412AA60F34001A23B6 /* SelectGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */; };
 		D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */; };
@@ -111,7 +110,6 @@
 		D86D1D612AAB62DE00E14A95 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D86D1D732AAC614300E14A95 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		D86D1D762AAC65E500E14A95 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Strings.swift; path = Generated/Strings.swift; sourceTree = "<group>"; };
-		D86D1D812AAF4C6D00E14A95 /* CreateScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewCell.swift; sourceTree = "<group>"; };
 		D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		D882CF402AA60F34001A23B6 /* SelectGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupTableViewCell.swift; sourceTree = "<group>"; };
 		D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
@@ -179,8 +177,7 @@
 				8B36FD472A84DE62000DF488 /* SelectTrackerViewController.swift */,
 				D81C11CE2A8AE154001A16E7 /* CreateTrackerView */,
 				8B36FD412A83AEC2000DF488 /* StatisticViewController.swift */,
-				8B36FD4B2A8770E8000DF488 /* CreateScheduleViewController.swift */,
-				D86D1D812AAF4C6D00E14A95 /* CreateScheduleViewCell.swift */,
+				D86D1D832AAF4D0400E14A95 /* CreateSchedule */,
 				D82DE9842AA07EDF0028DF70 /* Category */,
 			);
 			path = Screens;
@@ -319,6 +316,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D86D1D832AAF4D0400E14A95 /* CreateSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				8B36FD4B2A8770E8000DF488 /* CreateScheduleViewController.swift */,
+			);
+			path = CreateSchedule;
+			sourceTree = "<group>";
+		};
 		D882CF522AA87764001A23B6 /* SelectCategoryScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,7 +432,6 @@
 				D82DE9832AA07CEC0028DF70 /* SelectGroupViewController.swift in Sources */,
 				D82DE98C2AA281DF0028DF70 /* UserDefaultsBacked.swift in Sources */,
 				D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */,
-				D86D1D822AAF4C6D00E14A95 /* CreateScheduleViewCell.swift in Sources */,
 				8B36FD4A2A850D8A000DF488 /* CreateTrackerViewController.swift in Sources */,
 				8B36FD542A8820EB000DF488 /* TrackersModels.swift in Sources */,
 				D882CF472AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift in Sources */,

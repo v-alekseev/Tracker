@@ -14,23 +14,20 @@ final class CreateScheduleViewController: UIViewController {
     
 
     // MARK: - Public Properties
-    var scheduleDays: ScheduleDays?
+    weak var scheduleDays: ScheduleDays?
     var createTrackerViewController: CreateTrackerViewController?
     
     // MARK: - Private Properties
     private var readyButton: UIButton?
     private var scheduleTable: UITableView?
     
-    private let weekDaysLocale: [Int] = {
-                let firstDay = Locale.current.calendar.firstWeekday
-                return (firstDay..<firstDay+7).map { $0 == 8 ? 0 : $0-1}
-    }()
+
     
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("weekDaysLocale = \(weekDaysLocale)")
+        print("weekDaysLocale = \(ScheduleDays.weekDaysLocale)")
         
         view.backgroundColor = .ypWhiteDay
         self.navigationItem.title = L10n.Schedule.title //  "Расписание" //"schedule.title" 
@@ -48,10 +45,9 @@ final class CreateScheduleViewController: UIViewController {
         guard let scheduleDays = scheduleDays else { return }
         
         for cellIndex in 0..<scheduleDays.weekDays.count {
-            let cellSwitchView = scheduleTable?.cellForRow(at: IndexPath(row: cellIndex, section: 0))?.accessoryView
-            let cellSwitch: UISwitch? = cellSwitchView as? UISwitch
+            let cell = scheduleTable?.cellForRow(at: IndexPath(row: cellIndex, section: 0)) //as? CreateScheduleViewCell
+            let cellSwitch = cell?.accessoryView as? UISwitch
             
-            print(" scheduleDays.weekDays[cellIndex] = \( scheduleDays.weekDays[cellIndex].dayOfWeek)")
             scheduleDays.weekDays[cellIndex].dayValue = (cellSwitch?.isOn) ?? false
         }
         
@@ -112,23 +108,26 @@ extension CreateScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell =  UITableViewCell()
         
-        if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell")  {
+        if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: "cell") { //as? CreateScheduleViewCell  {
             cell = reusedCell
-        } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
-        
         guard let scheduleDays = scheduleDays else { return cell}
   
-        cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[weekDaysLocale[indexPath.row]] 
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
         switchCell.onTintColor = .ypBlue
         cell.accessoryView = switchCell
-        switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
         cell.selectionStyle = .none
         
-        
+        cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[scheduleDays.weekDays[indexPath.row].dayIndex]
+        switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
+
+        //switchCell.addTarget(cell, action: #selector(cell.selectorPressed), for: .touchUpInside)
+        //switchCell.addAction(<#T##action: UIAction##UIAction#>, for: <#T##UIControl.Event#>)
+
+
+
+
         return cell
     }
 }

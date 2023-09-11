@@ -130,7 +130,6 @@ class TrackersViewController: UIViewController {
               let currentDate = currentDate else { return visibleTrackers }
         
         let currentDay = calendar.component(.weekday, from: currentDate)
-        let currentDayOfWeek =  DaysOfWeek(rawValue: currentDay)
         
         for tracker in trackers {
             if tracker.trackerActiveDays.count == 0 { // расписания нет, показываем каждый день
@@ -140,7 +139,7 @@ class TrackersViewController: UIViewController {
                 visibleTrackers[tracker.trackerCategoryName]?.append(tracker)
                 
             } else {
-                let activeDayOnCurrentDay = tracker.trackerActiveDays.filter { DaysOfWeek(rawValue: $0 ) == currentDayOfWeek }
+                let activeDayOnCurrentDay = tracker.trackerActiveDays.filter { $0 == currentDay }
                 if activeDayOnCurrentDay.count > 0 { // один из дней совпас с сегодняшним днкм недели
                     if visibleTrackers[tracker.trackerCategoryName] == nil {
                         visibleTrackers[tracker.trackerCategoryName] = []
