@@ -122,12 +122,6 @@ extension CreateScheduleViewController: UITableViewDataSource {
         cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[scheduleDays.weekDays[indexPath.row].dayIndex]
         switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
 
-        //switchCell.addTarget(cell, action: #selector(cell.selectorPressed), for: .touchUpInside)
-        //switchCell.addAction(<#T##action: UIAction##UIAction#>, for: <#T##UIControl.Event#>)
-
-
-
-
         return cell
     }
 }

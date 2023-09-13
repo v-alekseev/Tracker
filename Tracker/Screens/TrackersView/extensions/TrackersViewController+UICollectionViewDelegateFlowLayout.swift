@@ -63,4 +63,26 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                                                   withHorizontalFittingPriority: .required,
                                                   verticalFittingPriority: .fittingSizeLevel)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(actionProvider: { suggestedActions in
+
+           if indexPaths.count == 1 {
+                // Construct a single-item menu.
+                return UIMenu(children: [
+                    UIAction(title: L10n.Tracker.ContextMenu.pin) { _ in     //TODO: Unpun L10n.Tracker.ContextMenu.unpin
+                       // TODO: pin tracker
+                    },
+                    UIAction(title: L10n.Tracker.ContextMenu.edit) { _ in
+                        // TODO: edit tracker
+                       },
+                    UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { _ in
+                        // TODO: delete tracker
+                    }
+                ])
+            }
+            
+            return nil
+        })
+    }
 }

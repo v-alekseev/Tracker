@@ -33,6 +33,8 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         quantityManagementView = addQuantityManagementView()
         daysCompletedLabel = addDaysCompletedLabel()
         completeButton = addCompleteButton()
+        
+        contentView.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

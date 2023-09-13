@@ -131,6 +131,16 @@ internal enum L10n {
     /// 
     ///   Created by Vitaly on 08.09.2023.
     internal static let title = L10n.tr("Localizable", "tracker.title", fallback: "Трекеры")
+    internal enum ContextMenu {
+      /// Удалить
+      internal static let delete = L10n.tr("Localizable", "tracker.contextMenu.delete", fallback: "Удалить")
+      /// Редактировать
+      internal static let edit = L10n.tr("Localizable", "tracker.contextMenu.edit", fallback: "Редактировать")
+      /// Закрепить
+      internal static let pin = L10n.tr("Localizable", "tracker.contextMenu.pin", fallback: "Закрепить")
+      /// Открепить
+      internal static let unpin = L10n.tr("Localizable", "tracker.contextMenu.unpin", fallback: "Открепить")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
