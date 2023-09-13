@@ -72,7 +72,7 @@ final class TrackerStore: NSObject {
 
 // TODO: добавить в DataProviderProtocol<Tracker>
 extension TrackerStore: TrackerStoreDataProviderProtocol {
-    
+
     func getTrackersByTextInName(text: String) -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
         let filtredTrackers = trackers.filter { $0.trackerName?.contains(text) ?? false }
@@ -93,6 +93,26 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         trackerCoreData.category = categoryObj
         do { try context.save() } catch { return false }
         return true
+    }
+    
+    func deleteTracker(_ trackerID: UUID) -> Bool {
+        guard let trackerObject = getTrackerObject(trackerID) else { return false }
+        context.delete(trackerObject)
+        
+        do {  try context.save() } catch { return false }
+        return true
+    }
+    
+    func getTrackerObject(_ uuid: UUID) -> TrackerCoreData? {
+        
+        let request = NSFetchRequest<TrackerCoreData>(entityName: "TrackerCoreData")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCoreData.trackerID), uuid.uuidString)
+        
+        var records:[TrackerCoreData] = []
+        do { records = try context.fetch(request) } catch { return nil }
+        
+        return records.first
     }
 }
 
@@ -128,6 +148,7 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
                      at indexPath: IndexPath?,
                      for type: NSFetchedResultsChangeType,
                      newIndexPath: IndexPath?) {
+        
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { fatalError() }

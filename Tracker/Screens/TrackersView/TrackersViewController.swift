@@ -167,7 +167,12 @@ class TrackersViewController: UIViewController {
         if trackerStore.addTracker(tracker) == false {
             Alert.alertInformation(viewController: self, text: L10n.Tracker.errorCreateTracker) //"tracker.error_create_tracker" 
         }
-        
+    }
+    
+    func deleteTracker(trackerID: UUID) {
+        if trackerStore.deleteTracker(trackerID) == false {
+            Alert.alertInformation(viewController: self, text: L10n.Tracker.errorEditTracker) //"tracker.error_create_tracker"
+        }
     }
     
     // сколько дней выполнен трекер

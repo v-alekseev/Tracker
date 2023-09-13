@@ -12,6 +12,7 @@ protocol TrackerStoreDataProviderProtocol: AnyObject {
     func addTracker(_ record: Tracker) -> Bool
     func getTrackers() -> [Tracker]
     func getTrackersByTextInName(text: String) -> [Tracker]
+    func deleteTracker(_ trackerID: UUID) -> Bool
 }
 
 protocol TrackerRecordStoreDataProviderProtocol: AnyObject {

@@ -122,6 +122,8 @@ internal enum L10n {
     internal static let createDateInTheFuture = L10n.tr("Localizable", "tracker.create_date_in_the_future", fallback: "Отметить выполнение привычки в будущем никак нельзя)")
     /// Не получилось создать трекер. Давай попробуем еще раз.
     internal static let errorCreateTracker = L10n.tr("Localizable", "tracker.error_create_tracker", fallback: "Не получилось создать трекер. Давай попробуем еще раз.")
+    /// Не получилось удалить трекер. Давай попробуем еще раз.
+    internal static let errorEditTracker = L10n.tr("Localizable", "tracker.errorEditTracker", fallback: "Не получилось удалить трекер. Давай попробуем еще раз.")
     /// Что будем отслеживать?
     internal static let logoText = L10n.tr("Localizable", "tracker.logoText", fallback: "Что будем отслеживать?")
     /// Ничего не найдено

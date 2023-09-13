@@ -116,8 +116,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         context.delete(categoryObject)
         
         do {  try context.save() } catch { return false }
-        
-        //delegate?.didUpdate()
+
         return true
     }
     

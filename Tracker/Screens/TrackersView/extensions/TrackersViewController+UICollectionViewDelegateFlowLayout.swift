@@ -41,14 +41,14 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! SupplementaryView
-
+        
         view.titleLabel.text = visibleTrackers.keys.sorted()[indexPath.section]
         return view
     }
     
     // устанавливаем размер хидера в секции
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    
+        
         // FIXIT: UICollectionView internal inconsistency: attempting to apply nil layout attributes to view.
         let headerView = SupplementaryView()
         var categoryName = ""
@@ -57,7 +57,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         }
         
         headerView.titleLabel.text = categoryName
-
+        
         return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width,
                                                          height: UIView.layoutFittingExpandedSize.height),
                                                   withHorizontalFittingPriority: .required,
@@ -65,19 +65,26 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(actionProvider: { suggestedActions in
-
-           if indexPaths.count == 1 {
+        
+        return UIContextMenuConfiguration(actionProvider: { [weak self] suggestedActions in
+            guard let self = self else { return nil}
+           
+            let cell = collectionView.cellForItem(at: indexPaths.first!) as? TrackerCollectionViewCell
+            print("indexPaths = \(indexPaths) cell tracker ID = \(cell?.trackerID), cell.titleLabel?.text = \(cell?.titleLabel?.text)")
+            
+            if indexPaths.count == 1 {
                 // Construct a single-item menu.
                 return UIMenu(children: [
                     UIAction(title: L10n.Tracker.ContextMenu.pin) { _ in     //TODO: Unpun L10n.Tracker.ContextMenu.unpin
-                       // TODO: pin tracker
+                        // TODO: pin tracker
                     },
                     UIAction(title: L10n.Tracker.ContextMenu.edit) { _ in
                         // TODO: edit tracker
-                       },
-                    UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { _ in
-                        // TODO: delete tracker
+                    },
+                    UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
+                        guard let self = self,
+                              let trackerID = cell?.trackerID else { return }
+                        self.deleteTracker(trackerID: trackerID)
                     }
                 ])
             }
