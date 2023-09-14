@@ -42,6 +42,10 @@
 "createTracker.inputName" = "Введите название трекера";
 "createTracker.buttonCancel" = "Отменить";
 "createTracker.buttonCreate" = "Создать";
+"createTracker.buttonSave" = "Сохранить";
+
+"editTracker.scheduler.title" =  "Редактирование нерегулярного события" ;
+"editTracker.title" = "Редактирование привычки";
 
 "statistic.title" = "Статистика";
 "statistic.lebel" = "Пока тут ничего нет";

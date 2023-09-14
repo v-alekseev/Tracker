@@ -42,7 +42,7 @@ struct Tracker {
         self.trackerID = trackerID
         self.trackerName = trackerName
         self.trackerEmodji = trackerEmodji
-        self.trackerColor = UIColorMarshalling(colorHex: trackerColorHEX).color
+        self.trackerColor =  UIColor(hex: trackerColorHEX) ?? .clear
         self.trackerActiveDays = DaysConverter.getActiveDaysInt(days: daysOfWeek)
         self.trackerCategoryName = trackerCategoryName
         self.isPinned = tracker.isPinned
@@ -64,7 +64,7 @@ struct Tracker {
         self.trackerCategoryName = trackerCategoryName
         self.isPinned = isPinned
     }
-    // инициализатор копирует tracker в новый с только изменением isPinned. trackerID не меняется
+    /// инициализатор копирует tracker в новый с только изменением isPinned. trackerID не меняется
     init(tracker: Tracker, isPinned: Bool) {
         self.trackerID = tracker.trackerID // не меняем
         self.trackerName = tracker.trackerName // не меняем
@@ -74,7 +74,7 @@ struct Tracker {
         self.trackerCategoryName = tracker.trackerCategoryName // не меняем
         self.isPinned = isPinned
     }
-    // инициализатор копирует tracker в новый с изменением всех параметров кроме trackerID . trackerID не меняется
+    /// инициализатор копирует tracker в новый с изменением всех параметров кроме trackerID . trackerID не меняется
     init(tracker: Tracker,
          trackerName: String,
          trackerEmodji: String,
@@ -89,6 +89,16 @@ struct Tracker {
         self.trackerActiveDays = trackerScheduleDays
         self.trackerCategoryName = trackerCategoryName
         self.isPinned = isPinned
+    }
+    ///  инициализатор пустого трекера.  Поле trackerID будет заполнено сгенерированным UUID
+    init() {
+        self.trackerID = UUID()
+        self.trackerName = ""
+        self.trackerEmodji = ""
+        self.trackerColor = UIColor.clear
+        self.trackerActiveDays = []
+        self.trackerCategoryName = ""
+        self.isPinned = false
     }
 }
 

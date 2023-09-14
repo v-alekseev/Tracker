@@ -11,6 +11,14 @@ import Foundation
 struct  Day {
     var dayValue: Bool = false
     var dayIndex: Int // index ( 0 .. 6) в массивах типа calendar.shortWeekdaySymbol
+    
+    init(dayIndex: Int) {
+        self.init(dayValue: false, dayIndex: dayIndex)
+    }
+    init(dayValue: Bool, dayIndex: Int) {
+        self.dayValue = dayValue
+        self.dayIndex = dayIndex
+    }
 }
 
 class ScheduleDays {
@@ -33,6 +41,10 @@ class ScheduleDays {
     // возвращает список дней недели в которые активирован трекер
     func getActiveDayInScheduleDays() -> [Int] {
         return activeWeekDays.map { $0.dayIndex+1 }  // +1 т.к. номера дней идут от 1 до 7 (напримкр тут calendar.firstWeekday)
+    }
+    
+    func setActiveDays(tracker: Tracker) {
+        weekDays = weekDays.map { tracker.trackerActiveDays.contains($0.dayIndex+1) ? Day(dayValue: true, dayIndex:  $0.dayIndex) : $0 }
     }
     
     // добавляет перенос строки перед строкой расписания.

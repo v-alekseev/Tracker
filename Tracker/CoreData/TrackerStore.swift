@@ -120,7 +120,6 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         guard let trackerObject = getTrackerObject(tracker.trackerID) else { return false }
 
         trackerObject.update(tracker: tracker)
-        print("updateTracker currentCategoryName=\(String(describing: trackerObject.category?.categoryName)), newCategoryName=\(tracker.trackerCategoryName)")
         if let currentTracetCategoryName = trackerObject.category?.categoryName,
            currentTracetCategoryName != tracker.trackerCategoryName,
            !tracker.trackerCategoryName.isEmpty {

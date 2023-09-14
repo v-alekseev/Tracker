@@ -12,7 +12,7 @@ extension TrackerCoreData {
         self.trackerID = tracker.trackerID
         self.trackerEmodji = tracker.trackerEmodji
         self.trackerName = tracker.trackerName
-        self.trackerColorHEX = UIColorMarshalling(color: tracker.trackerColor).colorHex
+        self.trackerColorHEX = tracker.trackerColor.toHex
         self.daysOfWeek = DaysConverter.getActiveDaysString(days: tracker.trackerActiveDays)
         self.isPinned = tracker.isPinned
     }
@@ -21,7 +21,7 @@ extension TrackerCoreData {
         // self.trackerID = tracker.trackerID
         self.trackerEmodji = tracker.trackerEmodji
         self.trackerName = tracker.trackerName
-        self.trackerColorHEX = UIColorMarshalling(color: tracker.trackerColor).colorHex
+        self.trackerColorHEX = tracker.trackerColor.toHex
         self.daysOfWeek = DaysConverter.getActiveDaysString(days: tracker.trackerActiveDays)
         self.isPinned = tracker.isPinned
     }

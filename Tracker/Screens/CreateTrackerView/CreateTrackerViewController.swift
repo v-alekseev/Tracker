@@ -35,7 +35,7 @@ final class CreateTrackerViewController: UIViewController {
     let colorCellId = "ColorCell"
     
     // MARK: - Public Properties
-    var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
+
     var trackersViewController: TrackersViewController?
     
     private (set) var tableItems = [L10n.CreateTracker.Category.buttonName] //"createTracker.category.buttonName" // "Категория"
@@ -43,6 +43,13 @@ final class CreateTrackerViewController: UIViewController {
     // MARK: - IBOutlet
     
     // MARK: - Private Properties
+    // TODO: убрать isEvent в  конструктор тоже
+    var isEvent = false // Если true, то создаем трекер(привычку) и нужна дата на экране. Иначе создаем нерегулрное событие без кнопки расписание
+    private var isEdit = false // Если true, то это режим редактирования трекера
+    
+    private var tracker: Tracker?
+    
+    
     private var label: UITextField?
     private var labelView: UIView?
     private var tableView: UITableView?
@@ -74,10 +81,26 @@ final class CreateTrackerViewController: UIViewController {
         }
     }
     
+    convenience init() {
+        self.init( isEdit: false, tracker: Tracker())
+    }
+    
+    init( isEdit: Bool, tracker: Tracker) {
+        super.init(nibName: nil, bundle: nil)
+        self.isEdit = isEdit
+        self.tracker = tracker
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UIViewController(*)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        guard let tracker = tracker else { return }
         
         view.backgroundColor = .ypWhiteDay
         
@@ -87,7 +110,10 @@ final class CreateTrackerViewController: UIViewController {
         
         // "createTracker.scheduler.title" : "createTracker.title"
 
-        self.navigationItem.title = isEvent ? L10n.CreateTracker.Scheduler.title : L10n.CreateTracker.title //"Новое нерегулярное событие" : "Новая привычка"
+        let createTracerTitle = isEvent ? L10n.CreateTracker.Scheduler.title : L10n.CreateTracker.title
+        let editTracerTitle = isEvent ? L10n.EditTracker.Scheduler.title : L10n.EditTracker.title
+        
+        self.navigationItem.title = isEdit ? editTracerTitle : createTracerTitle
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         view.addSubview(scrollView)
@@ -112,14 +138,24 @@ final class CreateTrackerViewController: UIViewController {
         createButton = addCreateButton()
         
         changeFieldValueEvent()  // задизайблим кнопку Создать
+        
+        if isEdit { // заполним поля экрана из трекере
+            label?.text = tracker.trackerName
+            categoryName = tracker.trackerCategoryName
+            scheduleDays.setActiveDays(tracker: tracker)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         guard let emojiCollectionsView = emojiCollectionsView,
-              let colorCollectionsView = colorCollectionsView else { return }
+              let colorCollectionsView = colorCollectionsView,
+              let tracker = tracker else { return }
         
-        selectFirstItemInCollection(collection: emojiCollectionsView)
-        selectFirstItemInCollection(collection: colorCollectionsView)
+        let emojiIndex = !isEdit ? 0 : (emojis.firstIndex(of: tracker.trackerEmodji) ?? 0)
+        selectItemInCollection(collection: emojiCollectionsView, index: emojiIndex)
+        
+        let colorIndex = !isEdit ? 0 : (cellColors.firstIndex(where: {$0.toHex == tracker.trackerColor.toHex}) ?? 0)
+        selectItemInCollection(collection: colorCollectionsView, index: colorIndex)
     }
     
     // MARK: - Public Methods
@@ -223,9 +259,11 @@ final class CreateTrackerViewController: UIViewController {
         guard let trackerName = label?.text,
               let selectedEmoji = getSelectedEmoji(),
               let selectedColor = getSelectedColor(),
-              let trackersViewController = trackersViewController else { return }
+              let trackersViewController = trackersViewController,
+              let tracker = tracker else { return }
         
-        let newTracker = Tracker(trackerID: UUID(),
+        // tracker создается в конструкторе. Или это трекер который надо редактировать или просто пустой, если у нас создание трекера
+        let newTracker = Tracker(tracker: tracker,
                                  trackerName: trackerName,
                                  trackerEmodji: selectedEmoji,
                                  trackerColor: selectedColor,
@@ -233,8 +271,11 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerCategoryName: categoryName,
                                  isPinned: false)
         
-        
-        trackersViewController.addTracker(tracker: newTracker)
+        if isEdit {
+            trackersViewController.updateTracker(tracker: newTracker)
+        } else {
+            trackersViewController.addTracker(tracker: newTracker)
+        }
         trackersViewController.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
         
         return
@@ -259,9 +300,10 @@ final class CreateTrackerViewController: UIViewController {
         return cell?.colorView.backgroundColor
     }
     
-    private func selectFirstItemInCollection(collection: UICollectionView) {
-        collection.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .centeredVertically)
-        collection.delegate?.collectionView?(collection, didSelectItemAt: IndexPath(row: 0, section: 0))
+    private func selectItemInCollection(collection: UICollectionView, index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
+        collection.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+        collection.delegate?.collectionView?(collection, didSelectItemAt: indexPath)
     }
     
     private func addEmojiTextLabel() -> UILabel? {
@@ -423,7 +465,8 @@ final class CreateTrackerViewController: UIViewController {
               let colorCollectionsView = colorCollectionsView else { return nil}
         
         let createButton = UIButton()
-        createButton.setTitle(L10n.CreateTracker.buttonCreate, for: .normal) // "createTracker.buttonCreate"  ("Создать"
+        let buttonText = isEdit ? L10n.CreateTracker.buttonSave : L10n.CreateTracker.buttonCreate
+        createButton.setTitle(buttonText, for: .normal) // "createTracker.buttonCreate"  ("Создать"
         createButton.setTitleColor(.ypWhiteDay, for: .normal)
         createButton.titleLabel?.font = YFonts.fontYPMedium16
         createButton.layer.cornerRadius = 19

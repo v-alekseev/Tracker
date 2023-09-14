@@ -34,7 +34,7 @@ extension ColorViewControllerDelegate: UICollectionViewDataSource {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: createTrackerViewController.colorCellId, for: indexPath) as? ColorsCollectionViewCell) ?? ColorsCollectionViewCell()
         
         cell.colorView.backgroundColor = createTrackerViewController.cellColors[indexPath.row]
-        //cell.backgroundColor = .red
+
         return cell
     }
     
@@ -50,11 +50,7 @@ extension ColorViewControllerDelegate: UICollectionViewDelegate {
         cell.backView.layer.borderWidth = 3
         cell.backView.layer.cornerRadius = 8
         cell.backView.layer.borderColor = cell.colorView.backgroundColor?.withAlphaComponent(0.3).cgColor
-        
-//        cell.layer.borderWidth = 3
-//        cell.layer.cornerRadius = 8
-//        cell.layer.borderColor = cell.colorView.backgroundColor?.withAlphaComponent(0.3).cgColor
-//
+
         self.createTrackerViewController?.changeFieldValueEvent()
     }
     

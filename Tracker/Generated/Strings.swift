@@ -47,6 +47,8 @@ internal enum L10n {
     internal static let buttonCancel = L10n.tr("Localizable", "createTracker.buttonCancel", fallback: "Отменить")
     /// Создать
     internal static let buttonCreate = L10n.tr("Localizable", "createTracker.buttonCreate", fallback: "Создать")
+    /// Сохранить
+    internal static let buttonSave = L10n.tr("Localizable", "createTracker.buttonSave", fallback: "Сохранить")
     /// Введите название трекера
     internal static let inputName = L10n.tr("Localizable", "createTracker.inputName", fallback: "Введите название трекера")
     /// Новая привычка
@@ -71,6 +73,14 @@ internal enum L10n {
     internal static let placeholder = L10n.tr("Localizable", "editCategoryScreen.placeholder", fallback: "Введите название категории")
     /// Редактирование категории
     internal static let title = L10n.tr("Localizable", "editCategoryScreen.title", fallback: "Редактирование категории")
+  }
+  internal enum EditTracker {
+    /// Редактирование привычки
+    internal static let title = L10n.tr("Localizable", "editTracker.title", fallback: "Редактирование привычки")
+    internal enum Scheduler {
+      /// Редактирование нерегулярного события
+      internal static let title = L10n.tr("Localizable", "editTracker.scheduler.title", fallback: "Редактирование нерегулярного события")
+    }
   }
   internal enum Navbar {
     /// Трекеры

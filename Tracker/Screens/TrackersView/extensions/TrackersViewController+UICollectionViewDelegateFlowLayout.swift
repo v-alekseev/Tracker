@@ -69,7 +69,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         return UIContextMenuConfiguration(actionProvider: { [weak self] suggestedActions in
             guard let self = self,
                   let cell = collectionView.cellForItem(at: indexPaths.first!) as? TrackerCollectionViewCell,
-                  let isCellPinned = cell.isPinned else { return UIMenu() }
+                  let isCellPinned = cell.isPinned,
+                  let tracker = cell.tracker else { return UIMenu() }
             
             let pinMenuItemString = isCellPinned ? L10n.Tracker.ContextMenu.unpin : L10n.Tracker.ContextMenu.pin
             if indexPaths.count == 1 {
@@ -80,7 +81,14 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                         self.updateTracker(tracker: newTracker)
                     },
                     UIAction(title: L10n.Tracker.ContextMenu.edit) { _ in
-                        // TODO: edit tracker
+                        let createTrackerViewController = CreateTrackerViewController(isEdit: true, tracker: tracker)
+                        createTrackerViewController.isEvent = false
+                        createTrackerViewController.trackersViewController = self
+
+                        let navigationController = UINavigationController(rootViewController: createTrackerViewController)
+                        navigationController.modalPresentationStyle = .pageSheet
+                        
+                        self.present(navigationController, animated: true)
                     },
                     UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                         guard let self = self,

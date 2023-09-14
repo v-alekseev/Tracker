@@ -40,6 +40,11 @@
 "createTracker.inputName" = "Enter tracker name";
 "createTracker.buttonCancel" = "Cancel";
 "createTracker.buttonCreate" = "Create";
+"createTracker.buttonSave" = "Save";
+
+"editTracker.scheduler.title" =  "Edit irregular event" ;
+"editTracker.title" = "Edit habbit";
+
 
 "statistic.title" = "Statistics";
 "statistic.lebel" = "There's nothing here yet";
