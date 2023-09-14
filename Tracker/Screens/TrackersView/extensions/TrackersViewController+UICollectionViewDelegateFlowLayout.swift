@@ -42,7 +42,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as! SupplementaryView
         
-        view.titleLabel.text = visibleTrackers.keys.sorted()[indexPath.section]
+        view.titleLabel.text = visibleTrackers.getKeyByIndex(index: indexPath.section) //visibleTrackers.keys.sorted()[indexPath.section]
         return view
     }
     
@@ -53,7 +53,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         let headerView = SupplementaryView()
         var categoryName = ""
         if(visibleTrackers.keys.count > 0 ) {
-            categoryName = visibleTrackers.keys.sorted()[section]
+            categoryName =  visibleTrackers.getKeyByIndex(index: section) //visibleTrackers.keys.sorted()[section]
         }
         
         headerView.titleLabel.text = categoryName
@@ -67,29 +67,30 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         
         return UIContextMenuConfiguration(actionProvider: { [weak self] suggestedActions in
-            guard let self = self else { return nil}
-           
-            let cell = collectionView.cellForItem(at: indexPaths.first!) as? TrackerCollectionViewCell
-            print("indexPaths = \(indexPaths) cell tracker ID = \(cell?.trackerID), cell.titleLabel?.text = \(cell?.titleLabel?.text)")
+            guard let self = self,
+                  let cell = collectionView.cellForItem(at: indexPaths.first!) as? TrackerCollectionViewCell,
+                  let isCellPinned = cell.isPinned else { return UIMenu() }
             
+            let pinMenuItemString = isCellPinned ? L10n.Tracker.ContextMenu.unpin : L10n.Tracker.ContextMenu.pin
             if indexPaths.count == 1 {
-                // Construct a single-item menu.
                 return UIMenu(children: [
-                    UIAction(title: L10n.Tracker.ContextMenu.pin) { _ in     //TODO: Unpun L10n.Tracker.ContextMenu.unpin
-                        // TODO: pin tracker
+                    UIAction(title: pinMenuItemString) { _ in
+                        guard let currentTracker = cell.tracker else {return}
+                        let newTracker = Tracker(tracker: currentTracker, isPinned: !isCellPinned)
+                        self.updateTracker(tracker: newTracker)
                     },
                     UIAction(title: L10n.Tracker.ContextMenu.edit) { _ in
                         // TODO: edit tracker
                     },
                     UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                         guard let self = self,
-                              let trackerID = cell?.trackerID else { return }
+                              let trackerID = cell.trackerID else { return }
                         self.deleteTracker(trackerID: trackerID)
                     }
                 ])
             }
             
-            return nil
+            return UIMenu()
         })
     }
 }

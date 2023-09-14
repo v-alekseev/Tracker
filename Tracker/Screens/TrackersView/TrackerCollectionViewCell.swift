@@ -18,6 +18,9 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     var completeButton: UIButton?
     var emojiLabel: UILabel?
     var cardTrackerView: UIView?
+    var isPinned: Bool?
+    
+    var tracker: Tracker?
 
     // MARK: - Private Properties
     private var isPressed = false

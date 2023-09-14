@@ -84,12 +84,12 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
-    func addTracker(_ record: Tracker) -> Bool {
-        guard record.trackerCategoryName != "",
-              let categoryObj = trackerCategoryStore.getCategoryObject(record.trackerCategoryName) else { return false }
+    func addTracker(_ tracker: Tracker) -> Bool {
+        guard tracker.trackerCategoryName != "",
+              let categoryObj = trackerCategoryStore.getCategoryObject(tracker.trackerCategoryName) else { return false }
         
         let trackerCoreData = TrackerCoreData(context: context)
-        trackerCoreData.set(tracker: record)
+        trackerCoreData.set(tracker: tracker)
         trackerCoreData.category = categoryObj
         do { try context.save() } catch { return false }
         return true
@@ -113,6 +113,25 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         do { records = try context.fetch(request) } catch { return nil }
         
         return records.first
+    }
+    
+    /// ID менять нельзя,  records измеить нельзя
+    func updateTracker(_ tracker: Tracker) -> Bool {
+        guard let trackerObject = getTrackerObject(tracker.trackerID) else { return false }
+
+        trackerObject.update(tracker: tracker)
+        print("updateTracker currentCategoryName=\(String(describing: trackerObject.category?.categoryName)), newCategoryName=\(tracker.trackerCategoryName)")
+        if let currentTracetCategoryName = trackerObject.category?.categoryName,
+           currentTracetCategoryName != tracker.trackerCategoryName,
+           !tracker.trackerCategoryName.isEmpty {
+            
+            guard let categoryObj = trackerCategoryStore.getCategoryObject(tracker.trackerCategoryName) else { return false }
+            trackerObject.category = categoryObj
+        }
+        
+        do {  try context.save() } catch { return false }
+        
+        return true
     }
 }
 

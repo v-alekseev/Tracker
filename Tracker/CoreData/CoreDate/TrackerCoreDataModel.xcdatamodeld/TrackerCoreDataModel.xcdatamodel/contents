@@ -6,6 +6,7 @@
     </entity>
     <entity name="TrackerCoreData" representedClassName="TrackerCoreData" syncable="YES" codeGenerationType="class">
         <attribute name="daysOfWeek" optional="YES" attributeType="String"/>
+        <attribute name="isPinned" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="trackerColorHEX" optional="YES" attributeType="String"/>
         <attribute name="trackerEmodji" optional="YES" attributeType="String"/>
         <attribute name="trackerID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

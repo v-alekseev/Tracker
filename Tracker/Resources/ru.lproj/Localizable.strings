@@ -14,6 +14,8 @@
 "tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
 "tracker.error_create_tracker" = "Не получилось создать трекер. Давай попробуем еще раз.";
 "tracker.errorEditTracker" = "Не получилось удалить трекер. Давай попробуем еще раз.";
+"tracker.errorUpdateTracker" = "Не получилось удалить трекер. Давай попробуем еще раз.";
+"tracker.pinnedCategory" = "Закрепленные";
 "tracker.contextMenu.pin" = "Закрепить";
 "tracker.contextMenu.unpin" = "Открепить";
 "tracker.contextMenu.edit" = "Редактировать";

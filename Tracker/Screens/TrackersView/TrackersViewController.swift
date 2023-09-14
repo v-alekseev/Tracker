@@ -10,7 +10,19 @@ import UIKit
 
 extension Dictionary where  Key : Comparable {
     func getKeyByIndex(index: Int) -> Key {
-        return self.keys.sorted()[index]
+        guard let impotantCategory = impotantCategory as? Key else { return self.keys.sorted()[index]}
+        let sortedArray = moveElementToStart(array: self.keys.sorted(), element: impotantCategory)
+        return sortedArray[index]
+    }
+    
+    private func moveElementToStart<T: Equatable>( array: [T], element: T) -> [T]  {
+        guard  let indexOfElement = array.firstIndex(of: element) else { return array}
+
+        var sortedArray = array
+        let element = sortedArray.remove(at: indexOfElement)
+        sortedArray.insert(element, at: sortedArray.startIndex)
+        
+        return sortedArray
     }
 }
 
@@ -124,31 +136,31 @@ class TrackersViewController: UIViewController {
     
     // функция возвращает массив терекеров у которых либо нет рассписания, либо он должен быть показан в выбранную дату (день недели совпадает)
     func getVisibleTrackers(trackers: [Tracker]) ->  [String : [Tracker]] {
-        var visibleTrackers: [String : [Tracker]] = [:]
-        
         guard let calendar = NSCalendar(identifier: .ISO8601),
               let currentDate = currentDate else { return visibleTrackers }
-        
+
+        var visibleTrackers: [String : [Tracker]] = [:]
         let currentDay = calendar.component(.weekday, from: currentDate)
         
-        for tracker in trackers {
-            if tracker.trackerActiveDays.count == 0 { // расписания нет, показываем каждый день
-                if visibleTrackers[tracker.trackerCategoryName] == nil {
-                    visibleTrackers[tracker.trackerCategoryName] = []
-                }
-                visibleTrackers[tracker.trackerCategoryName]?.append(tracker)
-                
-            } else {
-                let activeDayOnCurrentDay = tracker.trackerActiveDays.filter { $0 == currentDay }
-                if activeDayOnCurrentDay.count > 0 { // один из дней совпас с сегодняшним днкм недели
-                    if visibleTrackers[tracker.trackerCategoryName] == nil {
-                        visibleTrackers[tracker.trackerCategoryName] = []
-                    }
-                    visibleTrackers[tracker.trackerCategoryName]?.append(tracker)
-                }
-            }
+        // фильтр по дате [Tracker] -> [Tracker]
+        let filtersOnDate = trackers.filter {
+            if $0.trackerActiveDays.isEmpty { return true }
+            if $0.trackerActiveDays.contains(currentDay) { return true }
+            return false
         }
         
+        // фильтр по фильтрам  [Tracker] -> [Tracker]
+        // TODO: реализовать фильтрацию в зависимости от выбранного фильра
+        
+        // create visibleTrackers from  [Tracker] -> [String : [Tracker]]
+        for tracker in filtersOnDate {
+            let category = tracker.isPinned ? impotantCategory : tracker.trackerCategoryName
+            if visibleTrackers[category] == nil {
+                    visibleTrackers[category] = []
+                }
+            visibleTrackers[category]?.append(tracker)
+        }
+
         return visibleTrackers
     }
     
@@ -166,6 +178,12 @@ class TrackersViewController: UIViewController {
     func addTracker(tracker: Tracker) {
         if trackerStore.addTracker(tracker) == false {
             Alert.alertInformation(viewController: self, text: L10n.Tracker.errorCreateTracker) //"tracker.error_create_tracker" 
+        }
+    }
+    
+    func updateTracker(tracker: Tracker) {
+        if trackerStore.updateTracker(tracker) == false {
+            Alert.alertInformation(viewController: self, text: L10n.Tracker.errorUpdateTracker) //"tracker.error_create_tracker"
         }
     }
     

@@ -12,6 +12,8 @@
 "tracker.create_date_in_the_future" = "There is no way to mark the implementation of a habit in the future)";
 "tracker.error_create_tracker" = "Failed to create tracker. Let's try again.";
 "tracker.errorEditTracker" = "Failed to delete tracker. Let's try again.";
+"tracker.errorUpdateTracker" = "Failed to update tracker. Let's try again.";
+"tracker.pinnedCategory" = "Pinned";
 "tracker.contextMenu.pin" = "Pin";
 "tracker.contextMenu.unpin" = "Unpin";
 "tracker.contextMenu.edit" = "Edit";

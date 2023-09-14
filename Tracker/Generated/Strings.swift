@@ -124,10 +124,14 @@ internal enum L10n {
     internal static let errorCreateTracker = L10n.tr("Localizable", "tracker.error_create_tracker", fallback: "Не получилось создать трекер. Давай попробуем еще раз.")
     /// Не получилось удалить трекер. Давай попробуем еще раз.
     internal static let errorEditTracker = L10n.tr("Localizable", "tracker.errorEditTracker", fallback: "Не получилось удалить трекер. Давай попробуем еще раз.")
+    /// Не получилось удалить трекер. Давай попробуем еще раз.
+    internal static let errorUpdateTracker = L10n.tr("Localizable", "tracker.errorUpdateTracker", fallback: "Не получилось удалить трекер. Давай попробуем еще раз.")
     /// Что будем отслеживать?
     internal static let logoText = L10n.tr("Localizable", "tracker.logoText", fallback: "Что будем отслеживать?")
     /// Ничего не найдено
     internal static let notFound = L10n.tr("Localizable", "tracker.notFound", fallback: "Ничего не найдено")
+    /// Закрепленные
+    internal static let pinnedCategory = L10n.tr("Localizable", "tracker.pinnedCategory", fallback: "Закрепленные")
     /// Localizable.strings
     ///   Tracker
     /// 

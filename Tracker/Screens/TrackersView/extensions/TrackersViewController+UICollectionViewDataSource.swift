@@ -24,6 +24,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         guard let trackers = visibleTrackers[categoryName] else { return TrackerCollectionViewCell() }
         
         let tracker = trackers[indexPath.row]
+        cell.tracker = tracker
+        // TODO: убрать строки типа cell.trackerID = tracker.trackerID т.к. теперь есть cell.tracker = tracker
         cell.trackersViewController = self
         cell.trackerID = tracker.trackerID
         cell.titleLabel?.text = tracker.trackerName
@@ -31,6 +33,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.emojiLabel?.text = tracker.trackerEmodji
         cell.cardTrackerView?.backgroundColor = tracker.trackerColor
         cell.completeButton?.tintColor = tracker.trackerColor
+        cell.isPinned = tracker.isPinned
+        
+
         
         var imageCellButtom = imageTrackerCellPlus
         if let currentDate = currentDate {

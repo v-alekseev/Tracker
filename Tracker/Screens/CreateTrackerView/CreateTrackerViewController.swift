@@ -230,7 +230,8 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerEmodji: selectedEmoji,
                                  trackerColor: selectedColor,
                                  trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays(),
-                                 trackerCategoryName: categoryName)
+                                 trackerCategoryName: categoryName,
+                                 isPinned: false)
         
         
         trackersViewController.addTracker(tracker: newTracker)

@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 
+let impotantCategory = L10n.Tracker.pinnedCategory
+
 let trackerCoreDataModel = "TrackerCoreDataModel"
 
 let barControllerTrackers = L10n.Navbar.text1 //"Трекеры" // "navbar.text1"

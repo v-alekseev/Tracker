@@ -27,15 +27,17 @@ struct Tracker {
     let trackerColor: UIColor
     let trackerActiveDays: [Int]
     let trackerCategoryName: String
+    let isPinned: Bool
     
+    /// инициализатор из TrackerCoreData
     init?(tracker: TrackerCoreData) {
         guard let  trackerID = tracker.trackerID,
-        let trackerName = tracker.trackerName,
-        let trackerEmodji = tracker.trackerEmodji,
-        let trackerColorHEX = tracker.trackerColorHEX,
-        let daysOfWeek = tracker.daysOfWeek,
-        let trackerCategoryName = tracker.category?.categoryName else { return nil }
-        
+              let trackerName = tracker.trackerName,
+              let trackerEmodji = tracker.trackerEmodji,
+              let trackerColorHEX = tracker.trackerColorHEX,
+              let daysOfWeek = tracker.daysOfWeek,
+   //           let isPinned = tracker.isPinned,
+              let trackerCategoryName = tracker.category?.categoryName else { return nil }
         
         self.trackerID = trackerID
         self.trackerName = trackerName
@@ -43,14 +45,16 @@ struct Tracker {
         self.trackerColor = UIColorMarshalling(colorHex: trackerColorHEX).color
         self.trackerActiveDays = DaysConverter.getActiveDaysInt(days: daysOfWeek)
         self.trackerCategoryName = trackerCategoryName
+        self.isPinned = tracker.isPinned
     }
-    
+    /// базовый инициализатор
     init(trackerID: UUID,
          trackerName: String,
          trackerEmodji: String,
          trackerColor: UIColor,
          trackerScheduleDays: [Int],
-         trackerCategoryName: String) {
+         trackerCategoryName: String,
+         isPinned: Bool) {
         
         self.trackerID = trackerID
         self.trackerName = trackerName
@@ -58,8 +62,34 @@ struct Tracker {
         self.trackerColor = trackerColor
         self.trackerActiveDays = trackerScheduleDays
         self.trackerCategoryName = trackerCategoryName
+        self.isPinned = isPinned
     }
-    
+    // инициализатор копирует tracker в новый с только изменением isPinned. trackerID не меняется
+    init(tracker: Tracker, isPinned: Bool) {
+        self.trackerID = tracker.trackerID // не меняем
+        self.trackerName = tracker.trackerName // не меняем
+        self.trackerEmodji = tracker.trackerEmodji // не меняем
+        self.trackerColor = tracker.trackerColor // не меняем
+        self.trackerActiveDays = tracker.trackerActiveDays // не меняем
+        self.trackerCategoryName = tracker.trackerCategoryName // не меняем
+        self.isPinned = isPinned
+    }
+    // инициализатор копирует tracker в новый с изменением всех параметров кроме trackerID . trackerID не меняется
+    init(tracker: Tracker,
+         trackerName: String,
+         trackerEmodji: String,
+         trackerColor: UIColor,
+         trackerScheduleDays: [Int],
+         trackerCategoryName: String,
+         isPinned: Bool) {
+        self.trackerID = tracker.trackerID  // не меняем
+        self.trackerName = trackerName
+        self.trackerEmodji = trackerEmodji
+        self.trackerColor = trackerColor
+        self.trackerActiveDays = trackerScheduleDays
+        self.trackerCategoryName = trackerCategoryName
+        self.isPinned = isPinned
+    }
 }
 
 
