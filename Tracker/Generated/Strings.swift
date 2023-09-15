@@ -82,6 +82,16 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "editTracker.scheduler.title", fallback: "Редактирование нерегулярного события")
     }
   }
+  internal enum Filter {
+    /// Все
+    internal static let all = L10n.tr("Localizable", "filter.all", fallback: "Все")
+    /// Завершенные
+    internal static let completed = L10n.tr("Localizable", "filter.completed", fallback: "Завершенные")
+    /// Трекеры на сегодня
+    internal static let today = L10n.tr("Localizable", "filter.today", fallback: "Трекеры на сегодня")
+    /// Не завершенные
+    internal static let uncompleted = L10n.tr("Localizable", "filter.uncompleted", fallback: "Не завершенные")
+  }
   internal enum Navbar {
     /// Трекеры
     internal static let text1 = L10n.tr("Localizable", "navbar.text1", fallback: "Трекеры")
@@ -136,6 +146,8 @@ internal enum L10n {
     internal static let errorEditTracker = L10n.tr("Localizable", "tracker.errorEditTracker", fallback: "Не получилось удалить трекер. Давай попробуем еще раз.")
     /// Не получилось удалить трекер. Давай попробуем еще раз.
     internal static let errorUpdateTracker = L10n.tr("Localizable", "tracker.errorUpdateTracker", fallback: "Не получилось удалить трекер. Давай попробуем еще раз.")
+    /// Фильтры
+    internal static let filters = L10n.tr("Localizable", "tracker.filters", fallback: "Фильтры")
     /// Что будем отслеживать?
     internal static let logoText = L10n.tr("Localizable", "tracker.logoText", fallback: "Что будем отслеживать?")
     /// Ничего не найдено

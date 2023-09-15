@@ -18,6 +18,12 @@
 "tracker.contextMenu.unpin" = "Unpin";
 "tracker.contextMenu.edit" = "Edit";
 "tracker.contextMenu.delete" = "Delete";
+"tracker.filters" = "Filters";
+
+"filter.all" = "All";
+"filter.today" = "Today trackers";
+"filter.completed" = "Completed";
+"filter.uncompleted" = "Uncompleted";
 
 "alert.header" = "Hi";
 "alert.button" = "Ok";

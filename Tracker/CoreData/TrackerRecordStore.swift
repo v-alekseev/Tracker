@@ -14,6 +14,7 @@ final class TrackerRecordStore: NSObject {
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext
+    private let trackerStrore = TrackerStore()
     
     // MARK: - Initializers
     //
@@ -42,8 +43,10 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     func addRecord(_ record: TrackerRecord) -> Bool {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         
+        let trackerObject = trackerStrore.getTrackerObject(record.trackerID)
         trackerRecordCoreData.date = record.date
         trackerRecordCoreData.trackerID = record.trackerID
+        trackerRecordCoreData.tracker = trackerObject
         
         do { try context.save() } catch { return false }
         return true

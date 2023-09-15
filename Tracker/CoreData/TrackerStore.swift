@@ -84,6 +84,17 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
+    func getCompletedTrackersAtDay(onDate: Date) -> [Tracker] {
+        var trackers:[TrackerCoreData] = []
+        let request = TrackerCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "records.date CONTAINS %@", onDate as CVarArg)
+    
+        do { trackers = try context.fetch(request) } catch { return [] }
+        
+        return trackers.compactMap { Tracker(tracker: $0)}
+    }
+    
     func addTracker(_ tracker: Tracker) -> Bool {
         guard tracker.trackerCategoryName != "",
               let categoryObj = trackerCategoryStore.getCategoryObject(tracker.trackerCategoryName) else { return false }
@@ -145,7 +156,6 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
         delegate?.didUpdate(
             updateIndexes: TrackerStoreUpdateIndexes(
                 insertedIndexes: insertedIndexes ?? IndexSet(),

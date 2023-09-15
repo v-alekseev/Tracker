@@ -20,6 +20,12 @@
 "tracker.contextMenu.unpin" = "Открепить";
 "tracker.contextMenu.edit" = "Редактировать";
 "tracker.contextMenu.delete" = "Удалить";
+"tracker.filters" = "Фильтры";
+
+"filter.all" = "Все";
+"filter.today" = "Трекеры на сегодня";
+"filter.completed" = "Завершенные";
+"filter.uncompleted" = "Не завершенные";
 
 "alert.header" = "Привет";
 "alert.button" = "Хорошо";

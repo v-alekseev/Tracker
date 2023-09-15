@@ -29,6 +29,12 @@ struct YFonts {
     static let fontYPMedium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
 }
 
+enum Filter: String , CaseIterable {
+    case all
+    case today
+    case completed
+    case uncompleted
+}
 
 // MARK: - Types
 //

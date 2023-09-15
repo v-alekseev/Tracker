@@ -41,6 +41,7 @@ class TrackersViewController: UIViewController {
     // MARK: - Public Properties
     var visibleTrackers: [String : [Tracker]] = [:]
     var collectionView: UICollectionView?
+    
 
     private (set) var currentDate: Date? = Date()
     private (set) var trackerStore = TrackerStore()
@@ -51,7 +52,8 @@ class TrackersViewController: UIViewController {
     private var logoImageView: UIImageView?
     private var logoLabel: UILabel?
     private var datePicker: UIDatePicker?
-    
+    private var filterButton: UIButton?
+    private var currentFilter: Filter = Filter.all
 
     
     // MARK: - UIViewController(*)
@@ -63,12 +65,15 @@ class TrackersViewController: UIViewController {
         logoImageView = addDefaultImageView()
         logoLabel = addDefaultLabel()
         collectionView = addTrackersCollectionsView()
+        filterButton = addFilterButton()
         
-        currentDate = getCurrentDate(incomingDate: Date())
+        currentDate = Date().startOfDay() //  getCurrentDate(incomingDate: Date())
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         
         showLogo(visibleTrackers.count == 0)
         
+        
+        //trackerStore.getCompletedTrackersAtDay(onDate: currentDate!)
 
     }
     
@@ -129,6 +134,26 @@ class TrackersViewController: UIViewController {
         return trackers
     }
     
+    func setFilter(filter: Filter) {
+        
+        self.currentFilter = filter
+        if(self.currentFilter == .today) {
+            datePicker?.setDate(Date(), animated: true)
+            self.didChangeDate(self)
+            return
+        }
+    
+        visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
+        if visibleTrackers.count > 0 {
+            showLogo(false)
+            collectionView?.reloadData()
+        }
+        else {
+            showLogo(true)
+        }
+    }
+    
+    
     func isTrackerCompleted(trackerID: UUID, date: Date) -> Bool {
         guard let currentDate = currentDate else { return false }
         return trackerRecordStore.isRecordExist(TrackerRecord(trackerID: trackerID, date: currentDate))
@@ -142,18 +167,33 @@ class TrackersViewController: UIViewController {
         var visibleTrackers: [String : [Tracker]] = [:]
         let currentDay = calendar.component(.weekday, from: currentDate)
         
-        // фильтр по дате [Tracker] -> [Tracker]
-        let filtersOnDate = trackers.filter {
+        // фильтр по дате датапикера [Tracker] -> [Tracker]
+        let trackersOnDate = trackers.filter {
             if $0.trackerActiveDays.isEmpty { return true }
             if $0.trackerActiveDays.contains(currentDay) { return true }
             return false
         }
         
         // фильтр по фильтрам  [Tracker] -> [Tracker]
-        // TODO: реализовать фильтрацию в зависимости от выбранного фильра
+//        При выборе «Все трекеры» пользователь видит все трекеры на выбранный день;
+//        При выборе «Трекеры на сегодня» ставится текущая дата и пользователь видит все трекеры на этот день;
+//        При выборе «Завершенные» пользователь видит привычки, которые были выполнены пользователем в выбранный день;
+//        При выборе «Не завершенные» пользователь видит невыполненные трекеры в выбранный день;
+        var trackersAtFilters: [Tracker]  = []
+        switch(currentFilter) {
+        case .all:
+            trackersAtFilters = trackersOnDate
+        case .today: //  из-за странной логики обработка этого кейса
+            trackersAtFilters = trackersOnDate
+        case .completed:
+            trackersAtFilters = trackerStore.getCompletedTrackersAtDay(onDate: currentDate)
+        case .uncompleted:
+            var completedTrackers = trackerStore.getCompletedTrackersAtDay(onDate: currentDate).map {$0.trackerID}
+            trackersAtFilters = trackersOnDate.compactMap { !completedTrackers.contains($0.trackerID) ? $0 : nil }
+        }
         
         // create visibleTrackers from  [Tracker] -> [String : [Tracker]]
-        for tracker in filtersOnDate {
+        for tracker in trackersAtFilters {
             let category = tracker.isPinned ? impotantCategory : tracker.trackerCategoryName
             if visibleTrackers[category] == nil {
                     visibleTrackers[category] = []
@@ -210,21 +250,30 @@ class TrackersViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
         
     }
-    
-    func getCurrentDate(incomingDate: Date) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateString = dateFormatter.string(from: incomingDate)
         
-        return dateFormatter.date(from: dateString)
+    @objc
+    private func filterButtonPressed() {
+        let viewControllerToPresent = SelectFilterViewController()
+        viewControllerToPresent.selectFilterViewModel.trackersViewController = self
+        viewControllerToPresent.selectFilterViewModel.selectedFilter = currentFilter
+        
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .pageSheet
+        present(navigationController, animated: true, completion: nil)
+        
     }
     
     // выбрали новую дату
-    @IBAction private func didChangeDate(_ sender: UIButton) {
+    @IBAction private func didChangeDate(_ sender: AnyObject) {
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
 
-        currentDate = getCurrentDate(incomingDate: datePicker.date as Date)
+        // костыль для сброса фильтра
+        if currentDate != datePicker.date.startOfDay() && currentFilter == .today {
+            currentFilter = .all
+        }
+        
+        currentDate =  datePicker.date.startOfDay() // as Date getCurrentDate(incomingDate: datePicker.date as Date)
         
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         if visibleTrackers.count > 0 {
@@ -279,5 +328,28 @@ class TrackersViewController: UIViewController {
         noTrackersLabel.topAnchor.constraint(equalTo: noTrackersImageView.bottomAnchor).isActive = true
         noTrackersLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         return noTrackersLabel
+    }
+    
+    private func addFilterButton() -> UIButton {
+        
+        let filterButton = UIButton()
+        
+        filterButton.setTitle(L10n.Tracker.filters, for: .normal)
+        filterButton.setTitleColor(.ypWhiteDay, for: .normal)
+        filterButton.titleLabel?.font = YFonts.fontYPRegular17
+        filterButton.backgroundColor = UIColor.ypBlue
+        filterButton.layer.cornerRadius = 16
+        filterButton.layer.masksToBounds = true
+        filterButton.addTarget(self, action: #selector(self.filterButtonPressed), for: .touchUpInside)
+        
+        view.addSubview(filterButton)
+        filterButton.translatesAutoresizingMaskIntoConstraints = false
+        filterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        filterButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 115).isActive = true;
+        filterButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -114).isActive = true;
+       // filterButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
+        filterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true;
+        
+        return filterButton
     }
 }
