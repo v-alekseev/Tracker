@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 extension Dictionary where  Key : Comparable {
     func getKeyByIndex(index: Int) -> Key {
         guard let impotantCategory = impotantCategory as? Key else { return self.keys.sorted()[index]}
@@ -41,12 +42,13 @@ class TrackersViewController: UIViewController {
     // MARK: - Public Properties
     var visibleTrackers: [String : [Tracker]] = [:]
     var collectionView: UICollectionView?
-    
 
     private (set) var currentDate: Date? = Date()
     private (set) var trackerStore = TrackerStore()
     private (set) var trackerRecordStore = TrackerRecordStore()
     private (set) var trackerCategoryStore = TrackerCategoryStore()
+    
+    let analyticsService = AnalyticsService()
     
     // MARK: - Private Properties
     private var logoImageView: UIImageView?
@@ -54,6 +56,7 @@ class TrackersViewController: UIViewController {
     private var datePicker: UIDatePicker?
     private var filterButton: UIButton?
     private var currentFilter: Filter = Filter.all
+   
 
     
     // MARK: - UIViewController(*)
@@ -71,10 +74,15 @@ class TrackersViewController: UIViewController {
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         
         showLogo(visibleTrackers.count == 0)
-        
-        
-        //trackerStore.getCompletedTrackersAtDay(onDate: currentDate!)
 
+    }
+  
+    override func viewDidAppear(_ animated: Bool) {
+        analyticsService.eventOpen()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        analyticsService.eventClose()
     }
     
     // MARK: - Public Methods
@@ -188,7 +196,7 @@ class TrackersViewController: UIViewController {
         case .completed:
             trackersAtFilters = trackerStore.getCompletedTrackersAtDay(onDate: currentDate)
         case .uncompleted:
-            var completedTrackers = trackerStore.getCompletedTrackersAtDay(onDate: currentDate).map {$0.trackerID}
+            let completedTrackers = trackerStore.getCompletedTrackersAtDay(onDate: currentDate).map {$0.trackerID}
             trackersAtFilters = trackersOnDate.compactMap { !completedTrackers.contains($0.trackerID) ? $0 : nil }
         }
         
@@ -242,6 +250,9 @@ class TrackersViewController: UIViewController {
     // нажали кнопку добавить трекер
     @objc
     private func addNewTrackerButtonTap() {
+        
+        analyticsService.eventCreateTracker()
+        
         let viewControllerToPresent = SelectTrackerViewController()
         viewControllerToPresent.trackersViewController = self
         
@@ -253,6 +264,8 @@ class TrackersViewController: UIViewController {
         
     @objc
     private func filterButtonPressed() {
+        analyticsService.eventFilter()
+        
         let viewControllerToPresent = SelectFilterViewController()
         viewControllerToPresent.selectFilterViewModel.trackersViewController = self
         viewControllerToPresent.selectFilterViewModel.selectedFilter = currentFilter

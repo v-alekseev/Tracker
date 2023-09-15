@@ -75,12 +75,17 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             let pinMenuItemString = isCellPinned ? L10n.Tracker.ContextMenu.unpin : L10n.Tracker.ContextMenu.pin
             if indexPaths.count == 1 {
                 return UIMenu(children: [
-                    UIAction(title: pinMenuItemString) { _ in
-                        guard let currentTracker = cell.tracker else {return}
+                    // pin/unpin
+                    UIAction(title: pinMenuItemString) {  [weak self] _ in
+                        guard let self = self,
+                              let currentTracker = cell.tracker else {return}
                         let newTracker = Tracker(tracker: currentTracker, isPinned: !isCellPinned)
                         self.updateTracker(tracker: newTracker)
                     },
-                    UIAction(title: L10n.Tracker.ContextMenu.edit) { _ in
+                    // edit
+                    UIAction(title: L10n.Tracker.ContextMenu.edit) {  [weak self] _ in
+                        guard let self = self else { return }
+                        self.analyticsService.eventEdit()
                         let createTrackerViewController = CreateTrackerViewController(isEdit: true, tracker: tracker)
                         createTrackerViewController.isEvent = false
                         createTrackerViewController.trackersViewController = self
@@ -90,9 +95,12 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                         
                         self.present(navigationController, animated: true)
                     },
+                    // delete
                     UIAction(title: L10n.Tracker.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                         guard let self = self,
                               let trackerID = cell.trackerID else { return }
+                        self.analyticsService.eventDelete()
+                        
                         self.deleteTracker(trackerID: trackerID)
                     }
                 ])

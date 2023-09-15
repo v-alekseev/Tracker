@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import YandexMobileMetrica
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.isCompleteOnbording == nil {
             application.isCompleteOnbording = false
         }
+        
+        AnalyticsService.activate()
 
         return true
     }

@@ -249,7 +249,6 @@ final class CreateTrackerViewController: UIViewController {
         return
     }
     
-    
     @IBAction private func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
         return
@@ -269,7 +268,7 @@ final class CreateTrackerViewController: UIViewController {
                                  trackerColor: selectedColor,
                                  trackerScheduleDays: scheduleDays.getActiveDayInScheduleDays(),
                                  trackerCategoryName: categoryName,
-                                 isPinned: false)
+                                 isPinned: tracker.isPinned)
         
         if isEdit {
             trackersViewController.updateTracker(tracker: newTracker)

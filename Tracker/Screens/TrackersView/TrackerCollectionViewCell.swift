@@ -25,6 +25,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     // MARK: - Private Properties
     private var isPressed = false
     private var quantityManagementView: UIView?
+    private let analyticsService = AnalyticsService()
 
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -47,6 +48,8 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     // MARK: - IBAction
     // нажали кнопку +
     @IBAction private func completButtonTapped(_ sender: UIButton) {
+        analyticsService.eventTracker()
+        
         guard let trackersVC = trackersViewController,
               let trackerID = trackerID,
               let currentDate = trackersVC.currentDate else { return }

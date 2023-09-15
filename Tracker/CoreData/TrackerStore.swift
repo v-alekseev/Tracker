@@ -58,6 +58,7 @@ final class TrackerStore: NSObject {
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \TrackerCoreData.trackerName, ascending: true)
         ]
+
         let controller = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: context,
@@ -81,6 +82,7 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackers() -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
+        //print("getTrackers = \(trackers.compactMap { Tracker(tracker: $0)} )" )
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
