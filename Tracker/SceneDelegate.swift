@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: scene)
         let onboardingVC = OnboardingViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        let tabBarVC = application.getTabBarViewController()
-        tabBarVC.view.backgroundColor = .ypWhiteDay        
+        let tabBarVC = application.getTabBarViewController()      
         let firstViewController = isCompleteOnbording ? tabBarVC : onboardingVC
         
         window?.rootViewController = firstViewController 

@@ -343,7 +343,6 @@ class TrackersViewController: UIViewController {
         guard let noTrackersImageView = logoImageView else { return nil }
         
         let noTrackersLabel = UILabel()
-       // noTrackersLabel.text = "Что будем отслеживать?"
         noTrackersLabel.font = YFonts.fontYPMedium12
         noTrackersLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(noTrackersLabel)
@@ -359,7 +358,7 @@ class TrackersViewController: UIViewController {
         filterButton.setTitle(L10n.Tracker.filters, for: .normal)
         filterButton.setTitleColor(.ypWhiteDay, for: .normal)
         filterButton.titleLabel?.font = YFonts.fontYPRegular17
-        filterButton.backgroundColor = UIColor.ypBlue
+        filterButton.backgroundColor = .ypBlue
         filterButton.layer.cornerRadius = 16
         filterButton.layer.masksToBounds = true
         filterButton.addTarget(self, action: #selector(self.filterButtonPressed), for: .touchUpInside)
@@ -369,7 +368,6 @@ class TrackersViewController: UIViewController {
         filterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true;
         filterButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 115).isActive = true;
         filterButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -114).isActive = true;
-       // filterButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
         filterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true;
         
         return filterButton

@@ -70,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBar.tabBar.layer.borderWidth = 0.50
         tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor //  UIColor.ypGray.cgColor
         tabBar.tabBar.clipsToBounds = true
+        tabBar.view.backgroundColor = .ypWhiteDay
         
         return tabBar
         
