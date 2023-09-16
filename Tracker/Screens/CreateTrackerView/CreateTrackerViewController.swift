@@ -469,7 +469,6 @@ final class CreateTrackerViewController: UIViewController {
         createButton.setTitleColor(.ypWhiteDay, for: .normal)
         createButton.titleLabel?.font = YFonts.fontYPMedium16
         createButton.layer.cornerRadius = 19
-        createButton.backgroundColor = .ypGray
         createButton.addTarget(self, action: #selector(self.createButtonPressed), for: .touchUpInside)
         createButton.translatesAutoresizingMaskIntoConstraints =  false
         

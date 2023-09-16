@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.isCompleteOnbording = false
         }
         
+        
         AnalyticsService.activate()
 
         return true
@@ -54,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(named: "trackers"),
             selectedImage: nil
         )
+        navigationController.navigationBar.backgroundColor = .ypWhiteDay
         // второй экран на tabBar
         let statisticViewController = StatisticViewController()
         statisticViewController.tabBarItem = UITabBarItem(
@@ -66,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBar.tabBar.backgroundColor = .ypWhiteDay
         tabBar.viewControllers = [navigationController, statisticViewController]
         tabBar.tabBar.layer.borderWidth = 0.50
-        tabBar.tabBar.layer.borderColor = UIColor.ypGray.cgColor
+        tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor //  UIColor.ypGray.cgColor
         tabBar.tabBar.clipsToBounds = true
         
         return tabBar

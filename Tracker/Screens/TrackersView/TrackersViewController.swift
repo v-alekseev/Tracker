@@ -62,6 +62,11 @@ class TrackersViewController: UIViewController {
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .ypWhiteDay
+        
+        print(traitCollection.userInterfaceStyle == .dark ? "dark" : "lignt")
+        
         trackerStore.delegate = self
         
         setupNavigationBar()
@@ -85,12 +90,15 @@ class TrackersViewController: UIViewController {
         analyticsService.eventClose()
     }
     
+    // это нужно для белого шрифта в статус бар
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+        }
+    
     // MARK: - Public Methods
     
     private func setupNavigationBar() {
         guard let navBar = navigationController?.navigationBar else  { return }
-        
-        self.view.backgroundColor = .ypWhiteDay
  
         navBar.topItem?.title = L10n.Tracker.title  //NSLocalizedString("tracker.title", comment: "") // "Трекеры"  // LOCAL: tracker.title
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
@@ -99,14 +107,14 @@ class TrackersViewController: UIViewController {
         
         // Добавляем +
         let leftButton = UIBarButtonItem(image: UIImage(named: "AddTracker"), style: .plain, target: self, action: #selector(addNewTrackerButtonTap))
-        leftButton.tintColor = .black
+        leftButton.tintColor = .ypBlackDay
         navBar.topItem?.setLeftBarButton(leftButton, animated: false)
         navBar.topItem?.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         
         // добавляем строку поиска
         let seachController = UISearchController()  //
         seachController.hidesNavigationBarDuringPresentation = false
-        seachController.searchResultsUpdater = self
+        seachController.searchResultsUpdater = self     
         self.navigationItem.searchController = seachController
         
         // добавляем DatePicker
@@ -307,6 +315,7 @@ class TrackersViewController: UIViewController {
         view.addSubview(collectionView)
         
         collectionView.dataSource = self
+        collectionView.backgroundColor = .ypWhiteDay
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = false
         collectionView.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
@@ -317,7 +326,7 @@ class TrackersViewController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true;
         
-        view.backgroundColor = .white
+
         return collectionView
     }
     

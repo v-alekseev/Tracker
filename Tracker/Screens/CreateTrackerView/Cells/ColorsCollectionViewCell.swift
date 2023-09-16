@@ -21,7 +21,7 @@ class ColorsCollectionViewCell: UICollectionViewCell {
         backView.translatesAutoresizingMaskIntoConstraints = false
         backView.layer.masksToBounds = true
         backView.layer.cornerRadius = 8
-        backView.backgroundColor = .ypWhite
+        backView.backgroundColor = .ypWhiteDay
 
         
         NSLayoutConstraint.activate([

@@ -138,7 +138,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         guard let cardTrackerView = cardTrackerView else { return nil }
         
         let quantityManagementView = UIView()
-        quantityManagementView.backgroundColor = .ypWhiteDay
+        quantityManagementView.backgroundColor = .clear // .ypWhiteDay
         contentView.addSubview(quantityManagementView)
         quantityManagementView.translatesAutoresizingMaskIntoConstraints = false
         quantityManagementView.topAnchor.constraint(equalTo: cardTrackerView.bottomAnchor).isActive = true

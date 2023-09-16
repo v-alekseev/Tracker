@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 
-// TODO: Переделать на протокол BaseDataProviderProtocol  c Generic <Тип записи, тип ключа для поиска>
 protocol TrackerStoreDataProviderProtocol: AnyObject {
     func addTracker(_ tracker: Tracker) -> Bool
     func getTrackers() -> [Tracker]
