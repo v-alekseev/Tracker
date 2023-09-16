@@ -50,6 +50,7 @@ final class CreateTrackerViewController: UIViewController {
     private var tracker: Tracker?
     
     
+    private var labelCompletedDays: UILabel?
     private var label: UITextField?
     private var labelView: UIView?
     private var tableView: UITableView?
@@ -99,7 +100,7 @@ final class CreateTrackerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         guard let tracker = tracker else { return }
         
         view.backgroundColor = .ypWhiteDay
@@ -109,7 +110,7 @@ final class CreateTrackerViewController: UIViewController {
         }
         
         // "createTracker.scheduler.title" : "createTracker.title"
-
+        
         let createTracerTitle = isEvent ? L10n.CreateTracker.Scheduler.title : L10n.CreateTracker.title
         let editTracerTitle = isEvent ? L10n.EditTracker.Scheduler.title : L10n.EditTracker.title
         
@@ -123,6 +124,9 @@ final class CreateTrackerViewController: UIViewController {
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
+        if isEdit {
+            labelCompletedDays = addLabelCompletedDays()
+        }
         (labelView, label) = addTrackerNameFied()
         tableView = addCategoryAndSchedule()
         
@@ -144,6 +148,8 @@ final class CreateTrackerViewController: UIViewController {
             categoryName = tracker.trackerCategoryName
             scheduleDays.setActiveDays(tracker: tracker)
         }
+        
+       
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -381,7 +387,28 @@ final class CreateTrackerViewController: UIViewController {
         return colorCollectionView
     }
     
+    private func addLabelCompletedDays() -> UILabel {
+        let label = UILabel()
 
+        label.font = YFonts.fontYPBold32
+        label.textColor = .ypBlackDay
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.addSubview(label)
+        label.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
+        label.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 38).isActive = true
+       
+        var daysCompleted = 000
+        if let trackersViewController = trackersViewController,
+           let tracker = tracker {
+            daysCompleted = trackersViewController.getComletedDays(trackerID: tracker.trackerID)
+        }
+        label.text = L10n.numberOfDays(daysCompleted)
+        
+        return label
+        
+    }
     
     private func addTrackerNameFied() -> (UIView?, UITextField?) {
         
@@ -390,7 +417,8 @@ final class CreateTrackerViewController: UIViewController {
         textBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         textBackgroundView.layer.cornerRadius = 16
         scrollView.addSubview(textBackgroundView)
-        textBackgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
+        let offsetH = isEdit ? 102 : 24
+        textBackgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: CGFloat(offsetH)).isActive = true
         textBackgroundView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         textBackgroundView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         textBackgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor,constant: -32).isActive = true
