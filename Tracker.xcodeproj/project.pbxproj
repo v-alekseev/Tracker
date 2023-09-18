@@ -26,6 +26,8 @@
 		8B36FD582A8A44BC000DF488 /* TrackersViewController+UISearchResultsUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B36FD572A8A44BB000DF488 /* TrackersViewController+UISearchResultsUpdating.swift */; };
 		8B36FD5A2A8A44FD000DF488 /* TrackersViewController+UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B36FD592A8A44FD000DF488 /* TrackersViewController+UICollectionViewDelegateFlowLayout.swift */; };
 		8B36FD5C2A8A452C000DF488 /* TrackersViewController+UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B36FD5B2A8A452C000DF488 /* TrackersViewController+UICollectionViewDataSource.swift */; };
+		D81180DF2AB7B069000FC3C0 /* StatisticCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81180DE2AB7B069000FC3C0 /* StatisticCellView.swift */; };
+		D81180E12AB7B115000FC3C0 /* StatisticViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81180E02AB7B115000FC3C0 /* StatisticViewPresenter.swift */; };
 		D81C11D52A8AE3E5001A16E7 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C11D42A8AE3E5001A16E7 /* EmojiCollectionViewCell.swift */; };
 		D81C11D72A8AEDC8001A16E7 /* EmojiCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C11D62A8AEDC8001A16E7 /* EmojiCollectionViewDelegate.swift */; };
 		D81C11D92A8AF346001A16E7 /* ColorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C11D82A8AF346001A16E7 /* ColorViewControllerDelegate.swift */; };
@@ -103,6 +105,8 @@
 		8B36FD572A8A44BB000DF488 /* TrackersViewController+UISearchResultsUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+UISearchResultsUpdating.swift"; sourceTree = "<group>"; };
 		8B36FD592A8A44FD000DF488 /* TrackersViewController+UICollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+UICollectionViewDelegateFlowLayout.swift"; sourceTree = "<group>"; };
 		8B36FD5B2A8A452C000DF488 /* TrackersViewController+UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackersViewController+UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		D81180DE2AB7B069000FC3C0 /* StatisticCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCellView.swift; sourceTree = "<group>"; };
+		D81180E02AB7B115000FC3C0 /* StatisticViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewPresenter.swift; sourceTree = "<group>"; };
 		D81C11D42A8AE3E5001A16E7 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		D81C11D62A8AEDC8001A16E7 /* EmojiCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		D81C11D82A8AF346001A16E7 /* ColorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -220,12 +224,12 @@
 		8B36FD432A83AF6E000DF488 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				8B36FD522A87D03C000DF488 /* TrackersView */,
 				8B36FD3D2A83ADA4000DF488 /* TabBarController.swift */,
+				D81180DB2AB636E0000FC3C0 /* StatisticScreen */,
+				8B36FD522A87D03C000DF488 /* TrackersView */,
 				8B36FD472A84DE62000DF488 /* SelectTrackerViewController.swift */,
 				D878487C2AB446ED008C1736 /* SelectFilter */,
 				D81C11CE2A8AE154001A16E7 /* CreateTrackerView */,
-				8B36FD412A83AEC2000DF488 /* StatisticViewController.swift */,
 				D86D1D832AAF4D0400E14A95 /* CreateSchedule */,
 				D82DE9842AA07EDF0028DF70 /* Category */,
 			);
@@ -287,6 +291,16 @@
 				121C0CB3A3114C10EB56FEB6 /* Pods_Tracker.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D81180DB2AB636E0000FC3C0 /* StatisticScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8B36FD412A83AEC2000DF488 /* StatisticViewController.swift */,
+				D81180E02AB7B115000FC3C0 /* StatisticViewPresenter.swift */,
+				D81180DE2AB7B069000FC3C0 /* StatisticCellView.swift */,
+			);
+			path = StatisticScreen;
 			sourceTree = "<group>";
 		};
 		D81C11CE2A8AE154001A16E7 /* CreateTrackerView */ = {
@@ -626,6 +640,7 @@
 				D882CF492AA731A7001A23B6 /* UIViewController+extension.swift in Sources */,
 				D81C11D92A8AF346001A16E7 /* ColorViewControllerDelegate.swift in Sources */,
 				8B36FD462A83B4D5000DF488 /* Consts.swift in Sources */,
+				D81180DF2AB7B069000FC3C0 /* StatisticCellView.swift in Sources */,
 				D82DE9532A96A9980028DF70 /* DaysConverter.swift in Sources */,
 				D82DE9802A9F72740028DF70 /* OnboardingViewController.swift in Sources */,
 				D87848802AB493F8008C1736 /* Date+extension.swift in Sources */,
@@ -633,6 +648,7 @@
 				D882CF3F2AA2C94F001A23B6 /* Array+extension.swift in Sources */,
 				8B36FCC12A7E27C5000DF488 /* SceneDelegate.swift in Sources */,
 				8B36FD4F2A87949E000DF488 /* DaysModels.swift in Sources */,
+				D81180E12AB7B115000FC3C0 /* StatisticViewPresenter.swift in Sources */,
 				D882CF452AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift in Sources */,
 				D82DE9862AA0CA9C0028DF70 /* SelectGroupViewModel.swift in Sources */,
 				8B36FD402A83AE39000DF488 /* TrackersViewController.swift in Sources */,

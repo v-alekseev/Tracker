@@ -54,7 +54,11 @@
 "editTracker.title" = "Редактирование привычки";
 
 "statistic.title" = "Статистика";
-"statistic.lebel" = "Пока тут ничего нет";
+"statistic.label" = "Анализировать пока нечего";
+"statistic.BestPeriod" = "Лучший период";
+"statistic.IdealDays" = "Идеальные дни";
+"statistic.TrackersCompleted" = "Трекеров завершено";
+"statistic.Average" = "Среднее значение";
 
 "schedule.buttonCreate" = "Готово";
 "schedule.title" = "Расписание";

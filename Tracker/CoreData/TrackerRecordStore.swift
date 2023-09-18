@@ -36,10 +36,6 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         return true
     }
     
-    func getRecords() -> [TrackerRecord]? {
-        return nil
-    }
-    
     func addRecord(_ record: TrackerRecord) -> Bool {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         
@@ -55,6 +51,7 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     func deleteRecord(_ record: TrackerRecord) -> Bool {
         guard let object = getRecordObject(record) else { return false }
         context.delete(object)
+        do { try context.save() } catch { return false }
         return true
     }
     
@@ -64,6 +61,33 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         request.resultType = .countResultType
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.trackerID), trackerID as CVarArg)
         
+        var countRecords = 0
+        do { countRecords = try context.count(for: request) } catch { return 0 }
+        
+        return countRecords
+    }
+    
+    
+    func getRecords() -> [TrackerRecord]? {
+        let request = TrackerRecordCoreData.fetchRequest() //NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
+        request.returnsObjectsAsFaults = false
+        //request.sortDescriptors = [NSSortDescriptor(key: "categoryName", ascending: true)]
+        
+        var records:[TrackerRecordCoreData] = []
+        do { records = try context.fetch(request) } catch { return nil }
+        
+        return records.compactMap {
+            guard let trackerID = $0.trackerID,
+                  let date = $0.date else { return nil}
+            return TrackerRecord(trackerID: trackerID, date: date)
+        }
+    }
+    
+    func getRecordsCount() -> Int {
+        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
+        // Нам интересно лишь количество
+        request.resultType = .countResultType
+
         var countRecords = 0
         do { countRecords = try context.count(for: request) } catch { return 0 }
         

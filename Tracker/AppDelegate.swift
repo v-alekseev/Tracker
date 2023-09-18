@@ -48,17 +48,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getTabBarViewController() -> TabBarController {
         
+        // экран трекеров
         let trackersViewController = TrackersViewController()
-        let navigationController = UINavigationController(rootViewController: trackersViewController)
-        navigationController.tabBarItem = UITabBarItem( // так, наверно, более правильно
+        let trackersNavigationController = UINavigationController(rootViewController: trackersViewController)
+        trackersNavigationController.tabBarItem = UITabBarItem( 
             title: barControllerTrackers,
             image: UIImage(named: "trackers"),
             selectedImage: nil
         )
-        navigationController.navigationBar.backgroundColor = .ypWhiteDay
-        // второй экран на tabBar
+        trackersNavigationController.navigationBar.backgroundColor = .ypWhiteDay
+        
+        // экран статистики на tabBar
         let statisticViewController = StatisticViewController()
-        statisticViewController.tabBarItem = UITabBarItem(
+        let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
+        statisticNavigationController.tabBarItem = UITabBarItem(
             title: barControllerStatisic,
             image: UIImage(named: "Stats"),
             selectedImage: nil
@@ -66,9 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBar = TabBarController()
         tabBar.tabBar.backgroundColor = .ypWhiteDay
-        tabBar.viewControllers = [navigationController, statisticViewController]
+        tabBar.viewControllers = [trackersNavigationController, statisticNavigationController]
         tabBar.tabBar.layer.borderWidth = 0.50
-        tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor //  UIColor.ypGray.cgColor
+        tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor
         tabBar.tabBar.clipsToBounds = true
         tabBar.view.backgroundColor = .ypWhiteDay
         

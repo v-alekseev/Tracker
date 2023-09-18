@@ -110,6 +110,13 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func deleteTracker(_ trackerID: UUID) -> Bool {
         guard let trackerObject = getTrackerObject(trackerID) else { return false }
+        
+        if let records = trackerObject.records {
+            for record in records {
+                guard let record = record as? TrackerRecordCoreData else { continue }
+                context.delete(record)
+            }
+        }
         context.delete(trackerObject)
         
         do {  try context.save() } catch { return false }
@@ -117,11 +124,9 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     }
     
     func getTrackerObject(_ uuid: UUID) -> TrackerCoreData? {
-        
         let request = NSFetchRequest<TrackerCoreData>(entityName: "TrackerCoreData")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCoreData.trackerID), uuid.uuidString)
-        
         var records:[TrackerCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
         
@@ -131,7 +136,6 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     /// ID менять нельзя,  records измеить нельзя
     func updateTracker(_ tracker: Tracker) -> Bool {
         guard let trackerObject = getTrackerObject(tracker.trackerID) else { return false }
-
         trackerObject.update(tracker: tracker)
         if let currentTracetCategoryName = trackerObject.category?.categoryName,
            currentTracetCategoryName != tracker.trackerCategoryName,
@@ -144,6 +148,16 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         do {  try context.save() } catch { return false }
         
         return true
+    }
+    /// Возвращает количество трекеров которые можно выполнить в день недели.  dayOfWeekIndex
+    func getCountTrackersOnDay(dayOfWeekIndex: String) -> Int {
+        let request = TrackerCoreData.fetchRequest()
+        request.resultType = .countResultType
+        // Select count trackers from trackers where (activedays has weekday) or (activedays is empty)
+        request.predicate = NSPredicate(format: "%K CONTAINS %@ OR %K = ''", #keyPath(TrackerCoreData.daysOfWeek), dayOfWeekIndex, #keyPath(TrackerCoreData.daysOfWeek))
+        var countRecords = 0
+        do { countRecords = try context.count(for: request) } catch { return 0 }
+        return countRecords
     }
 }
 

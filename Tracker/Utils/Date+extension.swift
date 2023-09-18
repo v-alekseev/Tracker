@@ -9,12 +9,11 @@ import Foundation
 
 extension Date{
     func startOfDay() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateString = dateFormatter.string(from: self)
-        
-        return dateFormatter.date(from: dateString)
-        
-       // Locale.current.calendar.startOfDay(for: self)
+        return Locale.current.calendar.startOfDay(for: self) 
+    }
+    
+    static func getDateFromString(isoDate: String) -> Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from:isoDate)
     }
 }

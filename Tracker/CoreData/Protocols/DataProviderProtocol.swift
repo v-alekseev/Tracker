@@ -15,15 +15,16 @@ protocol TrackerStoreDataProviderProtocol: AnyObject {
     func deleteTracker(_ trackerID: UUID) -> Bool
     func getTrackerObject(_ uuid: UUID) -> TrackerCoreData?
     func updateTracker(_ tracker: Tracker) -> Bool
+    func getCountTrackersOnDay(dayOfWeekIndex: String) -> Int
+    func getCompletedTrackersAtDay(onDate: Date) -> [Tracker]
 }
 
 protocol TrackerRecordStoreDataProviderProtocol: AnyObject {
     func getTrackerComletedDays(trackerID: UUID) -> Int
-    func isRecordExist(_ record: TrackerRecord) -> Bool
-    
+    func isRecordExist(_ record: TrackerRecord) -> Bool    
     func addRecord(_ record: TrackerRecord) -> Bool
-    func getRecords() -> [TrackerRecord]?
     func deleteRecord(_ record: TrackerRecord) -> Bool
+    func getRecordsCount() -> Int
 }
 
 protocol TrackerCategoryStoreDataProviderProtocol: AnyObject {

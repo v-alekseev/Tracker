@@ -64,9 +64,7 @@ class TrackersViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .ypWhiteDay
-        
-        print(traitCollection.userInterfaceStyle == .dark ? "dark" : "lignt")
-        
+
         trackerStore.delegate = self
         
         setupNavigationBar()
@@ -79,7 +77,6 @@ class TrackersViewController: UIViewController {
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         
         showLogo(visibleTrackers.count == 0)
-
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -100,7 +97,7 @@ class TrackersViewController: UIViewController {
     private func setupNavigationBar() {
         guard let navBar = navigationController?.navigationBar else  { return }
  
-        navBar.topItem?.title = L10n.Tracker.title  //NSLocalizedString("tracker.title", comment: "") // "Трекеры"  // LOCAL: tracker.title
+        navBar.topItem?.title = L10n.Tracker.title
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
         

@@ -36,7 +36,6 @@ struct Tracker {
               let trackerEmodji = tracker.trackerEmodji,
               let trackerColorHEX = tracker.trackerColorHEX,
               let daysOfWeek = tracker.daysOfWeek,
-   //           let isPinned = tracker.isPinned,
               let trackerCategoryName = tracker.category?.categoryName else { return nil }
         
         self.trackerID = trackerID

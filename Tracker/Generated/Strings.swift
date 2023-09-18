@@ -132,10 +132,18 @@ internal enum L10n {
     internal static let allDays = L10n.tr("Localizable", "sheduler.all_days", fallback: "Каждый день")
   }
   internal enum Statistic {
-    /// Пока тут ничего нет
-    internal static let lebel = L10n.tr("Localizable", "statistic.lebel", fallback: "Пока тут ничего нет")
+    /// Среднее значение
+    internal static let average = L10n.tr("Localizable", "statistic.Average", fallback: "Среднее значение")
+    /// Лучший период
+    internal static let bestPeriod = L10n.tr("Localizable", "statistic.BestPeriod", fallback: "Лучший период")
+    /// Идеальные дни
+    internal static let idealDays = L10n.tr("Localizable", "statistic.IdealDays", fallback: "Идеальные дни")
+    /// Анализировать пока нечего
+    internal static let label = L10n.tr("Localizable", "statistic.label", fallback: "Анализировать пока нечего")
     /// Статистика
     internal static let title = L10n.tr("Localizable", "statistic.title", fallback: "Статистика")
+    /// Трекеров завершено
+    internal static let trackersCompleted = L10n.tr("Localizable", "statistic.TrackersCompleted", fallback: "Трекеров завершено")
   }
   internal enum Tracker {
     /// Отметить выполнение привычки в будущем никак нельзя)
