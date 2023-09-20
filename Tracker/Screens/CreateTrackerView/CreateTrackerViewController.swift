@@ -35,10 +35,10 @@ final class CreateTrackerViewController: UIViewController {
     let colorCellId = "ColorCell"
     
     // MARK: - Public Properties
-
+    
     var trackersViewController: TrackersViewController?
     
-    private (set) var tableItems = [L10n.CreateTracker.Category.buttonName] //"createTracker.category.buttonName" // "Категория"
+    private (set) var tableItems = [L10n.CreateTracker.Category.buttonName]
     
     // MARK: - IBOutlet
     
@@ -48,7 +48,6 @@ final class CreateTrackerViewController: UIViewController {
     private var isEdit = false // Если true, то это режим редактирования трекера
     
     private var tracker: Tracker?
-    
     
     private var labelCompletedDays: UILabel?
     private var label: UITextField?
@@ -62,7 +61,7 @@ final class CreateTrackerViewController: UIViewController {
     private var cancelButton: UIButton?
     private var createButton: UIButton?
     
-
+    
     private let scheduleDays = ScheduleDays()
     private var emojiViewControllerDelegate: EmojiViewControllerDelegate?
     private var colorViewControllerDelegate: ColorViewControllerDelegate?
@@ -106,10 +105,8 @@ final class CreateTrackerViewController: UIViewController {
         view.backgroundColor = .ypWhiteDay
         
         if !isEvent { // добавим возможность выбора рассписания в трекер
-            tableItems.append(L10n.CreateTracker.Scheduler.buttonName) //("Расписание") //"createTracker.scheduler.buttonName"
+            tableItems.append(L10n.CreateTracker.Scheduler.buttonName)
         }
-        
-        // "createTracker.scheduler.title" : "createTracker.title"
         
         let createTracerTitle = isEvent ? L10n.CreateTracker.Scheduler.title : L10n.CreateTracker.title
         let editTracerTitle = isEvent ? L10n.EditTracker.Scheduler.title : L10n.EditTracker.title
@@ -149,7 +146,7 @@ final class CreateTrackerViewController: UIViewController {
             scheduleDays.setActiveDays(tracker: tracker)
         }
         
-       
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,7 +222,7 @@ final class CreateTrackerViewController: UIViewController {
         let selectGroupViewController = SelectGroupViewController()
         selectGroupViewController.setCurrentCategory(name: categoryName)
         selectGroupViewController.selectGroupViewModel.initViewModel(createTrackerViewController: self)
-
+        
         let navigationController = UINavigationController(rootViewController: selectGroupViewController)
         navigationController.modalPresentationStyle = .pageSheet
         self.present(navigationController, animated: true)
@@ -286,7 +283,7 @@ final class CreateTrackerViewController: UIViewController {
         return
     }
     
-
+    
     
     // MARK: - Private Methods
     private func getSelectedEmoji() -> String? {
@@ -389,7 +386,7 @@ final class CreateTrackerViewController: UIViewController {
     
     private func addLabelCompletedDays() -> UILabel {
         let label = UILabel()
-
+        
         label.font = YFonts.fontYPBold32
         label.textColor = .ypBlackDay
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -398,7 +395,7 @@ final class CreateTrackerViewController: UIViewController {
         label.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
         label.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         label.heightAnchor.constraint(equalToConstant: 38).isActive = true
-       
+        
         var daysCompleted = 000
         if let trackersViewController = trackersViewController,
            let tracker = tracker {
@@ -425,7 +422,7 @@ final class CreateTrackerViewController: UIViewController {
         
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.placeholder = L10n.CreateTracker.inputName //"Введите название трекера"  //"createTracker.inputName"
+        label.placeholder = L10n.CreateTracker.inputName
         label.clearsOnBeginEditing = true
         label.keyboardType = .default
         label.clearButtonMode = .whileEditing
@@ -464,7 +461,7 @@ final class CreateTrackerViewController: UIViewController {
     private func addCancelButton() -> UIButton? {
         guard  let colorCollectionsView = colorCollectionsView else { return nil}
         let cancelButton = UIButton()
-        cancelButton.setTitle(L10n.CreateTracker.buttonCancel, for: .normal)  //"createTracker.buttonCancel" "Отменить"
+        cancelButton.setTitle(L10n.CreateTracker.buttonCancel, for: .normal)
         cancelButton.setTitleColor(.ypRed, for: .normal)
         cancelButton.titleLabel?.font = YFonts.fontYPMedium16
         cancelButton.layer.cornerRadius = 19
@@ -493,7 +490,7 @@ final class CreateTrackerViewController: UIViewController {
         
         let createButton = UIButton()
         let buttonText = isEdit ? L10n.CreateTracker.buttonSave : L10n.CreateTracker.buttonCreate
-        createButton.setTitle(buttonText, for: .normal) // "createTracker.buttonCreate"  ("Создать"
+        createButton.setTitle(buttonText, for: .normal)
         createButton.setTitleColor(.ypWhiteDay, for: .normal)
         createButton.titleLabel?.font = YFonts.fontYPMedium16
         createButton.layer.cornerRadius = 19
@@ -517,7 +514,7 @@ final class CreateTrackerViewController: UIViewController {
         return  categoryName == "" ? categoryName : ("\n" + categoryName)
     }
     
-
+    
     
 }
 

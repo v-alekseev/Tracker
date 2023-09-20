@@ -13,8 +13,8 @@ let impotantCategory = L10n.Tracker.pinnedCategory
 
 let trackerCoreDataModel = "TrackerCoreDataModel"
 
-let barControllerTrackers = L10n.Navbar.text1 //"Трекеры" // "navbar.text1"
-let barControllerStatisic = L10n.Navbar.text2 // "Статистика" //"navbar.text2"
+let barControllerTrackers = L10n.Navbar.text1
+let barControllerStatisic = L10n.Navbar.text2
 
 let imageTrackerCellPlus = UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate)
 let imageTrackerCellCompleted = UIImage(named: "done_button")?.withRenderingMode(.alwaysTemplate)

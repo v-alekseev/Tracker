@@ -17,7 +17,7 @@ class SelectTrackerViewController: UIViewController {
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .ypWhiteDay
         
         self.navigationItem.title = L10n.SelectTypeTracker.title
@@ -58,9 +58,8 @@ class SelectTrackerViewController: UIViewController {
         newEventButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
     }
-  
-    // MARK: - IBAction
     
+    // MARK: - IBAction
     @IBAction private func buttonNewEventTapped(_ sender: UIButton) {
         presentCreteEventController(isEvent: true)
         return
@@ -70,15 +69,14 @@ class SelectTrackerViewController: UIViewController {
         presentCreteEventController(isEvent: false)
         return
     }
-        
-    // MARK: - Private Methods
     
+    // MARK: - Private Methods
     private func presentCreteEventController(isEvent: Bool) {
         
         let createTrackerViewController = CreateTrackerViewController()
         createTrackerViewController.isEvent = isEvent
         createTrackerViewController.trackersViewController = self.trackersViewController
-
+        
         let navigationController = UINavigationController(rootViewController: createTrackerViewController)
         navigationController.modalPresentationStyle = .pageSheet
         

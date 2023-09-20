@@ -41,7 +41,7 @@ final class SelectGroupViewModel {
     func deleteCategory(name: String) -> Bool {
         return trackerCategoryStore.deleteCategory(name)
     }
-      
+    
     func showCreateNewCategoryScreen() {
         guard let selectGroupViewController = selectGroupViewController else { return }
         let createGroupViewController = CreateGroupViewController()
@@ -53,7 +53,7 @@ final class SelectGroupViewModel {
     
     func showEditCategoryScreen(categoryName: String) {
         guard let selectGroupViewController = selectGroupViewController else { return }
-
+        
         let editCategoryViewController = EditCategoryViewController(currentCategory: categoryName)
         
         let navigationController = UINavigationController(rootViewController: editCategoryViewController)

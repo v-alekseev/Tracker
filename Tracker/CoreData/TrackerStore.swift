@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import CoreData
 
-
 struct TrackerStoreUpdateIndexes {
     //    struct Move: Hashable {
     //        let oldIndex: Int
@@ -26,11 +25,9 @@ protocol TrackerStoreDelegate: AnyObject {
     func didUpdate(updateIndexes: TrackerStoreUpdateIndexes)
 }
 
-
 final class TrackerStore: NSObject {
     
     weak var delegate: TrackerStoreDelegate?
-    
     private var trackerCategoryStore = TrackerCategoryStore()
     
     // MARK: - Private Properties
@@ -58,7 +55,7 @@ final class TrackerStore: NSObject {
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \TrackerCoreData.trackerName, ascending: true)
         ]
-
+        
         let controller = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: context,
@@ -71,9 +68,8 @@ final class TrackerStore: NSObject {
     }
 }
 
-// TODO: добавить в DataProviderProtocol<Tracker>
 extension TrackerStore: TrackerStoreDataProviderProtocol {
-
+    
     func getTrackersByTextInName(text: String) -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
         let filtredTrackers = trackers.filter { $0.trackerName?.contains(text) ?? false }
@@ -82,7 +78,6 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
     
     func getTrackers() -> [Tracker] {
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
-        //print("getTrackers = \(trackers.compactMap { Tracker(tracker: $0)} )" )
         return trackers.compactMap { Tracker(tracker: $0)}
     }
     
@@ -91,7 +86,7 @@ extension TrackerStore: TrackerStoreDataProviderProtocol {
         let request = TrackerCoreData.fetchRequest()
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "records.date CONTAINS %@", onDate as CVarArg)
-    
+        
         do { trackers = try context.fetch(request) } catch { return [] }
         
         return trackers.compactMap { Tracker(tracker: $0)}

@@ -71,7 +71,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         categoryObject.categoryName = newCategory.categoryName
         do { try context.save() } catch { return false }
-       // delegate?.didUpdate()
+        // delegate?.didUpdate()
         return true
     }
     
@@ -82,7 +82,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
         
         do { try context.save() } catch { return false }
         
-       // delegate?.didUpdate()
+        // delegate?.didUpdate()
         return true
     }
     
@@ -114,9 +114,8 @@ extension TrackerCategoryStore: TrackerCategoryStoreDataProviderProtocol{
             return false
         }
         context.delete(categoryObject)
+        do { try context.save() } catch { return false }
         
-        do {  try context.save() } catch { return false }
-
         return true
     }
     
@@ -141,9 +140,9 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
                      at indexPath: IndexPath?,
                      for type: NSFetchedResultsChangeType,
                      newIndexPath: IndexPath?) {
-
+        
         self.delegate?.didUpdate()
-
+        
     }
 }
 

@@ -18,7 +18,7 @@ extension Dictionary where  Key : Comparable {
     
     private func moveElementToStart<T: Equatable>( array: [T], element: T) -> [T]  {
         guard  let indexOfElement = array.firstIndex(of: element) else { return array}
-
+        
         var sortedArray = array
         let element = sortedArray.remove(at: indexOfElement)
         sortedArray.insert(element, at: sortedArray.startIndex)
@@ -42,7 +42,7 @@ class TrackersViewController: UIViewController {
     // MARK: - Public Properties
     var visibleTrackers: [String : [Tracker]] = [:]
     var collectionView: UICollectionView?
-
+    
     private (set) var currentDate: Date? = Date()
     private (set) var trackerStore = TrackerStore()
     private (set) var trackerRecordStore = TrackerRecordStore()
@@ -56,15 +56,15 @@ class TrackersViewController: UIViewController {
     private var datePicker: UIDatePicker?
     private var filterButton: UIButton?
     private var currentFilter: Filter = Filter.all
-   
-
+    
+    
     
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .ypWhiteDay
-
+        
         trackerStore.delegate = self
         
         setupNavigationBar()
@@ -78,7 +78,7 @@ class TrackersViewController: UIViewController {
         
         showLogo(visibleTrackers.count == 0)
     }
-  
+    
     override func viewDidAppear(_ animated: Bool) {
         analyticsService.eventOpen()
     }
@@ -89,14 +89,14 @@ class TrackersViewController: UIViewController {
     
     // это нужно для белого шрифта в статус бар
     override var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
-        }
+        return .lightContent
+    }
     
     // MARK: - Public Methods
     
     private func setupNavigationBar() {
         guard let navBar = navigationController?.navigationBar else  { return }
- 
+        
         navBar.topItem?.title = L10n.Tracker.title
         navBar.largeTitleTextAttributes = [ .font: YFonts.fontYPBold34]
         navBar.prefersLargeTitles = true
@@ -111,7 +111,7 @@ class TrackersViewController: UIViewController {
         // добавляем строку поиска
         let seachController = UISearchController()  //
         seachController.hidesNavigationBarDuringPresentation = false
-        seachController.searchResultsUpdater = self     
+        seachController.searchResultsUpdater = self
         self.navigationItem.searchController = seachController
         
         // добавляем DatePicker
@@ -123,7 +123,7 @@ class TrackersViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(self.didChangeDate), for: .valueChanged)
         let rightButton = UIBarButtonItem(customView: datePicker)
         navBar.topItem?.setRightBarButton(rightButton, animated: false)
-    
+        
         view.frame.size.height = 200
     }
     
@@ -132,8 +132,8 @@ class TrackersViewController: UIViewController {
         logoImageView?.image = (whichLogo == .noTrackers) ? UIImage(named: "NoTrackers") : UIImage(named: "SearchError")
         logoLabel?.isHidden = !uiShow
         let noTrackersText = L10n.Tracker.logoText
-        let noNotFoundText = L10n.Tracker.notFound 
-        logoLabel?.text = (whichLogo == .noTrackers) ? noTrackersText : noNotFoundText  
+        let noNotFoundText = L10n.Tracker.notFound
+        logoLabel?.text = (whichLogo == .noTrackers) ? noTrackersText : noNotFoundText
         collectionView?.isHidden = uiShow
     }
     
@@ -155,7 +155,7 @@ class TrackersViewController: UIViewController {
             self.didChangeDate(self)
             return
         }
-    
+        
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         if visibleTrackers.count > 0 {
             showLogo(false)
@@ -176,7 +176,7 @@ class TrackersViewController: UIViewController {
     func getVisibleTrackers(trackers: [Tracker]) ->  [String : [Tracker]] {
         guard let calendar = NSCalendar(identifier: .ISO8601),
               let currentDate = currentDate else { return visibleTrackers }
-
+        
         var visibleTrackers: [String : [Tracker]] = [:]
         let currentDay = calendar.component(.weekday, from: currentDate)
         
@@ -188,10 +188,10 @@ class TrackersViewController: UIViewController {
         }
         
         // фильтр по фильтрам  [Tracker] -> [Tracker]
-//        При выборе «Все трекеры» пользователь видит все трекеры на выбранный день;
-//        При выборе «Трекеры на сегодня» ставится текущая дата и пользователь видит все трекеры на этот день;
-//        При выборе «Завершенные» пользователь видит привычки, которые были выполнены пользователем в выбранный день;
-//        При выборе «Не завершенные» пользователь видит невыполненные трекеры в выбранный день;
+        //        При выборе «Все трекеры» пользователь видит все трекеры на выбранный день;
+        //        При выборе «Трекеры на сегодня» ставится текущая дата и пользователь видит все трекеры на этот день;
+        //        При выборе «Завершенные» пользователь видит привычки, которые были выполнены пользователем в выбранный день;
+        //        При выборе «Не завершенные» пользователь видит невыполненные трекеры в выбранный день;
         var trackersAtFilters: [Tracker]  = []
         switch(currentFilter) {
         case .all:
@@ -209,11 +209,11 @@ class TrackersViewController: UIViewController {
         for tracker in trackersAtFilters {
             let category = tracker.isPinned ? impotantCategory : tracker.trackerCategoryName
             if visibleTrackers[category] == nil {
-                    visibleTrackers[category] = []
-                }
+                visibleTrackers[category] = []
+            }
             visibleTrackers[category]?.append(tracker)
         }
-
+        
         return visibleTrackers
     }
     
@@ -230,7 +230,7 @@ class TrackersViewController: UIViewController {
     // Обработка нажатия на кнопку Сохранить на форме создания трекера
     func addTracker(tracker: Tracker) {
         if trackerStore.addTracker(tracker) == false {
-            Alert.alertInformation(viewController: self, text: L10n.Tracker.errorCreateTracker) //"tracker.error_create_tracker" 
+            Alert.alertInformation(viewController: self, text: L10n.Tracker.errorCreateTracker) //"tracker.error_create_tracker"
         }
     }
     
@@ -266,7 +266,7 @@ class TrackersViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
         
     }
-        
+    
     @objc
     private func filterButtonPressed() {
         analyticsService.eventFilter()
@@ -285,7 +285,7 @@ class TrackersViewController: UIViewController {
     @IBAction private func didChangeDate(_ sender: AnyObject) {
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
-
+        
         // костыль для сброса фильтра
         if currentDate != datePicker.date.startOfDay() && currentFilter == .today {
             currentFilter = .all
@@ -323,7 +323,7 @@ class TrackersViewController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true;
         
-
+        
         return collectionView
     }
     

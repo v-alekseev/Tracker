@@ -8,6 +8,8 @@ xcuserdata/
 
 ##cocoapods
 pods/
+*.xcworkspace
+*.lock
 
 ## TestFiles
 TrackerSnapshotTests/__Snapshots__/

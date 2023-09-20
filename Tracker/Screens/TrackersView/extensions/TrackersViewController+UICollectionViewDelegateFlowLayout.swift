@@ -89,7 +89,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                         let createTrackerViewController = CreateTrackerViewController(isEdit: true, tracker: tracker)
                         createTrackerViewController.isEvent = false
                         createTrackerViewController.trackersViewController = self
-
+                        
                         let navigationController = UINavigationController(rootViewController: createTrackerViewController)
                         navigationController.modalPresentationStyle = .pageSheet
                         

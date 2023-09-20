@@ -20,13 +20,13 @@ extension SelectGroupViewController: UITableViewDataSource {
         if let reusedCell =  tableView.dequeueReusableCell(withIdentifier: SelectGroupTableViewCell.cellID) as? SelectGroupTableViewCell {
             cell = reusedCell
         }
-
+        
         cell.textLabel?.text = selectGroupViewModel.categories[indexPath.row];
         
         cell.markSelected(indexPath: indexPath.row, selectedIndex: selectGroupViewModel.selectionIndex)
         cell.setupSeparator(tableViewWidth: tableView.frame.width, indexPath: indexPath.row, categoriesCount: selectGroupViewModel.categories.count)
         cell.setConerRadius(indexPath: indexPath.row, categoriesCount: selectGroupViewModel.categories.count)
-
+        
         return cell
     }
 }

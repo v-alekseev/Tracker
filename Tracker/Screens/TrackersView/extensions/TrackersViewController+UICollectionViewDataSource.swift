@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -34,8 +33,6 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.cardTrackerView?.backgroundColor = tracker.trackerColor
         cell.completeButton?.tintColor = tracker.trackerColor
         cell.isPinned = tracker.isPinned
-        
-
         
         var imageCellButtom = imageTrackerCellPlus
         if let currentDate = currentDate {

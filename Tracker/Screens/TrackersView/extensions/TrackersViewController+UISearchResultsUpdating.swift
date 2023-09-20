@@ -20,7 +20,7 @@ extension TrackersViewController : UISearchResultsUpdating {
             collectionView.reloadData()
             return
         }
-    
+        
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackersByTextInName(text: searchText))
         
         if visibleTrackers.count == 0 {

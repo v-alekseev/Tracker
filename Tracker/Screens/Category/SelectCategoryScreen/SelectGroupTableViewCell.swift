@@ -24,7 +24,7 @@ final class SelectGroupTableViewCell : UITableViewCell {
         self.textLabel?.font = YFonts.fontYPRegular17
         self.backgroundColor = .ypBackground
         self.selectionStyle = .none
-
+        
     }
     
     func markSelected(indexPath: Int, selectedIndex: Int?) {

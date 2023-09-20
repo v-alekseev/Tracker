@@ -10,10 +10,10 @@ import UIKit
 
 
 final class CreateGroupViewController: UIViewController {
-
+    
     // MARK: public properties
     private let createGroupViewModel = CreateGroupViewModel()
-
+    
     
     // MARK: - UI elemants
     
@@ -101,7 +101,7 @@ final class CreateGroupViewController: UIViewController {
         guard let text = categoryNameTextView.text else { return }
         
         createGroupViewModel.categoryName = text
-
+        
     }
     
     private func setUpUI() {

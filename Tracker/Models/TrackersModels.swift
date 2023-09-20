@@ -8,18 +8,18 @@
 import Foundation
 import UIKit
 
-// TrackerCategory  - содержит имя категории и список трекеров с этой категориией
+/// TrackerCategory  - содержит имя категории. Связь с трекером через relationship
 struct TrackerCategory {
     let categoryName: String    // название категории
 }
 
-//  TrackerRecord структурв с информацией о том, что некий трекер был выполнен на некоторую дату;
+///  TrackerRecord структурв с информацией о том, что некий трекер был выполнен на некоторую дату;
 struct TrackerRecord {
     let trackerID: UUID
     let date: Date
 }
 
-// информация о трекере
+/// информация о трекере
 struct Tracker {
     let trackerID: UUID
     let trackerName: String

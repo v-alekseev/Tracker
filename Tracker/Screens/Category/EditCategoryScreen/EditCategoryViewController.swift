@@ -32,7 +32,6 @@ final class EditCategoryViewController: UIViewController {
         editCategoryViewModel.$isRenameSuccsesed.bind { [weak self]  in
             guard let self = self else { return }
             if(editCategoryViewModel.isRenameSuccsesed == false) {
-                // "editCategoryScreen.errorEdit"
                 Alert.alertInformation(viewController: self, text: L10n.EditCategoryScreen.errorEdit) {[weak self] _ in
                     self?.dismiss(animated: true)
                     return
@@ -40,9 +39,7 @@ final class EditCategoryViewController: UIViewController {
             } else {
                 self.dismiss(animated: true)
             }
-           
         }
-        
         setUpUI()
     }
     
@@ -61,7 +58,7 @@ final class EditCategoryViewController: UIViewController {
     lazy private var categoryNameTextView: UITextField = {
         let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.placeholder = L10n.EditCategoryScreen.placeholder  //"Введите название категории" //"editCategoryScreen.placeholder"
+        label.placeholder = L10n.EditCategoryScreen.placeholder
         label.clearsOnBeginEditing = true
         label.keyboardType = .default
         label.clearButtonMode = .whileEditing
@@ -79,7 +76,7 @@ final class EditCategoryViewController: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(L10n.EditCategoryScreen.buttonAdd, for: .normal) //"editCategoryScreen.buttonAdd"
+        button.setTitle(L10n.EditCategoryScreen.buttonAdd, for: .normal)
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonCreateCategoryTapped), for: .touchUpInside)
@@ -97,7 +94,7 @@ final class EditCategoryViewController: UIViewController {
         textBackgroundView.layer.cornerRadius = 16
         return textBackgroundView
     }()
-
+    
     // MARK: - IBAction
     //
     @objc private func buttonCreateCategoryTapped() {

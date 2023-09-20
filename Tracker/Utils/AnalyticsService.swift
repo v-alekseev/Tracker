@@ -13,7 +13,6 @@ class AnalyticsService {
     static func activate() {
         // Initializing the AppMetrica SDK.
         guard let configuration = YMMYandexMetricaConfiguration(apiKey: "5c9bec4a-acdc-411b-b3d6-3c5a24714071") else { return }
-        
         YMMYandexMetrica.activate(with: configuration)
     }
     

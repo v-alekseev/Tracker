@@ -21,12 +21,12 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     var isPinned: Bool?
     
     var tracker: Tracker?
-
+    
     // MARK: - Private Properties
     private var isPressed = false
     private var quantityManagementView: UIView?
     private let analyticsService = AnalyticsService()
-
+    
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,9 +54,9 @@ class TrackerCollectionViewCell: UICollectionViewCell {
               let trackerID = trackerID,
               let currentDate = trackersVC.currentDate else { return }
         
-       
+        
         if currentDate > Date() {
-            let alertText = L10n.Tracker.createDateInTheFuture //NSLocalizedString("tracker.create_date_in_the_future", comment: "")
+            let alertText = L10n.Tracker.createDateInTheFuture
             Alert.alertInformation(viewController: trackersVC, text: alertText)
             return
         }
@@ -82,11 +82,11 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     public func setDaysCompleted(daysCompleted: Int) {
-        daysCompletedLabel?.text = L10n.numberOfDays(daysCompleted) //"\(daysCompleted) дней" // LOCALE
+        daysCompletedLabel?.text = L10n.numberOfDays(daysCompleted)
     }
-
+    
     // MARK: - Private Methods
-
+    
     private func addCardTrackerView() -> UIView? {
         let cardTrackerView = UIView()
         cardTrackerView.layer.cornerRadius = 16

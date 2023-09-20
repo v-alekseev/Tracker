@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+
 enum StatisticParam {
     case bestPeriod
     case idealDaysCount
@@ -15,8 +16,6 @@ enum StatisticParam {
 }
 
 final class StatisticViewController: UIViewController {
-    
-    
     private var noDataImageView: UIImageView  = {
         let noCategoryImageView =  UIImageView(image: UIImage(named: "NoData"))
         noCategoryImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,11 +33,10 @@ final class StatisticViewController: UIViewController {
         return noCategoryLabel
     }()
     
-    
-    private let view1BestPeriod = StatisticCellView()
-    private let view2IdealDays = StatisticCellView()
-    private let view3TrackersCompleted = StatisticCellView()
-    private let view4Average = StatisticCellView()
+    private let viewBestPeriod = StatisticCellView()
+    private let viewIdealDays = StatisticCellView()
+    private let viewTrackersCompleted = StatisticCellView()
+    private let viewAverage = StatisticCellView()
     
     private let statisticViewPresenter = StatisticViewPresenter()
     
@@ -59,10 +57,10 @@ final class StatisticViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        view1BestPeriod.addGradient()
-        view2IdealDays.addGradient()
-        view3TrackersCompleted.addGradient()
-        view4Average.addGradient()
+        viewBestPeriod.addGradient()
+        viewIdealDays.addGradient()
+        viewTrackersCompleted.addGradient()
+        viewAverage.addGradient()
         
         statisticViewPresenter.updateStatistic()
     }
@@ -70,13 +68,13 @@ final class StatisticViewController: UIViewController {
     func updateStatisticPraram(param: StatisticParam, value: String) {
         switch param {
         case .bestPeriod:
-            view1BestPeriod.value = value
+            viewBestPeriod.value = value
         case .idealDaysCount:
-            view2IdealDays.value = value
+            viewIdealDays.value = value
         case .completedTrackersCount:
-            view3TrackersCompleted.value = value
+            viewTrackersCompleted.value = value
         case .completedTrackersCountAverage:
-            view4Average.value = value
+            viewAverage.value = value
         }
     }
     
@@ -85,53 +83,47 @@ final class StatisticViewController: UIViewController {
         noDataLabel.isHidden = !uiShow
         
         
-        view1BestPeriod.isHidden = uiShow
-        view2IdealDays.isHidden = uiShow
-        view3TrackersCompleted.isHidden = uiShow
-        view4Average.isHidden = uiShow
+        viewBestPeriod.isHidden = uiShow
+        viewIdealDays.isHidden = uiShow
+        viewTrackersCompleted.isHidden = uiShow
+        viewAverage.isHidden = uiShow
     }
     
     private func setupCells() {
-        
-        //view1BestPeriod.value = "6"
-        view1BestPeriod.label = L10n.Statistic.bestPeriod
-        view.addSubview(view1BestPeriod)
+        viewBestPeriod.label = L10n.Statistic.bestPeriod
+        view.addSubview(viewBestPeriod)
         NSLayoutConstraint.activate([
-            view1BestPeriod.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 77),
-            view1BestPeriod.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            view1BestPeriod.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            view1BestPeriod.heightAnchor.constraint(equalToConstant: 90)
+            viewBestPeriod.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 77),
+            viewBestPeriod.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            viewBestPeriod.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            viewBestPeriod.heightAnchor.constraint(equalToConstant: 90)
         ])
         
-        
-        //view2IdealDays.value = "2"
-        view2IdealDays.label =  L10n.Statistic.idealDays
-        view.addSubview(view2IdealDays)
+        viewIdealDays.label =  L10n.Statistic.idealDays
+        view.addSubview(viewIdealDays)
         NSLayoutConstraint.activate([
-            view2IdealDays.topAnchor.constraint(equalTo: view1BestPeriod.bottomAnchor, constant: 12),
-            view2IdealDays.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            view2IdealDays.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            view2IdealDays.heightAnchor.constraint(equalToConstant: 90)
+            viewIdealDays.topAnchor.constraint(equalTo: viewBestPeriod.bottomAnchor, constant: 12),
+            viewIdealDays.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            viewIdealDays.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            viewIdealDays.heightAnchor.constraint(equalToConstant: 90)
         ])
         
-        
-        view3TrackersCompleted.label =  L10n.Statistic.trackersCompleted
-        view.addSubview(view3TrackersCompleted)
+        viewTrackersCompleted.label =  L10n.Statistic.trackersCompleted
+        view.addSubview(viewTrackersCompleted)
         NSLayoutConstraint.activate([
-            view3TrackersCompleted.topAnchor.constraint(equalTo: view2IdealDays.bottomAnchor, constant: 12),
-            view3TrackersCompleted.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            view3TrackersCompleted.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            view3TrackersCompleted.heightAnchor.constraint(equalToConstant: 90)
+            viewTrackersCompleted.topAnchor.constraint(equalTo: viewIdealDays.bottomAnchor, constant: 12),
+            viewTrackersCompleted.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            viewTrackersCompleted.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            viewTrackersCompleted.heightAnchor.constraint(equalToConstant: 90)
         ])
         
-        
-        view4Average.label =  L10n.Statistic.average
-        view.addSubview(view4Average)
+        viewAverage.label =  L10n.Statistic.average
+        view.addSubview(viewAverage)
         NSLayoutConstraint.activate([
-            view4Average.topAnchor.constraint(equalTo: view3TrackersCompleted.bottomAnchor, constant: 12),
-            view4Average.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            view4Average.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            view4Average.heightAnchor.constraint(equalToConstant: 90)
+            viewAverage.topAnchor.constraint(equalTo: viewTrackersCompleted.bottomAnchor, constant: 12),
+            viewAverage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            viewAverage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            viewAverage.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
     

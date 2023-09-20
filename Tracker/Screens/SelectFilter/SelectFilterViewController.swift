@@ -48,10 +48,9 @@ final class SelectFilterViewController: UIViewController {
         groupsTable.delegate = self
         groupsTable.register(SelectGroupTableViewCell.self, forCellReuseIdentifier: SelectGroupTableViewCell.cellID)
         
-        setUpUI()
-
-        selectFilterViewModel.selectFilterViewController = self
+        setupUI()
         
+        selectFilterViewModel.selectFilterViewController = self
         selectFilterViewModel.$isShouldControllerClose.bind { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -63,7 +62,7 @@ final class SelectFilterViewController: UIViewController {
     }
 
     // MARK: Private functions
-    private func setUpUI() {
+    private func setupUI() {
         view.addSubview(groupsTable)
         NSLayoutConstraint.activate([
             groupsTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),

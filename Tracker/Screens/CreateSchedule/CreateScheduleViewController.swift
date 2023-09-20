@@ -12,7 +12,7 @@ import UIKit
 
 final class CreateScheduleViewController: UIViewController {
     
-
+    
     // MARK: - Public Properties
     weak var scheduleDays: ScheduleDays?
     var createTrackerViewController: CreateTrackerViewController?
@@ -21,8 +21,6 @@ final class CreateScheduleViewController: UIViewController {
     private var readyButton: UIButton?
     private var scheduleTable: UITableView?
     
-
-    
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +28,13 @@ final class CreateScheduleViewController: UIViewController {
         print("weekDaysLocale = \(ScheduleDays.weekDaysLocale)")
         
         view.backgroundColor = .ypWhiteDay
-        self.navigationItem.title = L10n.Schedule.title //  "Расписание" //"schedule.title" 
+        self.navigationItem.title = L10n.Schedule.title //  "Расписание" //"schedule.title"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
         
         readyButton = addReadyButton()
         scheduleTable = addScheduleTable()
-        
     }
-    
-    
-    
+
     // MARK: - IBAction
     @IBAction private func readyButtonTapped(_ sender: UIButton) {
         guard let scheduleDays = scheduleDays else { return }
@@ -74,7 +69,6 @@ final class CreateScheduleViewController: UIViewController {
         table.heightAnchor.constraint(equalToConstant: 75*7).isActive = true
         
         return table
-        
     }
     
     private func addReadyButton() -> UIButton? {
@@ -112,7 +106,7 @@ extension CreateScheduleViewController: UITableViewDataSource {
             cell = reusedCell
         }
         guard let scheduleDays = scheduleDays else { return cell}
-  
+        
         cell.backgroundColor = .ypBackground
         let switchCell = UISwitch()
         switchCell.onTintColor = .ypBlue
@@ -121,7 +115,7 @@ extension CreateScheduleViewController: UITableViewDataSource {
         
         cell.textLabel?.text = Locale.current.calendar.weekdaySymbols[scheduleDays.weekDays[indexPath.row].dayIndex]
         switchCell.setOn(scheduleDays.weekDays[indexPath.row].dayValue, animated: true)
-
+        
         return cell
     }
 }

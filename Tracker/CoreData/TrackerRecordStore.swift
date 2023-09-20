@@ -28,7 +28,6 @@ final class TrackerRecordStore: NSObject {
     }
 }
 
-
 extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     
     func isRecordExist(_ record: TrackerRecord) -> Bool {
@@ -57,7 +56,6 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     
     func getTrackerComletedDays(trackerID: UUID) -> Int {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
-        // Нам интересно лишь количество
         request.resultType = .countResultType
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.trackerID), trackerID as CVarArg)
         
@@ -69,11 +67,10 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     
     
     func getRecords() -> [TrackerRecord]? {
-        let request = TrackerRecordCoreData.fetchRequest() //NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
-        request.returnsObjectsAsFaults = false
-        //request.sortDescriptors = [NSSortDescriptor(key: "categoryName", ascending: true)]
-        
         var records:[TrackerRecordCoreData] = []
+        
+        let request = TrackerRecordCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
         do { records = try context.fetch(request) } catch { return nil }
         
         return records.compactMap {
@@ -85,9 +82,8 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     
     func getRecordsCount() -> Int {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
-        // Нам интересно лишь количество
         request.resultType = .countResultType
-
+        
         var countRecords = 0
         do { countRecords = try context.count(for: request) } catch { return 0 }
         
@@ -95,7 +91,7 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     }
     
     //MARK: - private methods
-    //  Возвращвет запись о выполнении трекра для конкретной даты
+    ///  Возвращвет запись о выполнении трекра для конкретной даты
     private func getRecordObject(_ record: TrackerRecord) -> TrackerRecordCoreData? {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
         request.returnsObjectsAsFaults = false
@@ -105,7 +101,6 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         
         var records:[TrackerRecordCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
-        //print("getRecordObject tracker = \(records.first?.tracker), trackerID =  \(records.first?.trackerID), date =  \(records.first?.date),")
         return records.first
     }
     

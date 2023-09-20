@@ -8,7 +8,7 @@
 import Foundation
 
 final class EditCategoryViewModel {
-
+    
     var currentCategoryName: String = ""
     @Observable
     var newCategoryName: String = ""
