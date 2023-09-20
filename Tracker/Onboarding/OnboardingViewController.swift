@@ -21,15 +21,10 @@ final class OnboardingViewController: UIPageViewController {
     
     private lazy var pages: [UIViewController] = {
         // первый экран
-        let first = setUPPage(imageName: "Onboarding1", text: "Отслеживайте только то, что хотите" )
-        
+        let first = setUPPage(imageName: "Onboarding1", text: L10n.Onbording.Screen1.text)
         // второй экран
         let second = setUPPage(imageName: "Onboarding2",
-                               text:
-                """
-                Даже если это
-                не литры воды и йога
-                """
+                               text: L10n.Onbording.Screen2.text
         )
         return [first, second]
     }()
@@ -83,7 +78,7 @@ final class OnboardingViewController: UIPageViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Вот это технологии!", for: .normal)
+        button.setTitle(L10n.Onbording.Button.text, for: .normal)
         button.setTitleColor(.ypWhiteDay, for: .normal)
         button.titleLabel?.font = YFonts.fontYPMedium16
         button.addTarget(self, action: #selector(buttonOnboardinCompleteTapped), for: .touchUpInside)
@@ -134,34 +129,34 @@ final class OnboardingViewController: UIPageViewController {
     }
 }
 
-    // MARK: - UIPageViewControllerDataSource
+// MARK: - UIPageViewControllerDataSource
 extension OnboardingViewController: UIPageViewControllerDataSource {
     // предыдущий экран
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
             return nil
         }
-
+        
         let previousIndex = viewControllerIndex - 1
-
+        
         guard previousIndex >= 0 else {
             return nil
         }
-
+        
         return pages[previousIndex]
     }
-
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
             return nil
         }
-
+        
         let nextIndex = viewControllerIndex + 1
-
+        
         guard nextIndex < pages.count else {
             return nil
         }
-
+        
         return pages[nextIndex]
     }
 }

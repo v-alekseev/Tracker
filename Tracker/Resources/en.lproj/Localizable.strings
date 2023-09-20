@@ -6,8 +6,77 @@
   
 */
 
-"tracker.title" = "Трекеры";
-"tracker.logo_text" = "Что будем отслеживать?";
-"tracker.not_found" = "Ничего не найдено";
-"tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
+"tracker.title" = "Trackers";
+"tracker.logoText" = "What will we track?";
+"tracker.notFound" = "Nothing found";
+"tracker.create_date_in_the_future" = "There is no way to mark the implementation of a habit in the future)";
+"tracker.error_create_tracker" = "Failed to create tracker. Let's try again.";
+"tracker.errorEditTracker" = "Failed to delete tracker. Let's try again.";
+"tracker.errorUpdateTracker" = "Failed to update tracker. Let's try again.";
+"tracker.pinnedCategory" = "Pinned";
+"tracker.contextMenu.pin" = "Pin";
+"tracker.contextMenu.unpin" = "Unpin";
+"tracker.contextMenu.edit" = "Edit";
+"tracker.contextMenu.delete" = "Delete";
+"tracker.filters" = "Filters";
 
+"filter.all" = "All";
+"filter.today" = "Today trackers";
+"filter.completed" = "Completed";
+"filter.uncompleted" = "Uncompleted";
+
+"alert.header" = "Hi";
+"alert.button" = "Ok";
+
+"onbording.screen1.text" = "Track only what you want";
+"onbording.screen2.text" = "Even if it not liters\n of water and yoga";
+"onbording.button.text" = "That's technology!";
+
+"sheduler.all_days" = "Every day";
+
+"navbar.text1" = "Trackers";
+"navbar.text2" = "Statistics";
+
+"base.error" = "init(coder:) has not been implemented";
+
+"createTracker.category.buttonName" = "Category";
+"createTracker.scheduler.buttonName" = "Schedule";
+"createTracker.scheduler.title" =  "New irregular event" ;
+"createTracker.title" = "New habit";
+"createTracker.inputName" = "Enter tracker name";
+"createTracker.buttonCancel" = "Cancel";
+"createTracker.buttonCreate" = "Create";
+"createTracker.buttonSave" = "Save";
+
+"editTracker.scheduler.title" =  "Edit irregular event" ;
+"editTracker.title" = "Edit habbit";
+
+
+"statistic.title" = "Statistics";
+"statistic.label" = "There's nothing here yet";
+"statistic.BestPeriod" = "Best period";
+"statistic.IdealDays" = "Ideal days";
+"statistic.TrackersCompleted" = "Trackers completed";
+"statistic.Average" = "Average value";
+
+"schedule.buttonCreate" = "Ready";
+"schedule.title" = "Schedule";
+
+"categoryScreen.title" = "Category";
+"categoryScreen.menuEdit" = "Edit";
+"categoryScreen.menuDelete" = "Delete";
+"categoryScreen.errorDelete" = "Error deleting category. Please delete all trackers in this category first.";
+
+"createCategoryScreen.placeholder" = "Enter category name";
+"createCategoryScreen.buttonAdd" = "Add category";
+"createCategoryScreen.title" = "New category";
+
+"editCategoryScreen.placeholder" = "Enter category name";
+"editCategoryScreen.buttonAdd" = "Ready";
+"editCategoryScreen.title" = "Editing a category";
+"editCategoryScreen.errorEdit" = "Error editing category";
+
+
+"selectTypeTracker.title" = "Creating a tracker";
+"selectTypeTracker.regularTracker" = "Habit";
+"selectTypeTracker.irregularTracker" = "Irregular event"; 

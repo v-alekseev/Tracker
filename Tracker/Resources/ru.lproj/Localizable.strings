@@ -6,8 +6,81 @@
   
 */
 
+//NSLocalizedString
+
 "tracker.title" = "Трекеры";
-"tracker.logo_text" = "Что будем отслеживать?";
-"tracker.not_found" = "Ничего не найдено";
+"tracker.logoText" = "Что будем отслеживать?";
+"tracker.notFound" = "Ничего не найдено";
 "tracker.create_date_in_the_future" = "Отметить выполнение привычки в будущем никак нельзя)";
+"tracker.error_create_tracker" = "Не получилось создать трекер. Давай попробуем еще раз.";
+"tracker.errorEditTracker" = "Не получилось удалить трекер. Давай попробуем еще раз.";
+"tracker.errorUpdateTracker" = "Не получилось удалить трекер. Давай попробуем еще раз.";
+"tracker.pinnedCategory" = "Закрепленные";
+"tracker.contextMenu.pin" = "Закрепить";
+"tracker.contextMenu.unpin" = "Открепить";
+"tracker.contextMenu.edit" = "Редактировать";
+"tracker.contextMenu.delete" = "Удалить";
+"tracker.filters" = "Фильтры";
+
+"filter.all" = "Все";
+"filter.today" = "Трекеры на сегодня";
+"filter.completed" = "Завершенные";
+"filter.uncompleted" = "Не завершенные";
+
+"alert.header" = "Привет";
+"alert.button" = "Хорошо";
+
+"onbording.screen1.text" = "Отслеживайте только то, что хотите";
+"onbording.screen2.text" = "Даже если это\nне литры воды и йога";
+"onbording.button.text" = "Вот это технологии!";
+
+"sheduler.all_days" = "Каждый день";
+
+"navbar.text1" = "Трекеры";
+"navbar.text2" = "Статистика";
+
+"base.error" = "init(coder:) has not been implemented";
+
+"createTracker.category.buttonName" = "Категория";
+"createTracker.scheduler.buttonName" = "Расписание";
+"createTracker.scheduler.title" =  "Новое нерегулярное событие" ;
+"createTracker.title" = "Новая привычка";
+"createTracker.inputName" = "Введите название трекера";
+"createTracker.buttonCancel" = "Отменить";
+"createTracker.buttonCreate" = "Создать";
+"createTracker.buttonSave" = "Сохранить";
+
+"editTracker.scheduler.title" =  "Редактирование нерегулярного события" ;
+"editTracker.title" = "Редактирование привычки";
+
+"statistic.title" = "Статистика";
+"statistic.label" = "Анализировать пока нечего";
+"statistic.BestPeriod" = "Лучший период";
+"statistic.IdealDays" = "Идеальные дни";
+"statistic.TrackersCompleted" = "Трекеров завершено";
+"statistic.Average" = "Среднее значение";
+
+"schedule.buttonCreate" = "Готово";
+"schedule.title" = "Расписание";
+
+"categoryScreen.title" = "Категория";
+"categoryScreen.menuEdit" = "Редактировать";
+"categoryScreen.menuDelete" = "Удалить";
+"categoryScreen.errorDelete" = "Ошибка удаления категории. Пожалуйста, сначала удалите все трекеры в этой категории.";
+
+"createCategoryScreen.placeholder" = "Введите название категории";
+"createCategoryScreen.buttonAdd" = "Добавить категорию";
+"createCategoryScreen.title" = "Новая категория";
+
+"editCategoryScreen.placeholder" = "Введите название категории";
+"editCategoryScreen.buttonAdd" = "Готово";
+"editCategoryScreen.title" = "Редактирование категории";
+"editCategoryScreen.errorEdit" = "Ошибка редактирования категории";
+
+
+"selectTypeTracker.title" = "Создание трекера";
+"selectTypeTracker.regularTracker" = "Привычка";
+"selectTypeTracker.irregularTracker" = "Нерегулярное событие";
+
+
 

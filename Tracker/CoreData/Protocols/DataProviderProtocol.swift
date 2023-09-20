@@ -6,21 +6,25 @@
 //
 
 import Foundation
+import CoreData
 
-// TODO: Переделать на протокол BaseDataProviderProtocol  c Generic <Тип записи, тип ключа для поиска>
 protocol TrackerStoreDataProviderProtocol: AnyObject {
-    func addTracker(_ record: Tracker) -> Bool
+    func addTracker(_ tracker: Tracker) -> Bool
     func getTrackers() -> [Tracker]
     func getTrackersByTextInName(text: String) -> [Tracker]
+    func deleteTracker(_ trackerID: UUID) -> Bool
+    func getTrackerObject(_ uuid: UUID) -> TrackerCoreData?
+    func updateTracker(_ tracker: Tracker) -> Bool
+    func getCountTrackersOnDay(dayOfWeekIndex: String) -> Int
+    func getCompletedTrackersAtDay(onDate: Date) -> [Tracker]
 }
 
 protocol TrackerRecordStoreDataProviderProtocol: AnyObject {
     func getTrackerComletedDays(trackerID: UUID) -> Int
-    func isRecordExist(_ record: TrackerRecord) -> Bool
-    
+    func isRecordExist(_ record: TrackerRecord) -> Bool    
     func addRecord(_ record: TrackerRecord) -> Bool
-    func getRecords() -> [TrackerRecord]?
     func deleteRecord(_ record: TrackerRecord) -> Bool
+    func getRecordsCount() -> Int
 }
 
 protocol TrackerCategoryStoreDataProviderProtocol: AnyObject {

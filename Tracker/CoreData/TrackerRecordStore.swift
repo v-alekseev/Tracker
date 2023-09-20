@@ -14,6 +14,7 @@ final class TrackerRecordStore: NSObject {
     // MARK: - Private Properties
     //
     private let context: NSManagedObjectContext
+    private let trackerStrore = TrackerStore()
     
     // MARK: - Initializers
     //
@@ -27,7 +28,6 @@ final class TrackerRecordStore: NSObject {
     }
 }
 
-
 extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     
     func isRecordExist(_ record: TrackerRecord) -> Bool {
@@ -35,15 +35,13 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         return true
     }
     
-    func getRecords() -> [TrackerRecord]? {
-        return nil
-    }
-    
     func addRecord(_ record: TrackerRecord) -> Bool {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         
+        let trackerObject = trackerStrore.getTrackerObject(record.trackerID)
         trackerRecordCoreData.date = record.date
         trackerRecordCoreData.trackerID = record.trackerID
+        trackerRecordCoreData.tracker = trackerObject
         
         do { try context.save() } catch { return false }
         return true
@@ -52,12 +50,12 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
     func deleteRecord(_ record: TrackerRecord) -> Bool {
         guard let object = getRecordObject(record) else { return false }
         context.delete(object)
+        do { try context.save() } catch { return false }
         return true
     }
     
     func getTrackerComletedDays(trackerID: UUID) -> Int {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
-        // Нам интересно лишь количество
         request.resultType = .countResultType
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.trackerID), trackerID as CVarArg)
         
@@ -67,8 +65,33 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         return countRecords
     }
     
+    
+    func getRecords() -> [TrackerRecord]? {
+        var records:[TrackerRecordCoreData] = []
+        
+        let request = TrackerRecordCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        do { records = try context.fetch(request) } catch { return nil }
+        
+        return records.compactMap {
+            guard let trackerID = $0.trackerID,
+                  let date = $0.date else { return nil}
+            return TrackerRecord(trackerID: trackerID, date: date)
+        }
+    }
+    
+    func getRecordsCount() -> Int {
+        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
+        request.resultType = .countResultType
+        
+        var countRecords = 0
+        do { countRecords = try context.count(for: request) } catch { return 0 }
+        
+        return countRecords
+    }
+    
     //MARK: - private methods
-    //  Возвращвет запись о выполнении трекра для конкретной даты
+    ///  Возвращвет запись о выполнении трекра для конкретной даты
     private func getRecordObject(_ record: TrackerRecord) -> TrackerRecordCoreData? {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
         request.returnsObjectsAsFaults = false
@@ -78,7 +101,6 @@ extension TrackerRecordStore: TrackerRecordStoreDataProviderProtocol {
         
         var records:[TrackerRecordCoreData] = []
         do { records = try context.fetch(request) } catch { return nil }
-        //print("getRecordObject tracker = \(records.first?.tracker), trackerID =  \(records.first?.trackerID), date =  \(records.first?.date),")
         return records.first
     }
     

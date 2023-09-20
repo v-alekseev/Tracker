@@ -9,10 +9,12 @@ import Foundation
 import UIKit
 
 
+let impotantCategory = L10n.Tracker.pinnedCategory
+
 let trackerCoreDataModel = "TrackerCoreDataModel"
 
-let barControllerTrackers = "Трекеры"
-let barControllerStatisic = "Статистика"
+let barControllerTrackers = L10n.Navbar.text1
+let barControllerStatisic = L10n.Navbar.text2
 
 let imageTrackerCellPlus = UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate)
 let imageTrackerCellCompleted = UIImage(named: "done_button")?.withRenderingMode(.alwaysTemplate)
@@ -27,6 +29,12 @@ struct YFonts {
     static let fontYPMedium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
 }
 
+enum Filter: String , CaseIterable {
+    case all
+    case today
+    case completed
+    case uncompleted
+}
 
 // MARK: - Types
 //

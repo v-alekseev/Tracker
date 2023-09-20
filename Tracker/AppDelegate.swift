@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import YandexMobileMetrica
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,12 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
         guard let application = UIApplication.shared.delegate as? AppDelegate else { return false}
 
         if application.isCompleteOnbording == nil {
             application.isCompleteOnbording = false
         }
+        
+        
+        AnalyticsService.activate()
 
         return true
     }
@@ -44,16 +48,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getTabBarViewController() -> TabBarController {
         
+        // экран трекеров
         let trackersViewController = TrackersViewController()
-        let navigationController = UINavigationController(rootViewController: trackersViewController)
-        navigationController.tabBarItem = UITabBarItem( // так, наверно, более правильно
+        let trackersNavigationController = UINavigationController(rootViewController: trackersViewController)
+        trackersNavigationController.tabBarItem = UITabBarItem( 
             title: barControllerTrackers,
             image: UIImage(named: "trackers"),
             selectedImage: nil
         )
-        // второй экран на tabBar
+        trackersNavigationController.navigationBar.backgroundColor = .ypWhiteDay
+        
+        // экран статистики на tabBar
         let statisticViewController = StatisticViewController()
-        statisticViewController.tabBarItem = UITabBarItem(
+        let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
+        statisticNavigationController.tabBarItem = UITabBarItem(
             title: barControllerStatisic,
             image: UIImage(named: "Stats"),
             selectedImage: nil
@@ -61,10 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBar = TabBarController()
         tabBar.tabBar.backgroundColor = .ypWhiteDay
-        tabBar.viewControllers = [navigationController, statisticViewController]
+        tabBar.viewControllers = [trackersNavigationController, statisticNavigationController]
         tabBar.tabBar.layer.borderWidth = 0.50
-        tabBar.tabBar.layer.borderColor = UIColor.ypGray.cgColor
+        tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor
         tabBar.tabBar.clipsToBounds = true
+        tabBar.view.backgroundColor = .ypWhiteDay
         
         return tabBar
         

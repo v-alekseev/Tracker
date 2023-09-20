@@ -7,64 +7,64 @@
 
 import Foundation
 
-enum DaysOfWeek: Int {
-    case Monday = 2, Tuesday = 3, Wednesday = 4, Thursday = 5, Friday = 6, Saturday = 7, Sunday=1
-}
 
 struct  Day {
-    let dayName: String
-    var dayValue: Bool
-    let shortDatName: String
-    let dayOfWeek: DaysOfWeek
+    var dayValue: Bool = false
+    var dayIndex: Int // index ( 0 .. 6) в массивах типа calendar.shortWeekdaySymbol
+    
+    init(dayIndex: Int) {
+        self.init(dayValue: false, dayIndex: dayIndex)
+    }
+    init(dayValue: Bool, dayIndex: Int) {
+        self.dayValue = dayValue
+        self.dayIndex = dayIndex
+    }
 }
 
 class ScheduleDays {
     
-    var weekDays: [Day] = [
-        Day(dayName: "Понедельник", dayValue: false, shortDatName: "Пн", dayOfWeek: DaysOfWeek.Monday),
-        Day(dayName: "Вторник", dayValue: false, shortDatName: "Вт", dayOfWeek: DaysOfWeek.Tuesday),
-        Day(dayName: "Среда", dayValue: false, shortDatName: "Ср", dayOfWeek: DaysOfWeek.Wednesday),
-        Day(dayName: "Четверг", dayValue: false, shortDatName: "Чт", dayOfWeek: DaysOfWeek.Thursday),
-        Day(dayName: "Пятница", dayValue: false, shortDatName: "Пт", dayOfWeek: DaysOfWeek.Friday),
-        Day(dayName: "Суббота", dayValue: false, shortDatName: "Сб", dayOfWeek: DaysOfWeek.Saturday),
-        Day(dayName: "Воскресенье", dayValue: false, shortDatName: "Вс", dayOfWeek: DaysOfWeek.Sunday)
-    ]
-
-    //MARK: public functions
-    // возвращает список дней недели в которые активирован трекер
-    func getActiveDayInScheduleDays() -> [Int] {
-        var activeDays: [Int] = []
-        
-        for day in weekDays {
-            if day.dayValue {
-                activeDays.append(day.dayOfWeek.rawValue)
-            }
+    var weekDays: [Day] = (0..<7).map { Day(dayIndex: weekDaysLocale[$0]) }
+    
+    private var activeWeekDays: [Day] {
+        get {
+            weekDays.filter { $0.dayValue }
         }
-        
-        return activeDays
     }
     
-    // добавляет перенос строки перед строкой расписания.
+    static let weekDaysLocale: [Int] = {
+        let firstDay = Locale.current.calendar.firstWeekday
+        return (firstDay..<firstDay+7).map { $0 == 8 ? 0 : $0-1}
+    }()
+    
+    
+    //MARK: public functions
+    /// возвращает список дней недели в которые активирован трекер
+    func getActiveDayInScheduleDays() -> [Int] {
+        return activeWeekDays.map { $0.dayIndex+1 }  // +1 т.к. номера дней идут от 1 до 7 (напримкр тут calendar.firstWeekday)
+    }
+    
+    func setActiveDays(tracker: Tracker) {
+        weekDays = weekDays.map { tracker.trackerActiveDays.contains($0.dayIndex+1) ? Day(dayValue: true, dayIndex:  $0.dayIndex) : $0 }
+    }
+    
+    /// добавляет перенос строки перед строкой расписания.
     func getScheduleAsTextWithNewLine() -> String {
         let desription = getScheduleAsText()
-        
         return  desription == "" ? desription : ("\n" + desription)
     }
-
     
-    // возвращает рассписание ативности трекера в виде строки  "Вт, Чт"
+    /// возвращает рассписание ативности трекера в виде строки  "Вт, Чт"
     private func getScheduleAsText() -> String {
         var countDays: Int = 0
         var description: String = ""
         
-        for day in weekDays {
-            if day.dayValue {
-                countDays += 1
-                description += day.shortDatName + ", "
-            }
+        for day in activeWeekDays {
+            countDays += 1
+            description += Locale.current.calendar.shortWeekdaySymbols[day.dayIndex] + ", "
         }
+        
         if countDays == 7 {
-            return "Каждый день"
+            return L10n.Sheduler.allDays //"Каждый день"
         }
         
         if description.isEmpty == false {
