@@ -278,7 +278,7 @@ final class CreateTrackerViewController: UIViewController {
         } else {
             trackersViewController.addTracker(tracker: newTracker)
         }
-        trackersViewController.dismiss(animated: true) { print("CreateTrackerViewController dismised")}
+        trackersViewController.dismiss(animated: true)
         
         return
     }

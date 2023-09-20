@@ -24,9 +24,7 @@ final class CreateScheduleViewController: UIViewController {
     // MARK: - UIViewController(*)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("weekDaysLocale = \(ScheduleDays.weekDaysLocale)")
-        
+
         view.backgroundColor = .ypWhiteDay
         self.navigationItem.title = L10n.Schedule.title //  "Расписание" //"schedule.title"
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
