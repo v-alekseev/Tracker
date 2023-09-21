@@ -70,10 +70,22 @@ final class TrackerStore: NSObject {
 
 extension TrackerStore: TrackerStoreDataProviderProtocol {
     
-    func getTrackersByTextInName(text: String) -> [Tracker] {
+    func getTrackers(contains text: String) -> [Tracker] {
+//  вариант через fetchedResultsController
         guard let trackers = fetchedResultsController.fetchedObjects else { return [] }
         let filtredTrackers = trackers.filter { $0.trackerName?.contains(text) ?? false }
         return  filtredTrackers.compactMap { Tracker(tracker: $0) }
+     
+// вариант через базу
+//        let request = TrackerCoreData.fetchRequest()
+//        request.returnsObjectsAsFaults = false
+//        request.predicate = NSPredicate(format: "%K CONTAINS %@",  #keyPath(TrackerCoreData.trackerName), text)
+//        do {
+//            let trackers = try context.fetch(request)
+//            return trackers.compactMap { Tracker(tracker: $0)}
+//        } catch {
+//            return []
+//        }
     }
     
     func getTrackers() -> [Tracker] {

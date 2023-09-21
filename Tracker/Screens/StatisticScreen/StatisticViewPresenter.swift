@@ -113,7 +113,7 @@ final class StatisticViewPresenter {
                 if date == Calendar.current.date(byAdding: .day, value: 1, to: prevDate) {
                     trackerSeries += 1
                 } else {
-                    trackerSeries = 1  // 1 т.к. у нас перебло по выполненным трекерам, а значит минимальное значение серии 1
+                    trackerSeries = 1  // 1 т.к. у нас перебор по выполненным трекерам, а значит минимальное значение серии 1
                 }
                 series.append(trackerSeries)
                 prevDate = date

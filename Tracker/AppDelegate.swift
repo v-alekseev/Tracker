@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
-    func getTabBarViewController() -> TabBarController {
+    func getTabBarViewController() -> UITabBarController {
         
         // экран трекеров
         let trackersViewController = TrackersViewController()
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: nil
         )
         
-        let tabBar = TabBarController()
+        let tabBar = UITabBarController()
         tabBar.tabBar.backgroundColor = .ypWhiteDay
         tabBar.viewControllers = [trackersNavigationController, statisticNavigationController]
         tabBar.tabBar.layer.borderWidth = 0.50

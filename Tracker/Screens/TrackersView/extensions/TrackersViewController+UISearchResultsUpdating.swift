@@ -21,7 +21,7 @@ extension TrackersViewController : UISearchResultsUpdating {
             return
         }
         
-        visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackersByTextInName(text: searchText))
+        visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers(contains: searchText))
         
         if visibleTrackers.count == 0 {
             // отобразить заглушку

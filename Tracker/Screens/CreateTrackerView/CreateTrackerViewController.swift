@@ -113,6 +113,7 @@ final class CreateTrackerViewController: UIViewController {
         
         self.navigationItem.title = isEdit ? editTracerTitle : createTracerTitle
         self.navigationController?.navigationBar.titleTextAttributes = [ .font: YFonts.fontYPMedium16]
+        self.navigationItem.setHidesBackButton(true, animated:true)
         
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -278,7 +279,7 @@ final class CreateTrackerViewController: UIViewController {
         } else {
             trackersViewController.addTracker(tracker: newTracker)
         }
-        trackersViewController.dismiss(animated: true)
+        dismiss(animated: true)
         
         return
     }

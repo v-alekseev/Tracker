@@ -137,16 +137,6 @@ class TrackersViewController: UIViewController {
         collectionView?.isHidden = uiShow
     }
     
-    func searchTrackers(text: String) -> [Tracker] {
-        var trackers: [Tracker] = []
-        for tracker in self.trackerStore.getTrackers() {
-            if tracker.trackerName.contains(text) {
-                trackers.append(tracker)
-            }
-        }
-        return trackers
-    }
-    
     func setFilter(filter: Filter) {
         
         self.currentFilter = filter
@@ -264,7 +254,6 @@ class TrackersViewController: UIViewController {
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
         navigationController.modalPresentationStyle = .pageSheet
         present(navigationController, animated: true, completion: nil)
-        
     }
     
     @objc
@@ -281,7 +270,7 @@ class TrackersViewController: UIViewController {
         
     }
     
-    // выбрали новую дату
+    /// выбрали новую дату
     @IBAction private func didChangeDate(_ sender: AnyObject) {
         guard let collectionView = collectionView else { return }
         guard let datePicker = datePicker else { return }
@@ -291,7 +280,7 @@ class TrackersViewController: UIViewController {
             currentFilter = .all
         }
         
-        currentDate =  datePicker.date.startOfDay() // as Date getCurrentDate(incomingDate: datePicker.date as Date)
+        currentDate =  datePicker.date.startOfDay()
         
         visibleTrackers = getVisibleTrackers(trackers: trackerStore.getTrackers())
         if visibleTrackers.count > 0 {

@@ -76,10 +76,13 @@ class SelectTrackerViewController: UIViewController {
         let createTrackerViewController = CreateTrackerViewController()
         createTrackerViewController.isEvent = isEvent
         createTrackerViewController.trackersViewController = self.trackersViewController
+
         
-        let navigationController = UINavigationController(rootViewController: createTrackerViewController)
-        navigationController.modalPresentationStyle = .pageSheet
-        
-        self.present(navigationController, animated: true)
+//        let navigationController = UINavigationController(rootViewController: createTrackerViewController)
+//        navigationController.modalPresentationStyle = .pageSheet
+//
+//        self.present(navigationController, animated: true)
+
+        self.navigationController?.pushViewController(createTrackerViewController, animated: true)
     }
 }

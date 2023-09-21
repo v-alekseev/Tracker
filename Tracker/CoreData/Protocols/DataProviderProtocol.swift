@@ -11,7 +11,7 @@ import CoreData
 protocol TrackerStoreDataProviderProtocol: AnyObject {
     func addTracker(_ tracker: Tracker) -> Bool
     func getTrackers() -> [Tracker]
-    func getTrackersByTextInName(text: String) -> [Tracker]
+    func getTrackers(contains text: String) -> [Tracker]
     func deleteTracker(_ trackerID: UUID) -> Bool
     func getTrackerObject(_ uuid: UUID) -> TrackerCoreData?
     func updateTracker(_ tracker: Tracker) -> Bool
