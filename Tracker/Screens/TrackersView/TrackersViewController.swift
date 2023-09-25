@@ -245,29 +245,18 @@ class TrackersViewController: UIViewController {
     // нажали кнопку добавить трекер
     @objc
     private func addNewTrackerButtonTap() {
-        
         analyticsService.eventCreateTracker()
         
-        let viewControllerToPresent = SelectTrackerViewController()
-        viewControllerToPresent.trackersViewController = self
-        
-        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-        navigationController.modalPresentationStyle = .pageSheet
+        let navigationController = ModuleFactory.getSelectTrackerNavigatorController(trackerViewController: self)
         present(navigationController, animated: true, completion: nil)
     }
     
     @objc
     private func filterButtonPressed() {
         analyticsService.eventFilter()
-        
-        let viewControllerToPresent = SelectFilterViewController()
-        viewControllerToPresent.selectFilterViewModel.trackersViewController = self
-        viewControllerToPresent.selectFilterViewModel.selectedFilter = currentFilter
-        
-        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-        navigationController.modalPresentationStyle = .pageSheet
+
+        let navigationController = ModuleFactory.getSelectFilterNavigatorController(trackerViewController: self, selectedFilter: currentFilter)
         present(navigationController, animated: true, completion: nil)
-        
     }
     
     /// выбрали новую дату

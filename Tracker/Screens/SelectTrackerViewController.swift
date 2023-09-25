@@ -72,17 +72,9 @@ class SelectTrackerViewController: UIViewController {
     
     // MARK: - Private Methods
     private func presentCreteEventController(isEvent: Bool) {
+        guard let trackersViewController = self.trackersViewController else { return }
+        let createTrackerViewController = ModuleFactory.getCreateTrackerViewController(trackerViewController: trackersViewController , isEvent: isEvent)
         
-        let createTrackerViewController = CreateTrackerViewController()
-        createTrackerViewController.isEvent = isEvent
-        createTrackerViewController.trackersViewController = self.trackersViewController
-
-        
-//        let navigationController = UINavigationController(rootViewController: createTrackerViewController)
-//        navigationController.modalPresentationStyle = .pageSheet
-//
-//        self.present(navigationController, animated: true)
-
         self.navigationController?.pushViewController(createTrackerViewController, animated: true)
     }
 }

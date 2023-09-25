@@ -97,7 +97,7 @@ final class OnboardingViewController: UIPageViewController {
         application.isCompleteOnbording = true
         
         let window = UIApplication.shared.windows.first
-        window?.rootViewController = application.getTabBarViewController()
+        window?.rootViewController = ModuleFactory.getTabBarViewController()
         window?.makeKeyAndVisible()
     }
     

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: scene)
         let onboardingVC = OnboardingViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        let tabBarVC = application.getTabBarViewController()      
+        let tabBarVC = ModuleFactory.getTabBarViewController()      
         let firstViewController = isCompleteOnbording ? tabBarVC : onboardingVC
         
         window?.rootViewController = firstViewController 

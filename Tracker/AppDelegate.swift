@@ -46,38 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
-    func getTabBarViewController() -> UITabBarController {
-        
-        // экран трекеров
-        let trackersViewController = TrackersViewController()
-        let trackersNavigationController = UINavigationController(rootViewController: trackersViewController)
-        trackersNavigationController.tabBarItem = UITabBarItem( 
-            title: barControllerTrackers,
-            image: UIImage(named: "trackers"),
-            selectedImage: nil
-        )
-        trackersNavigationController.navigationBar.backgroundColor = .ypWhiteDay
-        
-        // экран статистики на tabBar
-        let statisticViewController = StatisticViewController()
-        let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
-        statisticNavigationController.tabBarItem = UITabBarItem(
-            title: barControllerStatisic,
-            image: UIImage(named: "Stats"),
-            selectedImage: nil
-        )
-        
-        let tabBar = UITabBarController()
-        tabBar.tabBar.backgroundColor = .ypWhiteDay
-        tabBar.viewControllers = [trackersNavigationController, statisticNavigationController]
-        tabBar.tabBar.layer.borderWidth = 0.50
-        tabBar.tabBar.layer.borderColor = UIColor.ypWhiteNight.cgColor
-        tabBar.tabBar.clipsToBounds = true
-        tabBar.view.backgroundColor = .ypWhiteDay
-        
-        return tabBar
-        
-    }
+
 
 }
 

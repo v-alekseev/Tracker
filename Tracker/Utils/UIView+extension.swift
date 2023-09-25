@@ -26,6 +26,7 @@ extension UIView {
     
     @objc
     func dismissKeyboard() {
+        print("[tr] dismissKeyboard")
         topSuperview?.endEditing(true)
     }
 }

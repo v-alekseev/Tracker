@@ -44,20 +44,15 @@ final class SelectGroupViewModel {
     
     func showCreateNewCategoryScreen() {
         guard let selectGroupViewController = selectGroupViewController else { return }
-        let createGroupViewController = CreateGroupViewController()
         
-        let navigationController = UINavigationController(rootViewController: createGroupViewController)
-        navigationController.modalPresentationStyle = .pageSheet
+        let navigationController = ModuleFactory.getCreateGroupNavigationController ()
         selectGroupViewController.present(navigationController, animated: true)
     }
     
     func showEditCategoryScreen(categoryName: String) {
         guard let selectGroupViewController = selectGroupViewController else { return }
         
-        let editCategoryViewController = EditCategoryViewController(currentCategory: categoryName)
-        
-        let navigationController = UINavigationController(rootViewController: editCategoryViewController)
-        navigationController.modalPresentationStyle = .pageSheet
+        let navigationController = ModuleFactory.getEditCategoryNavigationController (currentCategoryName: categoryName)
         selectGroupViewController.present(navigationController, animated: true)
     }
     

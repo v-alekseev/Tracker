@@ -104,6 +104,7 @@ final class CreateTrackerViewController: UIViewController {
         
         view.backgroundColor = .ypWhiteDay
         view.addTapGestureToHideKeyboard()
+        
 
         if !isEvent { // добавим возможность выбора рассписания в трекер
             tableItems.append(L10n.CreateTracker.Scheduler.buttonName)
@@ -205,25 +206,12 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     func presentCreateScheduleViewController() {
-        
-        let createScheduleViewController = CreateScheduleViewController()
-        createScheduleViewController.scheduleDays = scheduleDays
-        
-        createScheduleViewController.createTrackerViewController = self
-        
-        let navigationController = UINavigationController(rootViewController: createScheduleViewController)
-        navigationController.modalPresentationStyle = .pageSheet
+        let navigationController =  ModuleFactory.getCreateScheduleNavigationController (createTrackerViewController: self, scheduleDays: scheduleDays)
         self.present(navigationController, animated: true)
     }
     
     func presentSelectGroupViewController() {
-        
-        let selectGroupViewController = SelectGroupViewController()
-        selectGroupViewController.setCurrentCategory(name: categoryName)
-        selectGroupViewController.selectGroupViewModel.initViewModel(createTrackerViewController: self)
-        
-        let navigationController = UINavigationController(rootViewController: selectGroupViewController)
-        navigationController.modalPresentationStyle = .pageSheet
+        let navigationController = ModuleFactory.getSelectGroupNavigationController (createTrackerViewController: self, categoryName: categoryName)
         self.present(navigationController, animated: true)
     }
     
@@ -510,6 +498,3 @@ final class CreateTrackerViewController: UIViewController {
         return  categoryName == "" ? categoryName : ("\n" + categoryName)
     }
 }
-
-
-
