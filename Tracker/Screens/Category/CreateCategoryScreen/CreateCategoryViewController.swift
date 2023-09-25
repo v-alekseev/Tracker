@@ -66,6 +66,7 @@ final class CreateGroupViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         view.backgroundColor = .ypWhiteDay
+        view.addTapGestureToHideKeyboard()
         
         setUpUI()
         

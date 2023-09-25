@@ -22,6 +22,7 @@ final class EditCategoryViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         view.backgroundColor = .ypWhiteDay
+        view.addTapGestureToHideKeyboard()
         
         editCategoryViewModel.$newCategoryName.bind { [weak self]  in
             guard let self = self else { return }

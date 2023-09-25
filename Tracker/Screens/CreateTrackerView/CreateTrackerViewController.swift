@@ -103,7 +103,8 @@ final class CreateTrackerViewController: UIViewController {
         guard let tracker = tracker else { return }
         
         view.backgroundColor = .ypWhiteDay
-        
+        view.addTapGestureToHideKeyboard()
+
         if !isEvent { // добавим возможность выбора рассписания в трекер
             tableItems.append(L10n.CreateTracker.Scheduler.buttonName)
         }
@@ -146,8 +147,6 @@ final class CreateTrackerViewController: UIViewController {
             categoryName = tracker.trackerCategoryName
             scheduleDays.setActiveDays(tracker: tracker)
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -163,7 +162,6 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     // MARK: - Public Methods
-    
     
     func getCountColors() -> Int {
         return cellColors.count
@@ -283,8 +281,6 @@ final class CreateTrackerViewController: UIViewController {
         
         return
     }
-    
-    
     
     // MARK: - Private Methods
     private func getSelectedEmoji() -> String? {
@@ -509,14 +505,10 @@ final class CreateTrackerViewController: UIViewController {
         return createButton
     }
     
-    
     func getCategoryeAsTextWithNewLine() -> String {
         
         return  categoryName == "" ? categoryName : ("\n" + categoryName)
     }
-    
-    
-    
 }
 
 

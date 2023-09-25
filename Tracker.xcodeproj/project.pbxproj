@@ -63,7 +63,7 @@
 		D882CF432AA67E20001A23B6 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */; };
 		D882CF452AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF442AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift */; };
 		D882CF472AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF462AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift */; };
-		D882CF492AA731A7001A23B6 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */; };
+		D882CF492AA731A7001A23B6 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF482AA731A7001A23B6 /* UIView+extension.swift */; };
 		D882CF4B2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF4A2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift */; };
 		D882CF4D2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF4C2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift */; };
 		D882CF4F2AA871A4001A23B6 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D882CF4E2AA871A4001A23B6 /* CreateGroupViewModel.swift */; };
@@ -144,7 +144,7 @@
 		D882CF422AA67E20001A23B6 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		D882CF442AA72CD3001A23B6 /* SelectGroupViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectGroupViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		D882CF462AA72CFC001A23B6 /* SelectGroupViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectGroupViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
+		D882CF482AA731A7001A23B6 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		D882CF4A2AA731E0001A23B6 /* CreateTrackerViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTrackerViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		D882CF4C2AA73207001A23B6 /* CreateTrackerViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTrackerViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		D882CF4E2AA871A4001A23B6 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 				D82DE9522A96A9980028DF70 /* DaysConverter.swift */,
 				D82DE98B2AA281DF0028DF70 /* UserDefaultsBacked.swift */,
 				D882CF3E2AA2C94F001A23B6 /* Array+extension.swift */,
-				D882CF482AA731A7001A23B6 /* UIViewController+extension.swift */,
+				D882CF482AA731A7001A23B6 /* UIView+extension.swift */,
 				D878487F2AB493F8008C1736 /* Date+extension.swift */,
 				D87848812AB4CEEC008C1736 /* AnalyticsService.swift */,
 			);
@@ -637,7 +637,7 @@
 				8B36FD482A84DE63000DF488 /* SelectTrackerViewController.swift in Sources */,
 				D86D1D772AAC65E500E14A95 /* Strings.swift in Sources */,
 				D845591F2A935AD500A225DD /* ColorToHEX.swift in Sources */,
-				D882CF492AA731A7001A23B6 /* UIViewController+extension.swift in Sources */,
+				D882CF492AA731A7001A23B6 /* UIView+extension.swift in Sources */,
 				D81C11D92A8AF346001A16E7 /* ColorViewControllerDelegate.swift in Sources */,
 				8B36FD462A83B4D5000DF488 /* Consts.swift in Sources */,
 				D81180DF2AB7B069000FC3C0 /* StatisticCellView.swift in Sources */,
@@ -827,9 +827,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5W68B442C7;
+				DEVELOPMENT_TEAM = A28FTYB68V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tracker;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
@@ -842,7 +843,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.v-alekseev.yp.tracker.Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.v-alekseev.yp.tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -858,9 +859,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5W68B442C7;
+				DEVELOPMENT_TEAM = A28FTYB68V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tracker/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tracker;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
@@ -873,7 +875,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.v-alekseev.yp.tracker.Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.v-alekseev.yp.tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
